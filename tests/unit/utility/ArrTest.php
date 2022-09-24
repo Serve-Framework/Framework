@@ -173,7 +173,7 @@ class ArrTest extends TestCase
 		$result2 = [0 => 'apple', 'foo' => 'orange', 'inserted', 10 => 'pear'];
 
 		$sample3 = [0 => 'apple', 'foo' => 'orange', 10 => 'pear'];
-		$result3 = [0 => 'apple', 'foo' => 'orange', 'foo' => 'bar', 10 => 'pear'];
+		$result3 = [0 => 'apple', 'foo' => 'bar', 10 => 'pear'];
 
 		$this->assertEquals($result1, Arr::insertAt($sample1, 'inserted', 2));
 		$this->assertEquals($result2, Arr::insertAt($sample2, 'inserted', 2));

@@ -96,6 +96,21 @@ abstract class Application extends Serve
     }
 
     /**
+     * Returns the application instance if it has been instantiated.
+     *
+     * @return static
+     */
+    public static function instance(): static
+    {
+        if(empty(static::$instance))
+        {
+            throw new RuntimeException('The application has not been started.');
+        }
+
+        return static::$instance;
+    }
+
+    /**
      * Returns the IOC container.
      *
      * @return \serve\ioc\Container

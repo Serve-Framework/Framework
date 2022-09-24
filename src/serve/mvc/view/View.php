@@ -7,7 +7,7 @@
 
 namespace serve\mvc\view;
 
-use serve\Serve;
+use serve\application\web\Application;
 use function array_merge;
 use function extract;
 use function file_exists;
@@ -78,7 +78,7 @@ class View extends ViewBase implements ViewInterface
 
         if ($this->includeServe === true)
         {
-            $serve = Serve::instance();
+            $serve = Application::instance();
         }
 
         foreach ($this->includes as $include)
