@@ -15,7 +15,7 @@ namespace serve\validator\filters\traits;
 trait DoesntFilterWhenUnset
 {
 	/**
-	 * {@inheritdoc}
+	 * {@inheritDoc}
 	 */
 	public function filterWhenUnset(): bool
 	{

@@ -7,6 +7,7 @@
 
 namespace serve\tests\unit\framework\cli\output\helpers;
 
+use RuntimeException;
 use serve\cli\output\Formatter;
 use serve\cli\output\helpers\Table;
 use serve\cli\output\Output;
@@ -134,7 +135,7 @@ class TableTest extends TestCase
 	 */
 	public function testInvalidInput(): void
 	{
-		$this->expectException(\RuntimeException::class);
+		$this->expectException(RuntimeException::class);
 
 		$formatter = new Formatter;
 		$output    = $this->mock(Output::class);

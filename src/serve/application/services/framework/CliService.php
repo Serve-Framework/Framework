@@ -27,7 +27,7 @@ use serve\console\Console;
 class CliService extends Service
 {
 	/**
-	 * {@inheritdoc}
+	 * {@inheritDoc}
 	 */
 	public function register(): void
 	{
@@ -47,7 +47,7 @@ class CliService extends Service
 	 */
 	protected function registerCli(): void
 	{
-		$this->container->singleton('Cli', function($container)
+		$this->container->singleton('Cli', function ($container)
         {
             return new Cli($container->Input, $container->output, new Environment);
         });
@@ -58,7 +58,7 @@ class CliService extends Service
 	 */
 	protected function registerInput(): void
 	{
-		$this->container->singleton('Input', function()
+		$this->container->singleton('Input', function ()
         {
             return new Input($_SERVER['argv']);
         });
@@ -69,7 +69,7 @@ class CliService extends Service
 	 */
 	protected function registerOutput(): void
 	{
-		$this->container->singleton('Output', function()
+		$this->container->singleton('Output', function ()
         {
             return new Output(new Formatter, new Environment);
         });
@@ -80,7 +80,7 @@ class CliService extends Service
 	 */
 	protected function registerConsole(): void
 	{
-		$this->container->singleton('Console', function($container)
+		$this->container->singleton('Console', function ($container)
         {
             return new Console($container->Input, $container->Output, $container);
         });

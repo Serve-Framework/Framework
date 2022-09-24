@@ -409,7 +409,7 @@ class Query
 	 * @param int      $offset Offset to start at
 	 * @param int|null $value  Limit results (optional) (default null)
 	 */
-	public function limit(int $offset, int $value = null): void
+	public function limit(int $offset, ?int $value = null): void
 	{
 		if ($value)
 		{
@@ -438,7 +438,7 @@ class Query
 	 * @param  int|null $id Row id to find (optional) (default null)
 	 * @return mixed
 	 */
-	public function find(int $id = null)
+	public function find(?int $id = null)
 	{
 		if (!$this->tableLoaded())
 		{
@@ -504,7 +504,7 @@ class Query
 		if ($this->operation === 'SET')
 		{
 			// Filter the array keys based on their value
-			$values    = implode(', ', array_map(function($v, $k) {return $k . ' = :' . $k; }, $this->opValues, array_keys($this->opValues)));
+			$values    = implode(', ', array_map(function ($v, $k) {return $k . ' = :' . $k; }, $this->opValues, array_keys($this->opValues)));
 			$this->SQL = "UPDATE $this->table SET $values " . trim($this->SQL);
 		}
 		// If we are deleting values
@@ -515,7 +515,7 @@ class Query
 		// If we are inserting values
 		elseif ($this->operation === 'INSERT INTO')
 		{
-			$values    = implode(', ', array_map(function($v, $k) { return ":$k"; }, $this->opValues, array_keys($this->opValues)));
+			$values    = implode(', ', array_map(function ($v, $k) { return ":$k"; }, $this->opValues, array_keys($this->opValues)));
 			$keys      = implode(', ', array_keys($this->opValues));
 			$this->SQL = "INSERT INTO $this->table ($keys) VALUES($values)";
 		}

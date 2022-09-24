@@ -45,7 +45,7 @@ class ErrorLogger
     /**
      * Constructor.
      *
-     * @param \Throwable                      $exception   Throwable
+     * @param Throwable                       $exception   Throwable
      * @param \serve\file\Filesystem          $filesystem  Filesystem instance
      * @param \serve\http\request\Environment $environment HttpEnv instance for logging details
      * @param string                          $path        Directory to store log files in

@@ -7,6 +7,7 @@
 
 namespace serve\exception\handlers;
 
+use Exception;
 use serve\exception\ExceptionLogicTrait;
 use serve\http\request\Request;
 use serve\http\response\exceptions\MethodNotAllowedException;
@@ -48,14 +49,14 @@ class WebHandler
 	/**
 	 * Error.
 	 *
-	 * @var \Throwable|\serve\http\response\exceptions\ForbiddenException|\serve\http\response\exceptions\InvalidTokenException|\serve\http\response\exceptions\MethodNotAllowedException|\serve\http\response\exceptions\NotFoundException|\serve\http\response\exceptions\RequestException|\serve\http\response\exceptions\Stop|\Exception
+	 * @var Exception|\serve\http\response\exceptions\ForbiddenException|\serve\http\response\exceptions\InvalidTokenException|\serve\http\response\exceptions\MethodNotAllowedException|\serve\http\response\exceptions\NotFoundException|\serve\http\response\exceptions\RequestException|\serve\http\response\exceptions\Stop|Throwable
 	 */
 	protected $exception;
 
 	/**
 	 * Constructor.
 	 *
-	 * @param \Throwable                    $exception Throwable
+	 * @param Throwable                     $exception Throwable
 	 * @param \serve\http\request\Request   $request   Request instance
 	 * @param \serve\http\response\Response $response  Response instance
 	 * @param \serve\mvc\view\View          $view      View instance

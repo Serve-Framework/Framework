@@ -7,6 +7,7 @@
 
 namespace serve\tests\unit\framework\cli\output;
 
+use Exception;
 use serve\cli\output\Formatter;
 use serve\tests\TestCase;
 
@@ -86,7 +87,7 @@ class FormatterTest extends TestCase
 	 */
 	public function testUndefinedTagException(): void
 	{
-		$this->expectException(\Exception::class);
+		$this->expectException(Exception::class);
 
 		$this->expectExceptionMessage('Undefined formatting tag [ fail ] detected.');
 
@@ -100,7 +101,7 @@ class FormatterTest extends TestCase
 	 */
 	public function testIncorrectTagNestingException(): void
 	{
-		$this->expectException(\Exception::class);
+		$this->expectException(Exception::class);
 
 		$this->expectExceptionMessage('Detected incorrectly nested formatting tag.');
 
@@ -114,7 +115,7 @@ class FormatterTest extends TestCase
 	 */
 	public function testMissingCloseTagException(): void
 	{
-		$this->expectException(\Exception::class);
+		$this->expectException(Exception::class);
 
 		$this->expectExceptionMessage('Detected missing formatting close tag');
 

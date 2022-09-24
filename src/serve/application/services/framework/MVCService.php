@@ -18,11 +18,11 @@ use serve\mvc\view\View;
 class MVCService extends Service
 {
 	/**
-	 * {@inheritdoc}
+	 * {@inheritDoc}
 	 */
 	public function register(): void
 	{
-		$this->container->singleton('View', function()
+		$this->container->singleton('View', function ()
 		{
 			return new View;
 		});

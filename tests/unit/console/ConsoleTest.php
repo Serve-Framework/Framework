@@ -117,12 +117,12 @@ class ConsoleTest extends TestCase
 class Bar extends Command
 {
 	/**
-	 * {@inheritdoc}
+	 * {@inheritDoc}
 	 */
 	protected $description = 'Foo description.';
 
 	/**
-	 * {@inheritdoc}
+	 * {@inheritDoc}
 	 */
 	public function execute(): void
 	{
@@ -133,12 +133,12 @@ class Bar extends Command
 class Foo extends Command
 {
 	/**
-	 * {@inheritdoc}
+	 * {@inheritDoc}
 	 */
 	protected $description = 'Foo description.';
 
 	/**
-	 * {@inheritdoc}
+	 * {@inheritDoc}
 	 */
 	public function execute(): void
 	{

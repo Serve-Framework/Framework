@@ -79,7 +79,7 @@ class ContainerTest extends TestCase
 	{
 		$container = Container::instance();
 
-		$container->set('foo', function()
+		$container->set('foo', function ()
 		{
 			return new ContainerCallbackTest;
 		});
@@ -106,7 +106,7 @@ class ContainerTest extends TestCase
 	{
 		$container = Container::instance();
 
-		$container->singleton('foo', function()
+		$container->singleton('foo', function ()
 		{
 			return new ContainerCallbackTest;
 		});

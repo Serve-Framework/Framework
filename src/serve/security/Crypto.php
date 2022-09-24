@@ -85,7 +85,7 @@ class Crypto
      * Decrypt a string.
      *
      * @param  string       $str Encrypted string to decrypt
-     * @return string|false
+     * @return false|string
      */
     public function decrypt(string $str)
     {

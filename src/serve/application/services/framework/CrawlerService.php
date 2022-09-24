@@ -19,11 +19,11 @@ use serve\crawler\fixtures\Inclusions;
 class CrawlerService extends Service
 {
 	/**
-	 * {@inheritdoc}
+	 * {@inheritDoc}
 	 */
 	public function register(): void
 	{
-		$this->container->singleton('UserAgent', function($container)
+		$this->container->singleton('UserAgent', function ($container)
 		{
 			return new CrawlerDetect($container->Request->headers(), new Inclusions);
 		});

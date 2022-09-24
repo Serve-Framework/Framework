@@ -8,6 +8,7 @@
 namespace serve\database\connection;
 
 use PDO;
+use PDOStatement;
 
 /**
  * Database connection handler.
@@ -33,7 +34,7 @@ class ConnectionHandler
 	/**
 	 * PDO statement object returned from \PDO::prepare().
 	 *
-	 * @var \PDOStatement|\PDO
+	 * @var PDO|PDOStatement
 	 */
 	private $pdoStatement;
 

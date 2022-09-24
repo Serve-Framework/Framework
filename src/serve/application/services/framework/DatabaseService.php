@@ -18,11 +18,11 @@ use serve\database\Database;
 class DatabaseService extends Service
 {
 	/**
-	 * {@inheritdoc}
+	 * {@inheritDoc}
 	 */
 	public function register(): void
 	{
-		$this->container->singleton('Database', function($container)
+		$this->container->singleton('Database', function ($container)
 		{
 			return new Database($container->Config->get('database'));
 		});

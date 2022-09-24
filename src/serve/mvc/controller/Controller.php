@@ -25,7 +25,7 @@ abstract class Controller
 	/**
 	 * Next middleware closure.
 	 *
-	 * @var \Closure
+	 * @var Closure
 	 */
 	protected $nextMiddleware;
 
@@ -41,7 +41,7 @@ abstract class Controller
      *
      * @param \serve\http\request\Request   $request    Request instance
      * @param \serve\http\response\Response $response   Response instance
-     * @param \Closure                      $next       Next middleware closure
+     * @param Closure                       $next       Next middleware closure
      * @param string                        $modelClass Full namespaced class name of the model
      */
     public function __construct(Request $request, Response $response, Closure $next, string $modelClass)

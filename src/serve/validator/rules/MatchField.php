@@ -28,7 +28,7 @@ class MatchField extends Rule implements RuleInterface, WithParametersInterface
 	protected $parameters = ['field'];
 
 	/**
-	 * {@inheritdoc}
+	 * {@inheritDoc}
 	 */
 	public function validate($value, array $input): bool
 	{
@@ -36,7 +36,7 @@ class MatchField extends Rule implements RuleInterface, WithParametersInterface
 	}
 
 	/**
-	 * {@inheritdoc}
+	 * {@inheritDoc}
 	 */
 	public function getErrorMessage(string $field): string
 	{

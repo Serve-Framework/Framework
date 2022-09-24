@@ -23,7 +23,7 @@ class ErrorHandlerService extends Service
 	/**
 	 * Return the error logger if we are logging errors.
 	 *
-	 * @param  \Throwable                        $exception "caught" exception
+	 * @param  Throwable                         $exception "caught" exception
 	 * @return \serve\exception\ErrorLogger|null
 	 */
 	private function getLogger(Throwable $exception)
@@ -37,7 +37,7 @@ class ErrorHandlerService extends Service
 	}
 
 	/**
-	 * {@inheritdoc}
+	 * {@inheritDoc}
 	 */
 	public function register(): void
 	{
@@ -51,7 +51,7 @@ class ErrorHandlerService extends Service
 		$handler = new ErrorHandler($display_errors, $error_reporting);
 
 		// Web handler
-		$handler->handle(Throwable::class, function($exception) use ($handler, $display_errors)
+		$handler->handle(Throwable::class, function ($exception) use ($handler, $display_errors)
 		{
 			// Logger
 			$handler->setLogger($this->getLogger($exception));

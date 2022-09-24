@@ -46,12 +46,12 @@ class CommandTest extends TestCase
 class Foobar extends Command
 {
 	/**
-	 * {@inheritdoc}
+	 * {@inheritDoc}
 	 */
 	protected $description = 'Foo description.';
 
 	/**
-	 * {@inheritdoc}
+	 * {@inheritDoc}
 	 */
 	public function execute(): void
 	{

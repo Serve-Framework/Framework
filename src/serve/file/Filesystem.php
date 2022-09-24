@@ -7,6 +7,7 @@
 
 namespace serve\file;
 
+use FilesystemIterator;
 use serve\utility\Mime;
 use SplFileObject;
 
@@ -130,7 +131,7 @@ class Filesystem
 	 * Returns the mime type of the file.
 	 *
 	 * @param  string      $file Path to file
-	 * @return string|bool
+	 * @return bool|string
 	 */
 	public static function mime(string $file)
 	{
@@ -185,7 +186,7 @@ class Filesystem
 	 */
 	public static function deleteDirectory(string $path): bool
 	{
-		$iterator = new \FilesystemIterator($path);
+		$iterator = new FilesystemIterator($path);
 
 		foreach($iterator as $item)
 		{
@@ -209,7 +210,7 @@ class Filesystem
 	 */
 	public static function emptyDirectory(string $path): void
 	{
-		$iterator = new \FilesystemIterator($path);
+		$iterator = new FilesystemIterator($path);
 
 		foreach($iterator as $item)
 		{
@@ -252,7 +253,7 @@ class Filesystem
 	 * Returns the contents of the file.
 	 *
 	 * @param  string      $file File path
-	 * @return string|bool
+	 * @return bool|string
 	 */
 	public static function getContents(string $file)
 	{
@@ -265,7 +266,7 @@ class Filesystem
 	 * @param  string   $file File path
 	 * @param  string   $data File data
 	 * @param  bool     $lock Acquire an exclusive write lock? (optional) (default FALSE)
-	 * @return int|bool
+	 * @return bool|int
 	 */
 	public static function putContents(string $file, string $data, bool $lock = false)
 	{
@@ -278,7 +279,7 @@ class Filesystem
 	 * @param  string   $file File path
 	 * @param  string   $data File data
 	 * @param  bool     $lock Acquire an exclusive write lock? (optional) (default FALSE)
-	 * @return int|bool
+	 * @return bool|int
 	 */
 	public static function prependContents(string $file, string $data, bool $lock = false)
 	{
@@ -291,7 +292,7 @@ class Filesystem
 	 * @param  string   $file File path
 	 * @param  string   $data File data
 	 * @param  bool     $lock Acquire an exclusive write lock? (optional) (default FALSE)
-	 * @return int|bool
+	 * @return bool|int
 	 */
 	public static function appendContents(string $file, string $data, bool $lock = false)
 	{
@@ -303,7 +304,7 @@ class Filesystem
 	 *
 	 * @param  string   $file File path
 	 * @param  bool     $lock Acquire an exclusive write lock? (optional) (default FALSE)
-	 * @return int|bool
+	 * @return bool|int
 	 */
 	public static function truncateContents(string $file, bool $lock = false)
 	{
@@ -370,10 +371,10 @@ class Filesystem
 	/**
 	 * Returns a SplFileObject.
 	 *
-	 * @param  string         $file           Path to file
-	 * @param  string         $openMode       Open mode
-	 * @param  bool           $useIncludePath Use include path? (optional) (default FALSE)
-	 * @return \SplFileObject
+	 * @param  string        $file           Path to file
+	 * @param  string        $openMode       Open mode
+	 * @param  bool          $useIncludePath Use include path? (optional) (default FALSE)
+	 * @return SplFileObject
 	 */
 	public static function file(string $file, string $openMode = 'r', bool $useIncludePath = false)
 	{

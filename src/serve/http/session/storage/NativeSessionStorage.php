@@ -34,7 +34,7 @@ class NativeSessionStorage implements StoreInterface
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      */
     public function session_save_path(string $path = '')
     {
@@ -47,7 +47,7 @@ class NativeSessionStorage implements StoreInterface
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      */
     public function session_start(): void
     {
@@ -58,7 +58,7 @@ class NativeSessionStorage implements StoreInterface
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      */
     public function session_destroy(): void
     {
@@ -68,9 +68,9 @@ class NativeSessionStorage implements StoreInterface
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      */
-    public function session_id(string $id = null)
+    public function session_id(?string $id = null)
     {
         if ($id)
         {
@@ -81,9 +81,9 @@ class NativeSessionStorage implements StoreInterface
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      */
-    public function session_name(string $name = null)
+    public function session_name(?string $name = null)
     {
         if ($name)
         {
@@ -94,7 +94,7 @@ class NativeSessionStorage implements StoreInterface
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      */
     public function session_regenerate_id(bool $deleteOldSession = false): void
     {
@@ -102,7 +102,7 @@ class NativeSessionStorage implements StoreInterface
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      */
     public function session_set_cookie_params(array $params): void
     {

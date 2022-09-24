@@ -17,7 +17,7 @@ use serve\database\wrappers\User;
 class UserProvider extends Provider
 {
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      */
     public function create(array $row)
     {
@@ -32,7 +32,7 @@ class UserProvider extends Provider
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      */
     public function byId(int $id)
     {
@@ -40,7 +40,7 @@ class UserProvider extends Provider
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      */
     public function byKey(string $key, $value, bool $single = false)
     {

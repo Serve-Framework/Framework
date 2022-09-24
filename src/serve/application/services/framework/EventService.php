@@ -19,16 +19,16 @@ use serve\event\Filters;
 class EventService extends Service
 {
 	/**
-	 * {@inheritdoc}
+	 * {@inheritDoc}
 	 */
 	public function register(): void
 	{
-		$this->container->singleton('Events', function($container)
+		$this->container->singleton('Events', function ($container)
 		{
 			return new Events;
 		});
 
-		$this->container->singleton('Filters', function($container)
+		$this->container->singleton('Filters', function ($container)
 		{
 			return new Filters;
 		});

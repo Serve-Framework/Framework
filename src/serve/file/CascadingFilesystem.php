@@ -42,7 +42,7 @@ trait CascadingFilesystem
      *
      * @param string|null $path Path
      */
-    public function __construct(string $path = null)
+    public function __construct(?string $path = null)
     {
         $this->path = $path;
     }
@@ -86,7 +86,7 @@ trait CascadingFilesystem
      * @param  string|null $suffix    Path suffix (optional) (default null)
      * @return string
      */
-    public function getFilePath(string $file, string $extension = null, string $suffix = null): string
+    public function getFilePath(string $file, ?string $extension = null, ?string $suffix = null): string
     {
         if(strpos($file, '::') === false)
         {
@@ -128,7 +128,7 @@ trait CascadingFilesystem
      * @param  string|null $suffix    Path suffix (optional) (default null)
      * @return array
      */
-    public function getCascadingFilePaths(string $file, string $extension = null, string $suffix = null): array
+    public function getCascadingFilePaths(string $file, ?string $extension = null, ?string $suffix = null): array
     {
         $paths = [];
 

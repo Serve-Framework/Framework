@@ -19,11 +19,11 @@ use serve\cache\stores\FileStore;
 class CacheService extends Service
 {
 	/**
-	 * {@inheritdoc}
+	 * {@inheritDoc}
 	 */
 	public function register(): void
 	{
-		$this->container->singleton('Cache', function()
+		$this->container->singleton('Cache', function ()
 		{
 			$cacheConfiguration = $this->container->Config->get('cache.configurations.' . $this->container->Config->get('cache.default'));
 

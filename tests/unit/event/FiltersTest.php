@@ -70,12 +70,12 @@ class FiltersTest extends TestCase
 
 		$filters->on('foo2', '\serve\tests\unit\event\FilterCallbackTester@testMethodSecond');
 
-		$filters->on('foo3', function($var)
+		$filters->on('foo3', function ($var)
 		{
 			return 'foo' . $var;
 		});
 
-		$filters->on('foo3', function($var)
+		$filters->on('foo3', function ($var)
 		{
 			return $var . 'baz';
 		});

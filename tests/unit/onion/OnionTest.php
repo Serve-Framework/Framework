@@ -137,7 +137,7 @@ class OnionTest extends TestCase
 	{
 		ob_start();
 
-		$callback = function(Request $request, Response $response, $next, $foo): void
+		$callback = function (Request $request, Response $response, $next, $foo): void
 		{
 			echo $foo;
 		};
@@ -162,14 +162,14 @@ class OnionTest extends TestCase
 	{
 		ob_start();
 
-		$callbackOne = function(Request $request, Response $response, $next, $foo): void
+		$callbackOne = function (Request $request, Response $response, $next, $foo): void
 		{
 			echo $foo;
 
 			$next();
 		};
 
-		$callbackTwo = function(Request $request, Response $response, $next, $bar): void
+		$callbackTwo = function (Request $request, Response $response, $next, $bar): void
 		{
 			echo $bar;
 		};
@@ -196,7 +196,7 @@ class OnionTest extends TestCase
 	{
 		$this->expectNotToPerformAssertions();
 
-		$callback = function(Request $request, Response $response, $next, $foo): void
+		$callback = function (Request $request, Response $response, $next, $foo): void
 		{
 			$next();
 		};

@@ -15,7 +15,7 @@ namespace serve\validator\filters;
 class UrlDecode extends FilterBase implements FilterInterface
 {
 	/**
-	 * {@inheritdoc}
+	 * {@inheritDoc}
 	 */
 	public function filter(string $value)
 	{

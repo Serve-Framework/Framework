@@ -23,7 +23,7 @@ class Curl
 	 * @param  string      $auth        HTTP 'Authorization' header (optional) (default '')
 	 * @param  string      $contentType HTTP content type header (optional) (default 'application/json')
 	 * @param  string      $accept      HTTP accept header (optional) (default 'application/json')
-	 * @return false|array
+	 * @return array|false
 	 */
 	public static function post(string $url, array $headers = [], array $postData = [], $auth = '', string $contentType = 'application/json', $accept = 'application/json')
 	{
@@ -124,7 +124,7 @@ class Curl
 		if ($queries)
 		{
 			$url = $url . '?' . implode('&', array_map(
-			    function($v, $k)
+			    function ($v, $k)
 			    {
 			    	return urlencode($k) . '=' . urlencode($v);
 				},

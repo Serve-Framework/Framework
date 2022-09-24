@@ -202,7 +202,7 @@ class Pluralize
     /**
      * Returns plural version of iregular words or FALSE if it is not irregular.
      *
-     * @return string|bool
+     * @return bool|string
      */
     private static function isIrregular()
     {

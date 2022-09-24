@@ -19,7 +19,7 @@ class Integer extends FilterBase implements FilterInterface
 	use FiltersWhenUnset;
 
 	/**
-	 * {@inheritdoc}
+	 * {@inheritDoc}
 	 */
 	public function filter(string $value)
 	{

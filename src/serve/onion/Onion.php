@@ -117,13 +117,13 @@ class Onion
     {
         if (!empty($this->layers))
         {
-            return function(): void
+            return function (): void
             {
                 $this->peelLayer();
             };
         }
 
-        return function(): void
+        return function (): void
         {
             $response = $this->peeled();
 

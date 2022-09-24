@@ -466,7 +466,7 @@ class Builder
      * @param  int|null                      $limit  Limit results (optional) (default null)
      * @return \serve\database\query\Builder
      */
-    public function LIMIT(int $offset, int $limit = null): Builder
+    public function LIMIT(int $offset, ?int $limit = null): Builder
     {
         $this->query->limit($offset, $limit);
 
@@ -490,7 +490,7 @@ class Builder
      * @param  int|null $id Row id to find (optional) (default null)
      * @return mixed
      */
-    public function FIND(int $id = null)
+    public function FIND(?int $id = null)
     {
         return $this->query->find($id);
     }

@@ -49,7 +49,7 @@ class MiddlewareTest extends TestCase
 
 		$layer = new Middleware('\serve\tests\unit\framework\onion\MiddleWareCallbackTest@normalMethod', ['foo', 'bar']);
 
-		$next = function(): void
+		$next = function (): void
 		{
 
 		};
@@ -72,7 +72,7 @@ class MiddlewareTest extends TestCase
 
 		$layer = new Middleware('\serve\tests\unit\framework\onion\MiddleWareCallbackTest::staticFunc', ['foo', 'bar']);
 
-		$next = function(): void
+		$next = function (): void
 		{
 
 		};
@@ -89,7 +89,7 @@ class MiddlewareTest extends TestCase
 	{
 		ob_start();
 
-		$callback = function(Request $request, Response $response, $next, $foo): void
+		$callback = function (Request $request, Response $response, $next, $foo): void
 		{
 			echo $foo;
 		};

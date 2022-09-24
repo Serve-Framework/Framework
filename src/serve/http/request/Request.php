@@ -283,7 +283,7 @@ class Request
      * @param  string|null $key (optional) (default null)
      * @return mixed
      */
-    public function fetch(string $key = null)
+    public function fetch(?string $key = null)
     {
         $env = $this->environment->asArray();
 
@@ -340,7 +340,7 @@ class Request
      * @param  string|null $_key (optional) (default null)
      * @return mixed
      */
-    public function queries(string $_key = null)
+    public function queries(?string $_key = null)
     {
         $result   = [];
 
@@ -386,7 +386,7 @@ class Request
     /**
      * Get MIME Type (type/subtype within Content Type header).
      *
-     * @return string|false
+     * @return false|string
      */
     public function mimeType()
     {

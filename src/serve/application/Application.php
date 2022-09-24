@@ -141,7 +141,7 @@ abstract class Application extends Serve
      */
     protected function bootstrap(): void
     {
-        (function($serve, $container): void
+        (function ($serve, $container): void
         {
             include "{$this->applicationPath}/bootstrap.php";
 
@@ -163,7 +163,7 @@ abstract class Application extends Serve
      */
     protected function registerFilesystem(): void
     {
-        $this->container->singleton('Filesystem', function()
+        $this->container->singleton('Filesystem', function ()
         {
             return new Filesystem;
         });
@@ -174,7 +174,7 @@ abstract class Application extends Serve
      */
     protected function registerConfig(): void
     {
-        $this->container->singleton('Config', function()
+        $this->container->singleton('Config', function ()
         {
             return $this->configFactory();
         });

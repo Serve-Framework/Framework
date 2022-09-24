@@ -34,7 +34,7 @@ class View extends ViewBase implements ViewInterface
     }
 
 	/**
-	 * {@inheritdoc}
+	 * {@inheritDoc}
 	 */
 	public function include(string $file): void
 	{
@@ -42,7 +42,7 @@ class View extends ViewBase implements ViewInterface
 	}
 
 	/**
-	 * {@inheritdoc}
+	 * {@inheritDoc}
 	 */
 	public function includes(array $files): void
 	{
@@ -53,7 +53,7 @@ class View extends ViewBase implements ViewInterface
 	}
 
 	/**
-	 * {@inheritdoc}
+	 * {@inheritDoc}
 	 */
 	public function display(string $file, array $data = []): string
 	{

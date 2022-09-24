@@ -7,6 +7,7 @@
 
 namespace serve\http\session;
 
+use Iterator;
 use serve\utility\Arr;
 
 /**
@@ -14,7 +15,7 @@ use serve\utility\Arr;
  *
  * @author Joe J. Howard
  */
-class Flash implements \Iterator
+class Flash implements Iterator
 {
     /**
      * The session flash data.
@@ -31,7 +32,7 @@ class Flash implements \Iterator
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      */
     public function rewind(): void
     {
@@ -39,7 +40,7 @@ class Flash implements \Iterator
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      */
     public function current(): mixed
     {
@@ -47,7 +48,7 @@ class Flash implements \Iterator
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      */
     public function key(): string|int|null
     {
@@ -55,7 +56,7 @@ class Flash implements \Iterator
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      */
     public function next(): void
     {
@@ -66,7 +67,7 @@ class Flash implements \Iterator
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      */
     public function valid(): bool
     {
@@ -115,7 +116,7 @@ class Flash implements \Iterator
      * @param  string|null $key The key to use for the value (optional) (default null)
      * @return mixed
      */
-    public function get(string $key = null)
+    public function get(?string $key = null)
     {
         if (!$key) {
 

@@ -98,7 +98,7 @@ abstract class MagicObjectArray implements Iterator
      * @param  string|null $key Key to use (optional) (default null)
      * @return mixed
      */
-    public function get(string $key = null)
+    public function get(?string $key = null)
     {
         if (!$key)
         {
@@ -149,7 +149,7 @@ abstract class MagicObjectArray implements Iterator
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      */
     public function __get(string $key)
     {
@@ -157,7 +157,7 @@ abstract class MagicObjectArray implements Iterator
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      */
     public function __set(string $key, $value): void
     {
@@ -165,7 +165,7 @@ abstract class MagicObjectArray implements Iterator
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      */
     public function __isset(string $key): bool
     {
@@ -181,7 +181,7 @@ abstract class MagicObjectArray implements Iterator
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      */
     public function rewind(): void
     {
@@ -189,7 +189,7 @@ abstract class MagicObjectArray implements Iterator
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      */
     public function current(): mixed
     {
@@ -197,7 +197,7 @@ abstract class MagicObjectArray implements Iterator
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      */
     public function key(): string|int|null
     {
@@ -205,7 +205,7 @@ abstract class MagicObjectArray implements Iterator
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      */
     public function next(): void
     {
@@ -216,7 +216,7 @@ abstract class MagicObjectArray implements Iterator
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      */
     public function valid(): bool
     {

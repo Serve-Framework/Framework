@@ -18,12 +18,12 @@ use serve\utility\Pluralize;
 class RoutesList extends Command
 {
 	/**
-	 * {@inheritdoc}
+	 * {@inheritDoc}
 	 */
 	protected $description = 'Lists available HTTP routes';
 
 	/**
-	 * {@inheritdoc}
+	 * {@inheritDoc}
 	 */
 	protected $commandInformation =
 	[
@@ -31,7 +31,7 @@ class RoutesList extends Command
 	];
 
 	/**
-	 * {@inheritdoc}
+	 * {@inheritDoc}
 	 */
 	public function execute(): void
 	{
@@ -40,7 +40,7 @@ class RoutesList extends Command
 		$cols     = ['<green>Route</green>', '<green>Method</green>', '<green>Callback</green>', '<green>Args</green>'];
 		$rows     = [];
 
-		usort($routes, function($a, $b)
+		usort($routes, function ($a, $b)
 		{
 			return strcmp($a['uri'], $b['uri']);
 		});

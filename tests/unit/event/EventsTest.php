@@ -60,7 +60,7 @@ class EventsTest extends TestCase
 
 		$events->on('foo2', '\serve\tests\unit\event\EventsCallbackTester::testStaticMethod');
 
-		$events->on('foo3', function($_this, $foo): void
+		$events->on('foo3', function ($_this, $foo): void
 		{
 			$_this->assertEquals('bar', $foo);
 

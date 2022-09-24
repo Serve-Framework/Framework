@@ -21,11 +21,11 @@ use serve\pixl\processor\ProcessorInterface;
 class PixlService extends Service
 {
 	/**
-	 * {@inheritdoc}
+	 * {@inheritDoc}
 	 */
 	public function register(): void
 	{
-		$this->container->singleton('Pixl', function($container)
+		$this->container->singleton('Pixl', function ($container)
 		{
 			return new Image($this->getImageProcessor($container->Config->get('pixl')), '');
 		});

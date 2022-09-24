@@ -81,7 +81,7 @@ class OpenSSL extends Encrypter implements EncrypterInterface
 	 */
 	private function loadCyphers(): void
 	{
-		$this->ciphers = array_filter(openssl_get_cipher_methods(), function($cypher)
+		$this->ciphers = array_filter(openssl_get_cipher_methods(), function ($cypher)
 		{
 			foreach ($this->nonCyphers as $nonCypher)
 			{
@@ -96,7 +96,7 @@ class OpenSSL extends Encrypter implements EncrypterInterface
 	}
 
 	/**
-	 * {@inheritdoc}
+	 * {@inheritDoc}
 	 */
 	public function encrypt(string $string): string
 	{
@@ -108,7 +108,7 @@ class OpenSSL extends Encrypter implements EncrypterInterface
 	}
 
 	/**
-	 * {@inheritdoc}
+	 * {@inheritDoc}
 	 */
 	public function decrypt(string $string)
 	{

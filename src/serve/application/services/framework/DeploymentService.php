@@ -22,11 +22,11 @@ use serve\shell\Shell;
 class DeploymentService extends Service
 {
 	/**
-	 * {@inheritdoc}
+	 * {@inheritDoc}
 	 */
 	public function register(): void
 	{
-		$this->container->singleton('Deployment', function()
+		$this->container->singleton('Deployment', function ()
 		{
 			return new Deployment($this->webhookInterface());
 		});

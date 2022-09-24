@@ -24,14 +24,14 @@ trait ExceptionLogicTrait
 	/**
 	 * Exception object.
 	 *
-	 * @var \Throwable
+	 * @var Throwable
 	 */
 	protected $exception;
 
 	/**
 	 * Set the exception object.
 	 *
-	 * @param \Throwable $exception Throwable
+	 * @param Throwable $exception Throwable
 	 */
 	protected function setException(Throwable $exception): void
 	{

@@ -7,6 +7,8 @@
 
 namespace serve\pixl\processor;
 
+use RuntimeException;
+
 /**
  * Image processor interface.
  *
@@ -17,8 +19,8 @@ interface ProcessorInterface
     /**
      * Load image parameters for internal use.
      *
-     * @param  string            $filename Absolute path to file
-     * @throws \RuntimeException If file is not an image
+     * @param  string           $filename Absolute path to file
+     * @throws RuntimeException If file is not an image
      */
     public function load(string $filename);
 
@@ -45,7 +47,7 @@ interface ProcessorInterface
      * @param  int|null $permissions File permissions to save with (optional)
      * @return mixed
      */
-    public function save(string $filename, int $image_type = null, int $quality = null, int $permissions = null);
+    public function save(string $filename, ?int $image_type = null, ?int $quality = null, ?int $permissions = null);
 
     /**
      * Resize to height.
@@ -99,7 +101,7 @@ interface ProcessorInterface
      * @param  int                                      $red   Red color value
      * @param  int                                      $green Green color value
      * @param  int                                      $blue  Blue color value
-     * @throws \RuntimeException                        If file is not an image or not provided
+     * @throws RuntimeException                         If file is not an image or not provided
      * @return \serve\pixl\processor\ProcessorInterface
      */
     public function addBackground(int $red, int $green, int $blue);

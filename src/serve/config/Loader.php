@@ -49,10 +49,10 @@ class Loader
 	 * Loads the configuration file.
 	 *
 	 * @param  string      $file        File name
-	 * @param  null|string $environment Environment
+	 * @param  string|null $environment Environment
 	 * @return array
 	 */
-	public function load(string $file, string $environment = null): array
+	public function load(string $file, ?string $environment = null): array
 	{
 		// Load default config
 		$path = $this->getFilePath($file, null);
@@ -86,9 +86,9 @@ class Loader
 	 * Saves the configuration data.
 	 *
 	 * @param array       $data        Data to save
-	 * @param null|string $environment Environment
+	 * @param string|null $environment Environment
 	 */
-	public function save(array $data, string $environment = null)
+	public function save(array $data, ?string $environment = null)
 	{
 		foreach ($data as $file => $fileData)
 		{
@@ -104,10 +104,10 @@ class Loader
 	 * Returns the path for a config file.
 	 *
 	 * @param  string      $file        File name
-	 * @param  null|string $environment Environment
+	 * @param  string|null $environment Environment
 	 * @return string
 	 */
-	protected function getFilePath(string $file, string $environment = null): string
+	protected function getFilePath(string $file, ?string $environment = null): string
 	{
 		return !$environment ? $this->path . DIRECTORY_SEPARATOR . $file . '.php' : $this->path . DIRECTORY_SEPARATOR . $environment . DIRECTORY_SEPARATOR . $file . '.php';
 	}

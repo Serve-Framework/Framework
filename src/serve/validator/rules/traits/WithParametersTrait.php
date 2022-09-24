@@ -19,7 +19,7 @@ use function vsprintf;
 trait WithParametersTrait
 {
 	/**
-	 * {@inheritdoc}
+	 * {@inheritDoc}
 	 * @suppress PhanUndeclaredProperty
 	 */
 	public function setParameters(array $parameters): void

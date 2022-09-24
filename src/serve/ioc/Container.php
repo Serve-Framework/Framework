@@ -31,8 +31,11 @@
 
 namespace serve\ioc;
 
+use ArrayAccess;
 use ArrayIterator;
 use Closure;
+use Countable;
+use IteratorAggregate;
 
 /**
  * Container.
@@ -66,7 +69,7 @@ use Closure;
  * @property \serve\cli\input\Input   $Input
  * @property \serve\cli\output\Output $Output
  */
-class Container implements \ArrayAccess, \Countable, \IteratorAggregate
+class Container implements ArrayAccess, Countable, IteratorAggregate
 {
     /**
      * Key-value array of arbitrary data.
@@ -268,13 +271,13 @@ class Container implements \ArrayAccess, \Countable, \IteratorAggregate
 
     /**
      * Ensure a value or object will remain globally unique.
-     * @param  string   $key   The value or object name
-     * @param  \Closure $value The closure that defines the object
+     * @param  string  $key   The value or object name
+     * @param  Closure $value The closure that defines the object
      * @return mixed
      */
     public function singleton($key, $value)
     {
-        $this->set($key, function($c) use ($value)
+        $this->set($key, function ($c) use ($value)
         {
             static $object;
 
@@ -296,7 +299,7 @@ class Container implements \ArrayAccess, \Countable, \IteratorAggregate
      */
     public function setInstance($key, $object): void
     {
-        $this->set($key, function() use ($object)
+        $this->set($key, function () use ($object)
         {
             return $object;
         });
@@ -304,12 +307,12 @@ class Container implements \ArrayAccess, \Countable, \IteratorAggregate
 
     /**
      * Protect closure from being directly invoked.
-     * @param  \Closure $callable A closure to keep from being invoked and evaluated
+     * @param  Closure $callable A closure to keep from being invoked and evaluated
      * @return Closure
      */
     public function protect(Closure $callable)
     {
-        return function() use ($callable) {
+        return function () use ($callable) {
             return $callable;
         };
     }

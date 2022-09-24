@@ -54,7 +54,7 @@ class Console
 	 * @param \serve\cli\output\Output  $output    Output
 	 * @param \serve\ioc\Container|null $container Container instance (optional) (default null)
 	 */
-	public function __construct(Input $input, Output $output, Container $container = null)
+	public function __construct(Input $input, Output $output, ?Container $container = null)
 	{
 		$this->input = $input;
 
@@ -133,7 +133,7 @@ class Console
 
 			$table = new Table($this->output);
 
-			$headers = array_map(function($value) { return "<green>{$value}</green>"; }, $headers);
+			$headers = array_map(function ($value) { return "<green>{$value}</green>"; }, $headers);
 
 			$this->output->write($table->render($headers, $rows));
 		}

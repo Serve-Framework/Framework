@@ -17,12 +17,12 @@ use serve\console\Command;
 class Encrypt extends Command
 {
 	/**
-	 * {@inheritdoc}
+	 * {@inheritDoc}
 	 */
 	protected $description = 'Securely encrypts a string';
 
 	/**
-	 * {@inheritdoc}
+	 * {@inheritDoc}
 	 */
 	protected $commandInformation =
 	[
@@ -30,7 +30,7 @@ class Encrypt extends Command
 	];
 
 	/**
-	 * {@inheritdoc}
+	 * {@inheritDoc}
 	 */
 	public function execute(): void
 	{

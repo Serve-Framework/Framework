@@ -19,10 +19,10 @@ class NotFoundException extends RequestException
 	/**
 	 * Constructor.
 	 *
-	 * @param string|null     $message  Exception message
-	 * @param \Throwable|null $previous Previous exception
+	 * @param string|null    $message  Exception message
+	 * @param Throwable|null $previous Previous exception
 	 */
-	public function __construct(string $message = null, Throwable $previous = null)
+	public function __construct(?string $message = null, ?Throwable $previous = null)
 	{
 		$message = empty($message) ? 'The requested URL was not found on this server.' : $message;
 

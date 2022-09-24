@@ -15,7 +15,7 @@ namespace serve\validator\rules\traits;
 trait DoesntValidateWhenEmptyTrait
 {
 	/**
-	 * {@inheritdoc}
+	 * {@inheritDoc}
 	 */
 	public function validateWhenEmpty(): bool
 	{

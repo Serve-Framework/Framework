@@ -18,11 +18,11 @@ use serve\auth\Gatekeeper;
 class GatekeeperService extends Service
 {
 	/**
-	 * {@inheritdoc}
+	 * {@inheritDoc}
 	 */
 	public function register(): void
 	{
-		$this->container->singleton('Gatekeeper', function($container)
+		$this->container->singleton('Gatekeeper', function ($container)
 		{
 			return new Gatekeeper(
 			    $container->Database->connection()->builder(),

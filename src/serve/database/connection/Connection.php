@@ -72,7 +72,7 @@ class Connection
 	/**
 	 * PDO object.
 	 *
-	 * @var \PDO|null
+	 * @var PDO|null
 	 */
 	protected $pdo;
 

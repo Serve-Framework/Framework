@@ -17,7 +17,7 @@ use serve\file\Filesystem;
 class FileStore implements StoreInterface
 {
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      */
     private $path;
 
@@ -42,7 +42,7 @@ class FileStore implements StoreInterface
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      */
     public function get(string $key)
     {
@@ -53,7 +53,7 @@ class FileStore implements StoreInterface
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      */
     public function put(string $key, string $data): void
     {
@@ -61,7 +61,7 @@ class FileStore implements StoreInterface
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      */
     public function has(string $key): bool
     {
@@ -69,7 +69,7 @@ class FileStore implements StoreInterface
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      */
     public function delete(string $key): void
     {
@@ -80,7 +80,7 @@ class FileStore implements StoreInterface
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      */
     public function expired(string $key, int $maxAge): bool
     {
@@ -96,7 +96,7 @@ class FileStore implements StoreInterface
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      */
     public function clear(): void
     {

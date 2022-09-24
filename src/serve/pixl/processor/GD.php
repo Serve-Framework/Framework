@@ -113,7 +113,7 @@ class GD implements ProcessorInterface
      * @param string|null $filename     Absolute path to file (optional) (default null)
      * @param int|null    $imageQuality Default image quality to use (optional) (default null)
      */
-    public function __construct(string $filename = null, int $imageQuality = null)
+    public function __construct(?string $filename = null, ?int $imageQuality = null)
     {
         if ($filename)
         {
@@ -129,7 +129,7 @@ class GD implements ProcessorInterface
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      */
     public function load(string $filename): void
     {
@@ -167,7 +167,7 @@ class GD implements ProcessorInterface
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      */
     public function width(): int
     {
@@ -180,7 +180,7 @@ class GD implements ProcessorInterface
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      */
     public function height(): int
     {
@@ -193,9 +193,9 @@ class GD implements ProcessorInterface
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      */
-    public function save(string $filename, int $image_type = null, int $quality = null, int $permissions = null)
+    public function save(string $filename, ?int $image_type = null, ?int $quality = null, ?int $permissions = null)
     {
         $addedbg    = true;
         $image_type = $image_type ?: $this->source_type;
@@ -278,7 +278,7 @@ class GD implements ProcessorInterface
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      */
     public function resizeToHeight(int $height, bool $allow_enlarge = false)
     {
@@ -292,7 +292,7 @@ class GD implements ProcessorInterface
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      */
     public function resizeToWidth(int $width, bool $allow_enlarge = false)
     {
@@ -306,7 +306,7 @@ class GD implements ProcessorInterface
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      */
     public function scale(int $scale)
     {
@@ -320,7 +320,7 @@ class GD implements ProcessorInterface
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      */
     public function resize(int $width, int $height, bool $allow_enlarge = false)
     {
@@ -350,7 +350,7 @@ class GD implements ProcessorInterface
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      */
     public function crop(int $max_width, int $max_height, bool $allow_enlarge = false)
     {
@@ -412,7 +412,7 @@ class GD implements ProcessorInterface
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      */
     public function addBackground(int $red, int $green, int $blue)
     {

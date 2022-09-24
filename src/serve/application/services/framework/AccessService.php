@@ -18,11 +18,11 @@ use serve\application\services\Service;
 class AccessService extends Service
 {
 	/**
-	 * {@inheritdoc}
+	 * {@inheritDoc}
 	 */
 	public function register(): void
 	{
-		$this->container->singleton('Access', function($container)
+		$this->container->singleton('Access', function ($container)
 		{
 			return new Access($container->Request, $container->Response, $container->Filesystem, $container->Config->get('cms.security.ip_blocked'), $container->Config->get('cms.security.ip_whitelist'));
 		});

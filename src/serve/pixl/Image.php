@@ -94,7 +94,7 @@ class Image
      * @param  int|null    $permissions File permissions to save with (optional)
      * @return mixed
      */
-    public function save(string $image = null, int $image_type = null, int $quality = null, int $permissions = null)
+    public function save(?string $image = null, ?int $image_type = null, ?int $quality = null, ?int $permissions = null)
     {
         $image = $image ?? $this->image;
 

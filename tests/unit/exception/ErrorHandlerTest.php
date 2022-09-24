@@ -29,7 +29,7 @@ class ErrorHandlerTest extends TestCase
         $logger     = $this->mock('\serve\exception\ErrorLogger');
         $webHandler = $this->mock('\serve\exception\handlers\WebHandler');
 
-        $handler->handle(ErrorException::class, function($exception) use ($handler, $logger, $webHandler)
+        $handler->handle(ErrorException::class, function ($exception) use ($handler, $logger, $webHandler)
         {
             // Logger
             $handler->setLogger($logger);
@@ -56,7 +56,7 @@ class ErrorHandlerTest extends TestCase
         $logger     = $this->mock('\serve\exception\ErrorLogger');
         $webHandler = $this->mock('\serve\exception\handlers\WebHandler');
 
-        $handler->handle(Throwable::class, function($exception) use ($handler, $logger, $webHandler)
+        $handler->handle(Throwable::class, function ($exception) use ($handler, $logger, $webHandler)
         {
             // Logger
             $handler->setLogger($logger);
@@ -83,7 +83,7 @@ class ErrorHandlerTest extends TestCase
         $logger     = $this->mock('\serve\exception\ErrorLogger');
         $webHandler = $this->mock('\serve\exception\handlers\WebHandler');
 
-        $handler->handle(Throwable::class, function($exception) use ($handler, $logger, $webHandler)
+        $handler->handle(Throwable::class, function ($exception) use ($handler, $logger, $webHandler)
         {
             return $webHandler->handle($handler->display_errors());
         });
@@ -108,7 +108,7 @@ class ErrorHandlerTest extends TestCase
         $logger     = $this->mock('\serve\exception\ErrorLogger');
         $webHandler = $this->mock('\serve\exception\handlers\WebHandler');
 
-        $handler->handle(Throwable::class, function($exception) use ($handler, $logger, $webHandler)
+        $handler->handle(Throwable::class, function ($exception) use ($handler, $logger, $webHandler)
         {
             return $webHandler->handle($handler->display_errors());
         });

@@ -53,7 +53,7 @@ class User extends Wrapper
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      */
     public function save(): bool
 	{
@@ -82,7 +82,7 @@ class User extends Wrapper
 	}
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      */
     public function delete(): bool
 	{

@@ -103,7 +103,7 @@ class Shell
      *
      * @param string|null $dir Directory to run command on (optional) (default null)
      */
-    public function __construct(string $dir = null)
+    public function __construct(?string $dir = null)
     {
         $this->process = new Process([]);
 
@@ -150,7 +150,7 @@ class Shell
      * @param  string|null        $subCmd sub command name (optional) (default null)
      * @return \serve\shell\Shell
      */
-    public function cmd(string $cmd, string $subCmd = null): Shell
+    public function cmd(string $cmd, ?string $subCmd = null): Shell
     {
         $this->cmd = escapeshellcmd($cmd);
 
@@ -169,7 +169,7 @@ class Shell
      * @param  string|null        $value Option value (optional) (default null)
      * @return \serve\shell\Shell
      */
-    public function option(string $flag, string $value = null): Shell
+    public function option(string $flag, ?string $value = null): Shell
     {
         // No supplied value
         if ($value === false)

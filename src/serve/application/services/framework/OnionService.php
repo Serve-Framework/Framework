@@ -18,11 +18,11 @@ use serve\onion\Onion;
 class OnionService extends Service
 {
 	/**
-	 * {@inheritdoc}
+	 * {@inheritDoc}
 	 */
 	public function register(): void
 	{
-		$this->container->singleton('Onion', function($container)
+		$this->container->singleton('Onion', function ($container)
 		{
 			return new Onion($container->Request, $container->Response);
 		});

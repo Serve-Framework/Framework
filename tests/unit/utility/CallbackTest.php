@@ -80,7 +80,7 @@ class CallbackTest extends TestCase
 
 		$this->assertEquals('foobar', Callback::apply('\serve\tests\unit\framework\utility\CallbackTesters@testMethods', ['foo', 'bar']));
 
-		$this->assertEquals('foobar', Callback::apply(function($foo, $bar)
+		$this->assertEquals('foobar', Callback::apply(function ($foo, $bar)
 		{
 			return $foo . $bar;
 

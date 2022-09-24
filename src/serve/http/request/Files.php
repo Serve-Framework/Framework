@@ -101,7 +101,7 @@ class Files extends MagicObjectArray
 	}
 
 	/**
-	 * {@inheritdoc}
+	 * {@inheritDoc}
 	 */
 	public function add(string $name, $value): void
 	{

@@ -55,10 +55,10 @@ class Database
 	 * Create a new database from the config.
 	 *
 	 * @param  string|null                           $connectionName Name of the connection (optional) (default null)
-	 * @throws \RuntimeException
+	 * @throws RuntimeException
 	 * @return \serve\database\connection\Connection
 	 */
-	public function create(string $connectionName = null)
+	public function create(?string $connectionName = null)
 	{
 		$connectionName = !$connectionName ? $this->default : $connectionName;
 
@@ -91,7 +91,7 @@ class Database
 	 * @param  string|null                           $connectionName Name of the connection (optional) (default null)
 	 * @return \serve\database\connection\Connection
 	 */
-	public function connection(string $connectionName = null): Connection
+	public function connection(?string $connectionName = null): Connection
 	{
 		$connectionName = !$connectionName ? $this->default : $connectionName;
 
@@ -102,7 +102,7 @@ class Database
 	 * Connect to a database by name.
 	 *
 	 * @param  string                                $connectionName Name of the connection
-	 * @throws \RuntimeException
+	 * @throws RuntimeException
 	 * @return \serve\database\connection\Connection
 	 */
 	private function connect(string $connectionName): Connection

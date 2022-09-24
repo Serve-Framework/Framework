@@ -44,7 +44,7 @@ class NativeCookieStorage implements StoreInterface
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      */
     public function read(string $name)
     {
@@ -57,7 +57,7 @@ class NativeCookieStorage implements StoreInterface
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      */
     public function write(string $name, $data)
     {

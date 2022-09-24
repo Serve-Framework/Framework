@@ -98,7 +98,7 @@ class Formatter
 	 * Adds a user defined style.
 	 *
 	 * @param string       $name  Style name
-	 * @param string|array $style Style or array of styles
+	 * @param array|string $style Style or array of styles
 	 */
 	public function addStyle(string $name, $style): void
 	{
@@ -140,8 +140,8 @@ class Formatter
 	/**
 	 * Returns style codes associated with the tag name.
 	 *
-	 * @param  string     $tag Tag name
-	 * @throws \Exception
+	 * @param  string    $tag Tag name
+	 * @throws Exception
 	 * @return array
 	 */
 	protected function getStyleCodes(string $tag): array
@@ -196,8 +196,8 @@ class Formatter
 	 * Returns ANSI SGR escape sequence for style reset and
 	 * ANSI SGR escape sequence for parent style if the closed tag was nested.
 	 *
-	 * @param  string     $tag Tag name
-	 * @throws \Exception
+	 * @param  string    $tag Tag name
+	 * @throws Exception
 	 * @return string
 	 */
 	protected function closeStyle(string $tag): string
@@ -242,7 +242,7 @@ class Formatter
 	}
 
 	/**
-	 * {@inheritdoc}
+	 * {@inheritDoc}
 	 */
 	public function format(string $string): string
 	{
@@ -287,7 +287,7 @@ class Formatter
 	}
 
 	/**
-	 * {@inheritdoc}
+	 * {@inheritDoc}
 	 */
 	public function escape(string $string): string
 	{
@@ -295,7 +295,7 @@ class Formatter
 	}
 
 	/**
-	 * {@inheritdoc}
+	 * {@inheritDoc}
 	 */
 	public function stripTags(string $string): string
 	{

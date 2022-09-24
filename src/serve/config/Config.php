@@ -43,7 +43,7 @@ class Config
 	 *
 	 * @param \serve\config\Loader $loader Config file reader
 	 */
-	public function __construct(Loader $loader, string $environment = null)
+	public function __construct(Loader $loader, ?string $environment = null)
 	{
 		$this->loader = $loader;
 
@@ -66,7 +66,7 @@ class Config
 	 * @param  string $key Config key
 	 * @return mixed
 	 */
-	public function get(string $key = null)
+	public function get(?string $key = null)
 	{
 		// Return loaded config
 		if (!$key)

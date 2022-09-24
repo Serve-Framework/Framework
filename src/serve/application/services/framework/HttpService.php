@@ -36,7 +36,7 @@ use serve\http\session\Token;
 class HttpService extends Service
 {
 	/**
-	 * {@inheritdoc}
+	 * {@inheritDoc}
 	 */
 	public function register(): void
 	{
@@ -56,7 +56,7 @@ class HttpService extends Service
 	 */
 	private function registerRequest(): void
 	{
-		$this->container->singleton('Request', function()
+		$this->container->singleton('Request', function ()
 		{
 			return new Request(new Environment, new RequestHeaders, new Files);
 		});
@@ -67,7 +67,7 @@ class HttpService extends Service
 	 */
 	private function registerCookie(): void
 	{
-		$this->container->singleton('Cookie', function()
+		$this->container->singleton('Cookie', function ()
 		{
 			$cookieConfiguration = $this->container->Config->get('cookie.configurations.' . $this->container->Config->get('cookie.configuration'));
 
@@ -115,7 +115,7 @@ class HttpService extends Service
 	 */
 	private function registerSession(): void
 	{
-		$this->container->singleton('Session', function()
+		$this->container->singleton('Session', function ()
 		{
 			$sessionConfiguration = $this->container->Config->get('session.configurations.' . $this->container->Config->get('session.default'));
 
@@ -199,7 +199,7 @@ class HttpService extends Service
 	 */
 	private function registerResponse(): void
 	{
-		$this->container->singleton('Response', function()
+		$this->container->singleton('Response', function ()
 		{
 			return new Response($this->getProtocol(), new Format, new Body, new Status, new ResponseHeaders, $this->container->Cookie, $this->container->Session, $this->getCDN(), $this->container->View, $this->container->Request, $this->container->Config->get('cache.http_cache_enabled'), $this->container->Config->get('cache.http_max_age'));
 		});
@@ -210,7 +210,7 @@ class HttpService extends Service
 	 */
 	private function registerRouter(): void
 	{
-		$this->container->singleton('Router', function($container)
+		$this->container->singleton('Router', function ($container)
 		{
 			return new Router($container->Request, $container->Onion, $container->Config->get('application.send_response'));
 		});

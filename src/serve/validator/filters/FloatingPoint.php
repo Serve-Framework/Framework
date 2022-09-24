@@ -15,7 +15,7 @@ namespace serve\validator\filters;
 class FloatingPoint extends FilterBase implements FilterInterface
 {
 	/**
-	 * {@inheritdoc}
+	 * {@inheritDoc}
 	 */
 	public function filter(string $value)
 	{

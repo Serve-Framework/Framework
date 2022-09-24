@@ -83,7 +83,7 @@ abstract class Command
 	 * @param \serve\cli\output\Output  $output    Output
 	 * @param \serve\ioc\Container|null $container Container instance (optional) (default null)
 	 */
-	public function __construct(Input $input, Output $output, Container $container = null)
+	public function __construct(Input $input, Output $output, ?Container $container = null)
 	{
 		$this->input = $input;
 
@@ -93,7 +93,7 @@ abstract class Command
 	}
 
 	/**
-	 * {@inheritdoc}
+	 * {@inheritDoc}
 	 */
 	public function getDescription(): string
 	{
@@ -101,7 +101,7 @@ abstract class Command
 	}
 
 	/**
-	 * {@inheritdoc}
+	 * {@inheritDoc}
 	 */
 	public function getArguments(): array
 	{

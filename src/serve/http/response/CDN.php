@@ -93,7 +93,7 @@ class CDN
     	$cdnHost  = $this->cdnHost;
 
         // Replace <img> tags
-        $html = preg_replace_callback('/<img [^>]*src="([^"]+)"[^>]*/', function($matches) use ($currHost, $cdnHost)
+        $html = preg_replace_callback('/<img [^>]*src="([^"]+)"[^>]*/', function ($matches) use ($currHost, $cdnHost)
         {
             if (strpos($matches[0], $currHost) !== false)
             {
@@ -106,7 +106,7 @@ class CDN
         }, $html);
 
         // Replace favicions and style sheets
-        $html = preg_replace_callback('/<link rel="(shortcut icon|icon|stylesheet|apple-touch-icon)".+href="([^"]+)"/', function($matches) use ($currHost, $cdnHost)
+        $html = preg_replace_callback('/<link rel="(shortcut icon|icon|stylesheet|apple-touch-icon)".+href="([^"]+)"/', function ($matches) use ($currHost, $cdnHost)
         {
             if (strpos($matches[0], $currHost) !== false)
             {
@@ -117,7 +117,7 @@ class CDN
 
         }, $html);
 
-        $html = preg_replace_callback('/<link href="([^"]+)".+rel="(shortcut icon|icon|stylesheet|apple-touch-icon)"/', function($matches) use ($currHost, $cdnHost)
+        $html = preg_replace_callback('/<link href="([^"]+)".+rel="(shortcut icon|icon|stylesheet|apple-touch-icon)"/', function ($matches) use ($currHost, $cdnHost)
         {
             if (strpos($matches[0], $currHost) !== false)
             {
@@ -129,7 +129,7 @@ class CDN
         }, $html);
 
         // Replace JS scripts
-        $html = preg_replace_callback('/<script.+src="([^"]+)"/', function($matches) use ($currHost, $cdnHost)
+        $html = preg_replace_callback('/<script.+src="([^"]+)"/', function ($matches) use ($currHost, $cdnHost)
         {
             if (strpos($matches[0], $currHost) !== false)
             {
@@ -141,7 +141,7 @@ class CDN
         }, $html);
 
         // Background URLS
-		$html = preg_replace_callback('/background:(\s+|)url\(([^)]+)\)/', function($matches) use ($currHost, $cdnHost)
+		$html = preg_replace_callback('/background:(\s+|)url\(([^)]+)\)/', function ($matches) use ($currHost, $cdnHost)
         {
             if (strpos($matches[0], $currHost) !== false)
             {
@@ -152,7 +152,7 @@ class CDN
 
         }, $html);
 
-        $html = preg_replace_callback('/background-image:(\s+|)url\(([^)]+)\)/', function($matches) use ($currHost, $cdnHost)
+        $html = preg_replace_callback('/background-image:(\s+|)url\(([^)]+)\)/', function ($matches) use ($currHost, $cdnHost)
         {
             if (strpos($matches[0], $currHost) !== false)
             {

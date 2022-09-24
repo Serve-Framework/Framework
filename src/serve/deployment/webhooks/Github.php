@@ -91,7 +91,7 @@ class Github implements WebhookInterface
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      */
     public function validate(): bool
     {
@@ -119,7 +119,7 @@ class Github implements WebhookInterface
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      */
     public function event(): string
     {
@@ -127,7 +127,7 @@ class Github implements WebhookInterface
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      */
     public function payload(): array
     {
@@ -135,7 +135,7 @@ class Github implements WebhookInterface
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      */
     public function deploy(): void
     {
@@ -147,7 +147,7 @@ class Github implements WebhookInterface
     /**
      * Update repo via git.
      *
-     * @throws \Exception if 'git pull' was unsuccefull
+     * @throws Exception if 'git pull' was unsuccefull
      */
     private function gitPull(): void
     {

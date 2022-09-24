@@ -28,7 +28,7 @@ class LessThanOrEqualTo extends Rule implements RuleInterface, WithParametersInt
 	protected $parameters = ['lessThanOrEqualTo'];
 
 	/**
-	 * {@inheritdoc}
+	 * {@inheritDoc}
 	 */
 	public function validate($value, array $input): bool
 	{
@@ -36,7 +36,7 @@ class LessThanOrEqualTo extends Rule implements RuleInterface, WithParametersInt
 	}
 
 	/**
-	 * {@inheritdoc}
+	 * {@inheritDoc}
 	 */
 	public function getErrorMessage(string $field): string
 	{

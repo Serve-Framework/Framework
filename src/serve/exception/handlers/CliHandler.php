@@ -8,6 +8,7 @@
 namespace serve\exception\handlers;
 
 use ErrorException;
+use Exception;
 use serve\cli\input\Input;
 use serve\cli\output\helpers\OrderedList;
 use serve\cli\output\helpers\UnorderedList;
@@ -27,7 +28,7 @@ class CliHandler
 	/**
 	 * Error.
 	 *
-	 * @var \Throwable|\serve\http\response\exceptions\ForbiddenException|\serve\http\response\exceptions\InvalidTokenException|\serve\http\response\exceptions\MethodNotAllowedException|\serve\http\response\exceptions\NotFoundException|\serve\http\response\exceptions\RequestException|\serve\http\response\exceptions\Stop|\Exception
+	 * @var Exception|\serve\http\response\exceptions\ForbiddenException|\serve\http\response\exceptions\InvalidTokenException|\serve\http\response\exceptions\MethodNotAllowedException|\serve\http\response\exceptions\NotFoundException|\serve\http\response\exceptions\RequestException|\serve\http\response\exceptions\Stop|Throwable
 	 */
 	protected $exception;
 
@@ -48,7 +49,7 @@ class CliHandler
 	/**
 	 * Constructor.
 	 *
-	 * @param \Throwable               $exception Exception being thrown
+	 * @param Throwable                $exception Exception being thrown
 	 * @param \serve\cli\input\Input   $input     Input
 	 * @param \serve\cli\output\Output $output    Output
 	 */
@@ -86,7 +87,7 @@ class CliHandler
 	/**
 	 * Determines the exception type.
 	 *
-	 * @param  \Throwable $exception Throwable
+	 * @param  Throwable $exception Throwable
 	 * @return string
 	 */
 	protected function determineExceptionType(Throwable $exception): string

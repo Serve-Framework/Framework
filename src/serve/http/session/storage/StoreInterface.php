@@ -37,14 +37,14 @@ interface StoreInterface
 	 * @param  string|null $id Id to set (optional) (default null)
 	 * @return string
 	 */
-	public function session_id(string $id = null);
+	public function session_id(?string $id = null);
 
 	/**
 	 * Get and/or set the session cookie name.
 	 *
 	 * @param string|null $name The cookie name to set
 	 */
-	public function session_name(string $name = null);
+	public function session_name(?string $name = null);
 
 	/**
 	 * Regenerate the session id.

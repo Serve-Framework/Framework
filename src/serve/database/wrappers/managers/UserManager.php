@@ -207,7 +207,7 @@ class UserManager extends Manager
 	}
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      */
     public function provider(): UserProvider
 	{

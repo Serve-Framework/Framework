@@ -83,7 +83,7 @@ class ErrorHandler
         $this->error_reporting($errorReporting);
 
     	// Add a basic exception handler to the stack as a fullback
-		$this->handle(Throwable::class, function($e)
+		$this->handle(Throwable::class, function ($e)
 		{
 			echo '[ ' . get_class($e) . '] ' . $e->getMessage() . ' on line [ ' . $e->getLine() . ' ] in [ ' . $e->getFile() . ' ]';
 
@@ -106,7 +106,7 @@ class ErrorHandler
 	protected function register(): void
 	{
 		// Allows us to handle "fatal" errors
-		register_shutdown_function(function(): void
+		register_shutdown_function(function (): void
 		{
 			$e = error_get_last();
 
@@ -135,7 +135,7 @@ class ErrorHandler
 	/**
 	 * Disables logging for an exception type.
 	 *
-	 * @param string|array $exceptionType Exception type or array of exception types
+	 * @param array|string $exceptionType Exception type or array of exception types
 	 */
 	public function disableLoggingFor($exceptionType): void
 	{
@@ -153,8 +153,8 @@ class ErrorHandler
 	/**
 	 * Prepends an exception handler to the stack.
 	 *
-	 * @param string   $exceptionType Exception type
-	 * @param \Closure $handler       Exception handler
+	 * @param string  $exceptionType Exception type
+	 * @param Closure $handler       Exception handler
 	 */
 	public function handle(string $exceptionType, Closure $handler): void
 	{
@@ -180,8 +180,8 @@ class ErrorHandler
 	/**
 	 * Replaces all error handlers for an exception type with a new one.
 	 *
-	 * @param string   $exceptionType Exception type
-	 * @param \Closure $handler       Exception handler
+	 * @param string  $exceptionType Exception type
+	 * @param Closure $handler       Exception handler
 	 */
 	public function replaceHandlers(string $exceptionType, Closure $handler): void
 	{
@@ -215,7 +215,7 @@ class ErrorHandler
 	/**
 	 * Should the exception be logged?
 	 *
-	 * @param  \Throwable $exception An exception object
+	 * @param  Throwable $exception An exception object
 	 * @return bool
 	 */
 	protected function shouldExceptionBeLogged(Throwable $exception): bool
@@ -249,7 +249,7 @@ class ErrorHandler
 	/**
 	 * Should the exception force a shutdown.
 	 *
-	 * @param  \Throwable $exception An exception object
+	 * @param  Throwable $exception An exception object
 	 * @return bool
 	 */
 	protected function shouldShutdown(Throwable $exception): bool
@@ -273,7 +273,7 @@ class ErrorHandler
 	/**
 	 * Handles uncaught exceptions.
 	 *
-	 * @param \Throwable $exception An exception object
+	 * @param Throwable $exception An exception object
 	 */
 	public function handler(Throwable $exception): void
 	{
@@ -325,7 +325,7 @@ class ErrorHandler
      * @param  int|null $errorReporting (optional) (default NULL)
      * @return int
      */
-    public function error_reporting(int $errorReporting = null): int
+    public function error_reporting(?int $errorReporting = null): int
     {
     	if (!is_null($errorReporting))
     	{
@@ -343,7 +343,7 @@ class ErrorHandler
      * @param  bool|null $display_errors (optional) (default NULL)
      * @return bool
      */
-    public function display_errors(bool $display_errors = null): bool
+    public function display_errors(?bool $display_errors = null): bool
     {
     	if (!is_null($display_errors))
     	{

@@ -34,7 +34,7 @@ class NativePHP extends Hasher implements HasherInterface
 	}
 
 	/**
-	 * {@inheritdoc}
+	 * {@inheritDoc}
 	 */
 	public function hash(string $string): string
 	{
@@ -42,7 +42,7 @@ class NativePHP extends Hasher implements HasherInterface
 	}
 
 	/**
-	 * {@inheritdoc}
+	 * {@inheritDoc}
 	 */
 	public function verify(string $string, string $hashed): bool
 	{

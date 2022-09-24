@@ -137,7 +137,7 @@ class Alter
      * @throws PDOException                If the column does not exist
      * @return \serve\database\query\Alter
      */
-    public function MODIFY_COLUMN(string $column, string $dataType = null): Alter
+    public function MODIFY_COLUMN(string $column, ?string $dataType = null): Alter
     {
         // Convert the column to valid syntax
         $column = $this->indexFilter($column);
@@ -506,7 +506,7 @@ class Alter
      * @param  string|null                 $constraint     The constraint name to add (optional) (default null)
      * @return \serve\database\query\Alter
      */
-    public function ADD_FOREIGN_KEY(string $referenceTable, string $referenceKey, string $constraint = null): Alter
+    public function ADD_FOREIGN_KEY(string $referenceTable, string $referenceKey, ?string $constraint = null): Alter
     {
         // Prefix the reference table
         $referenceTable = $this->connectionHandler->tablePrefix() . $this->indexFilter($referenceTable);
@@ -591,7 +591,7 @@ class Alter
     /**
      * Get the table's PRIMARY KEY column name.
      *
-     * @return string|false
+     * @return false|string
      */
     private function getPrimaryKey()
     {
@@ -611,7 +611,7 @@ class Alter
      * @param  string|null $column (optional) (default null)
      * @return string
      */
-    private function getColumnConfig(string $column = null): string
+    private function getColumnConfig(?string $column = null): string
     {
         $strConfig = '';
 
@@ -640,7 +640,7 @@ class Alter
      * @param  string|null $column The column name (optional) (default null)
      * @return string
      */
-    private function setColumnConfig(string $key, string $value, string $column = null): string
+    private function setColumnConfig(string $key, string $value, ?string $column = null): string
     {
         $key = ucfirst(strtolower($key));
 

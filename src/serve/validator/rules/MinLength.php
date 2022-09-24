@@ -29,7 +29,7 @@ class MinLength extends Rule implements RuleInterface, WithParametersInterface
 	protected $parameters = ['minLength'];
 
 	/**
-	 * {@inheritdoc}
+	 * {@inheritDoc}
 	 */
 	public function validate($value, array $input): bool
 	{
@@ -37,7 +37,7 @@ class MinLength extends Rule implements RuleInterface, WithParametersInterface
 	}
 
 	/**
-	 * {@inheritdoc}
+	 * {@inheritDoc}
 	 */
 	public function getErrorMessage(string $field): string
 	{

@@ -28,7 +28,7 @@ class GreaterThanOrEqualTo extends Rule implements RuleInterface, WithParameters
 	protected $parameters = ['greaterThanOrEqualTo'];
 
 	/**
-	 * {@inheritdoc}
+	 * {@inheritDoc}
 	 */
 	public function validate($value, array $input): bool
 	{
@@ -36,7 +36,7 @@ class GreaterThanOrEqualTo extends Rule implements RuleInterface, WithParameters
 	}
 
 	/**
-	 * {@inheritdoc}
+	 * {@inheritDoc}
 	 */
 	public function getErrorMessage(string $field): string
 	{

@@ -177,7 +177,7 @@ class Validator
 	 * @param array                     $filters   Filter sets (optional default [])
 	 * @param \serve\ioc\Container|null $container Container (optional) (default null)
 	 */
-	public function __construct(array $input, array $ruleSets, array $filters = [], Container $container = null)
+	public function __construct(array $input, array $ruleSets, array $filters = [], ?Container $container = null)
 	{
 		$this->input = $input;
 
@@ -194,7 +194,7 @@ class Validator
 	 * @param  array|null &$errors If $errors is provided, then it is filled with all the error messages
 	 * @return bool
 	 */
-	public function isValid(array &$errors = null): bool
+	public function isValid(?array &$errors = null): bool
 	{
 		[$isValid, $errors] = $this->process();
 
@@ -207,7 +207,7 @@ class Validator
 	 * @param  array|null &$errors If $errors is provided, then it is filled with all the error messages
 	 * @return bool
 	 */
-	public function isInvalid(array &$errors = null): bool
+	public function isInvalid(?array &$errors = null): bool
 	{
 		[$isValid, $errors] = $this->process();
 
@@ -400,7 +400,7 @@ class Validator
 
 		if (!$this->container->has($name))
 		{
-			$this->container->set($name, function() use ($name)
+			$this->container->set($name, function () use ($name)
 			{
 				return new $name;
 			});

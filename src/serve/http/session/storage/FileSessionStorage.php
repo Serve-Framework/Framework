@@ -83,7 +83,7 @@ class FileSessionStorage implements StoreInterface
      * @param array                  $cookieParams Assoc array of cookie configurations
      * @param string|null            $storageDir   Path to save session files to (optional) (default null)
      */
-    public function __construct(Crypto $crypto, Filesystem $filesystem, array $cookieParams = [], string $storageDir = null)
+    public function __construct(Crypto $crypto, Filesystem $filesystem, array $cookieParams = [], ?string $storageDir = null)
     {
         $this->crypto = $crypto;
 
@@ -97,7 +97,7 @@ class FileSessionStorage implements StoreInterface
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      */
     public function session_save_path(string $path = '')
     {
@@ -117,7 +117,7 @@ class FileSessionStorage implements StoreInterface
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      */
     public function session_start(): void
     {
@@ -145,7 +145,7 @@ class FileSessionStorage implements StoreInterface
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      */
     public function session_destroy(): void
     {
@@ -162,9 +162,9 @@ class FileSessionStorage implements StoreInterface
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      */
-    public function session_id(string $id = null)
+    public function session_id(?string $id = null)
     {
         if ($id)
         {
@@ -185,9 +185,9 @@ class FileSessionStorage implements StoreInterface
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      */
-    public function session_name(string $name = null)
+    public function session_name(?string $name = null)
     {
         if ($name)
         {
@@ -203,7 +203,7 @@ class FileSessionStorage implements StoreInterface
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      */
     public function session_regenerate_id(bool $deleteOldSession = false): void
     {
@@ -228,7 +228,7 @@ class FileSessionStorage implements StoreInterface
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      */
     public function session_set_cookie_params(array $params): void
     {
@@ -236,7 +236,7 @@ class FileSessionStorage implements StoreInterface
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      */
     public function session_get_cookie_params()
     {
@@ -244,7 +244,7 @@ class FileSessionStorage implements StoreInterface
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      */
     public function session_gc()
     {
@@ -279,7 +279,7 @@ class FileSessionStorage implements StoreInterface
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      */
     public function read()
     {
@@ -292,7 +292,7 @@ class FileSessionStorage implements StoreInterface
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      */
     public function write(array $data): void
     {
@@ -303,7 +303,7 @@ class FileSessionStorage implements StoreInterface
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      */
     public function send(): void
     {
@@ -318,7 +318,7 @@ class FileSessionStorage implements StoreInterface
     /**
      * Get the path to the current session file.
      *
-     * @return string|false
+     * @return false|string
      */
     private function sessionFile()
     {

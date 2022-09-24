@@ -190,7 +190,7 @@ class Headers
      * @param  string|null $headerValue Header value
      * @return array
      */
-    protected function parseAcceptHeader(string $headerValue = null): array
+    protected function parseAcceptHeader(?string $headerValue = null): array
     {
         $groupedAccepts = [];
 
@@ -224,7 +224,7 @@ class Headers
      * @param  string|null $default Default content type
      * @return array
      */
-    public function acceptableContentTypes(string $default = null): array
+    public function acceptableContentTypes(?string $default = null): array
     {
         if (!isset($this->acceptableContentTypes) && isset($this->data['HTTP_ACCEPT']))
         {
@@ -240,7 +240,7 @@ class Headers
      * @param  string|null $default Default language
      * @return array
      */
-    public function acceptableLanguages(string $default = null): array
+    public function acceptableLanguages(?string $default = null): array
     {
         if(!isset($this->acceptableLanguages) && isset($this->data['HTTP_ACCEPT_LANGUAGE']))
         {
@@ -256,7 +256,7 @@ class Headers
      * @param  string|null $default Default charset
      * @return array
      */
-    public function acceptableCharsets(string $default = null): array
+    public function acceptableCharsets(?string $default = null): array
     {
         if(!isset($this->acceptableCharsets) && isset($this->data['HTTP_ACCEPT_CHARSET']))
         {
@@ -272,7 +272,7 @@ class Headers
      * @param  string|null $default Default encoding
      * @return array
      */
-    public function acceptableEncodings(string $default = null): array
+    public function acceptableEncodings(?string $default = null): array
     {
         if(!isset($this->acceptableEncodings) && isset($this->data['HTTP_ACCEPT_ENCODING']))
         {

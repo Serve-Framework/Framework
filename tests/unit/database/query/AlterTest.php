@@ -43,7 +43,7 @@ class AlterTest extends TestCase
 
         $connectionHandler->shouldReceive('query')->withArgs(['SHOW COLUMNS FROM `prefixed_my_table_name`'])->andReturn($columns);
 
-        $connectionHandler->shouldReceive('cleanQuery')->andReturnUsing(function($sql)
+        $connectionHandler->shouldReceive('cleanQuery')->andReturnUsing(function ($sql)
         {
             return trim(preg_replace('/\s+/', ' ', $sql));
         });
@@ -82,7 +82,7 @@ class AlterTest extends TestCase
 
         $connectionHandler->shouldReceive('query')->withArgs(['SHOW COLUMNS FROM `prefixed_my_table_name`'])->andReturn($columns);
 
-        $connectionHandler->shouldReceive('cleanQuery')->andReturnUsing(function($sql)
+        $connectionHandler->shouldReceive('cleanQuery')->andReturnUsing(function ($sql)
         {
             return trim(preg_replace('/\s+/', ' ', $sql));
         });
@@ -121,7 +121,7 @@ class AlterTest extends TestCase
 
         $connectionHandler->shouldReceive('query')->withArgs(['SHOW COLUMNS FROM `prefixed_my_table_name`'])->andReturn($columns);
 
-        $connectionHandler->shouldReceive('cleanQuery')->andReturnUsing(function($sql)
+        $connectionHandler->shouldReceive('cleanQuery')->andReturnUsing(function ($sql)
         {
             return trim(preg_replace('/\s+/', ' ', $sql));
         });
@@ -156,7 +156,7 @@ class AlterTest extends TestCase
 
         $connectionHandler->shouldReceive('tablePrefix')->andReturn('prefixed_');
 
-        $connectionHandler->shouldReceive('cleanQuery')->andReturnUsing(function($sql)
+        $connectionHandler->shouldReceive('cleanQuery')->andReturnUsing(function ($sql)
         {
             return trim(preg_replace('/\s+/', ' ', $sql));
         });
@@ -197,7 +197,7 @@ class AlterTest extends TestCase
 
         $connectionHandler->shouldReceive('tablePrefix')->andReturn('prefixed_');
 
-        $connectionHandler->shouldReceive('cleanQuery')->andReturnUsing(function($sql)
+        $connectionHandler->shouldReceive('cleanQuery')->andReturnUsing(function ($sql)
         {
             return trim(preg_replace('/\s+/', ' ', $sql));
         });
@@ -236,7 +236,7 @@ class AlterTest extends TestCase
 
         $connectionHandler->shouldReceive('tablePrefix')->andReturn('prefixed_');
 
-        $connectionHandler->shouldReceive('cleanQuery')->andReturnUsing(function($sql)
+        $connectionHandler->shouldReceive('cleanQuery')->andReturnUsing(function ($sql)
         {
             return trim(preg_replace('/\s+/', ' ', $sql));
         });
@@ -277,7 +277,7 @@ class AlterTest extends TestCase
 
         $connectionHandler->shouldReceive('tablePrefix')->andReturn('prefixed_');
 
-        $connectionHandler->shouldReceive('cleanQuery')->andReturnUsing(function($sql)
+        $connectionHandler->shouldReceive('cleanQuery')->andReturnUsing(function ($sql)
         {
             return trim(preg_replace('/\s+/', ' ', $sql));
         });
@@ -316,7 +316,7 @@ class AlterTest extends TestCase
 
         $connectionHandler->shouldReceive('tablePrefix')->andReturn('prefixed_');
 
-        $connectionHandler->shouldReceive('cleanQuery')->andReturnUsing(function($sql)
+        $connectionHandler->shouldReceive('cleanQuery')->andReturnUsing(function ($sql)
         {
             return trim(preg_replace('/\s+/', ' ', $sql));
         });
@@ -355,7 +355,7 @@ class AlterTest extends TestCase
 
         $connectionHandler->shouldReceive('tablePrefix')->andReturn('prefixed_');
 
-        $connectionHandler->shouldReceive('cleanQuery')->andReturnUsing(function($sql)
+        $connectionHandler->shouldReceive('cleanQuery')->andReturnUsing(function ($sql)
         {
             return trim(preg_replace('/\s+/', ' ', $sql));
         });
@@ -394,7 +394,7 @@ class AlterTest extends TestCase
 
         $connectionHandler->shouldReceive('tablePrefix')->andReturn('prefixed_');
 
-        $connectionHandler->shouldReceive('cleanQuery')->andReturnUsing(function($sql)
+        $connectionHandler->shouldReceive('cleanQuery')->andReturnUsing(function ($sql)
         {
             return trim(preg_replace('/\s+/', ' ', $sql));
         });
@@ -433,7 +433,7 @@ class AlterTest extends TestCase
 
         $connectionHandler->shouldReceive('tablePrefix')->andReturn('prefixed_');
 
-        $connectionHandler->shouldReceive('cleanQuery')->andReturnUsing(function($sql)
+        $connectionHandler->shouldReceive('cleanQuery')->andReturnUsing(function ($sql)
         {
             return trim(preg_replace('/\s+/', ' ', $sql));
         });
@@ -472,7 +472,7 @@ class AlterTest extends TestCase
 
         $connectionHandler->shouldReceive('tablePrefix')->andReturn('prefixed_');
 
-        $connectionHandler->shouldReceive('cleanQuery')->andReturnUsing(function($sql)
+        $connectionHandler->shouldReceive('cleanQuery')->andReturnUsing(function ($sql)
         {
             return trim(preg_replace('/\s+/', ' ', $sql));
         });
@@ -509,7 +509,7 @@ class AlterTest extends TestCase
 
         $connectionHandler->shouldReceive('tablePrefix')->andReturn('prefixed_');
 
-        $connectionHandler->shouldReceive('cleanQuery')->andReturnUsing(function($sql)
+        $connectionHandler->shouldReceive('cleanQuery')->andReturnUsing(function ($sql)
         {
             return trim(preg_replace('/\s+/', ' ', $sql));
         });
@@ -546,7 +546,7 @@ class AlterTest extends TestCase
 
         $connectionHandler->shouldReceive('tablePrefix')->andReturn('prefixed_');
 
-        $connectionHandler->shouldReceive('cleanQuery')->andReturnUsing(function($sql)
+        $connectionHandler->shouldReceive('cleanQuery')->andReturnUsing(function ($sql)
         {
             return trim(preg_replace('/\s+/', ' ', $sql));
         });
@@ -583,7 +583,7 @@ class AlterTest extends TestCase
 
         $connectionHandler->shouldReceive('tablePrefix')->andReturn('prefixed_');
 
-        $connectionHandler->shouldReceive('cleanQuery')->andReturnUsing(function($sql)
+        $connectionHandler->shouldReceive('cleanQuery')->andReturnUsing(function ($sql)
         {
             return trim(preg_replace('/\s+/', ' ', $sql));
         });
@@ -620,7 +620,7 @@ class AlterTest extends TestCase
 
         $connectionHandler->shouldReceive('tablePrefix')->andReturn('prefixed_');
 
-        $connectionHandler->shouldReceive('cleanQuery')->andReturnUsing(function($sql)
+        $connectionHandler->shouldReceive('cleanQuery')->andReturnUsing(function ($sql)
         {
             return trim(preg_replace('/\s+/', ' ', $sql));
         });
@@ -657,7 +657,7 @@ class AlterTest extends TestCase
 
         $connectionHandler->shouldReceive('tablePrefix')->andReturn('prefixed_');
 
-        $connectionHandler->shouldReceive('cleanQuery')->andReturnUsing(function($sql)
+        $connectionHandler->shouldReceive('cleanQuery')->andReturnUsing(function ($sql)
         {
             return trim(preg_replace('/\s+/', ' ', $sql));
         });

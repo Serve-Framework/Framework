@@ -402,7 +402,7 @@ class Gatekeeper
      * Forgot username.
      *
      * @param  string       $email Email for username
-     * @return string|false
+     * @return false|string
      */
     public function forgotUsername(string $email): mixed
     {

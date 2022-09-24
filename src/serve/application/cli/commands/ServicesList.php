@@ -17,12 +17,12 @@ use serve\console\Command;
 class ServicesList extends Command
 {
 	/**
-	 * {@inheritdoc}
+	 * {@inheritDoc}
 	 */
 	protected $description = 'Lists available container services.';
 
 	/**
-	 * {@inheritdoc}
+	 * {@inheritDoc}
 	 */
 	public function execute(): void
 	{

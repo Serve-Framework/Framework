@@ -9,6 +9,7 @@ namespace serve\tests\unit\framework\utility;
 
 use serve\tests\TestCase;
 use serve\utility\Arr;
+use StdClass;
 
 // --------------------------------------------------------------------------
 // START CLASSES
@@ -110,11 +111,11 @@ class ArrTest extends TestCase
 
 	 	//
 
-	 	$obj1 = new \StdClass;
+	 	$obj1 = new StdClass;
 
 	 	$obj1->foo = 'bar';
 
-	 	$obj2 = new \StdClass;
+	 	$obj2 = new StdClass;
 
 	 	$obj2->foo = 'baz';
 

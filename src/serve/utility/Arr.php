@@ -69,8 +69,8 @@ class Arr
 	 *
 	 * @param  array      $array   Array we're going to search
 	 * @param  string     $path    Array path
-	 * @param  null|mixed $default Default return value
-	 * @return null|mixed
+	 * @param  mixed|null $default Default return value
+	 * @return mixed|null
 	 */
 	public static function get(array $array, string $path, $default = null)
 	{
@@ -167,7 +167,7 @@ class Arr
 	 */
 	public static function pluck(array $array, string $key): array
 	{
-		return array_map(function($value) use ($key)
+		return array_map(function ($value) use ($key)
 		{
 			return is_object($value) ? $value->$key : $value[$key];
 
@@ -278,7 +278,7 @@ class Arr
 
 		$usort = self::isAssoc($array) ? 'uasort' : 'usort';
 
-		$usort($array, function($a, $b) use ($key)
+		$usort($array, function ($a, $b) use ($key)
 	    {
 	    	$aV = null;
 	        $bV = null;

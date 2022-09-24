@@ -25,21 +25,21 @@ use serve\validator\ValidatorFactory;
 class SecurityService extends Service
 {
 	/**
-	 * {@inheritdoc}
+	 * {@inheritDoc}
 	 */
 	public function register(): void
 	{
-		$this->container->singleton('Crypto', function($container)
+		$this->container->singleton('Crypto', function ($container)
 		{
 			return new Crypto($this->getSinger(), $this->getEncrypter(), $this->getPassword());
 		});
 
-		$this->container->singleton('Spam', function($container)
+		$this->container->singleton('Spam', function ($container)
 		{
 			return new SpamProtector($this->getGibberish(), $container->Config);
 		});
 
-		$this->container->singleton('Validator', function($container)
+		$this->container->singleton('Validator', function ($container)
 		{
 			return new ValidatorFactory($container);
 		});

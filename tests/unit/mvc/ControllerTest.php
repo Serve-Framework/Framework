@@ -37,7 +37,7 @@ class ControllerTest extends TestCase
 
         $response = $this->mock('\serve\http\response\Response');
 
-        $next = function(): void
+        $next = function (): void
         {
 
         };

@@ -134,7 +134,7 @@ class Mime
      * Convert a file extension to a valid MIME-type.
      *
      * @param  string       $ext File extension
-     * @return string|false
+     * @return false|string
      */
     public static function fromExt(string $ext)
     {
@@ -157,7 +157,7 @@ class Mime
      * Convert a valid MIME-type to a file extension.
      *
      * @param  string       $mime File extension
-     * @return string|false
+     * @return false|string
      */
     public static function toExt(string $mime)
     {
