@@ -7,6 +7,7 @@
 
 namespace serve\application;
 
+use RuntimeException;
 use serve\config\Config;
 use serve\config\Loader;
 use serve\file\Filesystem;
@@ -86,7 +87,7 @@ abstract class Application extends Serve
     {
         if(!empty(static::$instance))
         {
-            throw new ApplicationException('The application has already been started.');
+            throw new RuntimeException('The application has already been started.');
         }
 
         static::$instance = new static($applicationPath);
