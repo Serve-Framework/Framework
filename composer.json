@@ -1,0 +1,52 @@
+{
+    "name": "serve/framework",
+    "description": "Serve Framework",
+    "keywords": ["Serve", "framework"],
+    "homepage": "https://serve-framework.github.io",
+    "license": "BSD-3-Clause",
+    "authors": [
+        {
+            "name": "Joe J. Howard",
+            "email": "joe.howard.au@icloud.com"
+        },
+        {
+            "name": "Contributors",
+            "homepage": "https://github.com/Serve-Framework/Framework/contributors"
+        }
+    ],
+    "support": {
+        "issues": "https://github.com/Serve-Framework/Framework/issues",
+        "source": "https://github.com/Serve-Framework/Framework"
+    },
+    "autoload": {
+        "psr-4": {
+            "serve\\": "src/serve"
+        }
+    },
+    "autoload-dev": {
+        "psr-4": {
+            "serve\\tests\\": "tests"
+        }
+    },
+    "require": {
+        "php": ">=8.0.0",
+        "ext-json": "*",
+        "ext-mbstring": "*"
+    },
+    "require-dev": {
+        "phpunit/phpunit": "^9.5",
+        "phpstan/phpstan": "^1.4.5",
+        "mockery/mockery": "^1.5"
+    },
+    "prefer-stable": true,
+    "minimum-stability": "dev",
+    "extra": {
+        "branch-alias": {
+            "dev-master": "9.0-dev"
+        }
+    },
+    "suggest": {
+        "ext-openssl": "Required to use the crypto library",
+        "ext-pdo": "Required to use the database library"
+    }
+}

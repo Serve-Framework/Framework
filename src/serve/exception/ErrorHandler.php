@@ -1,0 +1,355 @@
+<?php
+
+/**
+ * @copyright Joe J. Howard
+ * @license   https://github.com/Serve-Framework/Framework/blob/master/LICENSE
+ */
+
+namespace serve\exception;
+
+use Closure;
+use ErrorException;
+use Throwable;
+
+/**
+ * Error handler.
+ *
+ * @author Joe J. Howard
+ */
+class ErrorHandler
+{
+	/**
+	 * Is the shutdown handler disabled?
+	 *
+	 * @var bool
+	 */
+	protected $disableShutdownHandler = false;
+
+	/**
+	 * Die on error level
+	 *
+	 * @var bool
+	 */
+	protected $dieLevel = 0;
+
+	/**
+	 * Exception types that shouldn't be logged.
+	 *
+	 * @var array
+	 */
+	protected $disableLoggingFor = ['serve\http\response\exceptions\Stop'];
+
+	/**
+	 * Exception handlers.
+	 *
+	 * @var array
+	 */
+	protected $handlers = [];
+
+	/**
+	 * User defined "error_reporting()" value before Serve runs.
+	 *
+	 * @var int
+	 */
+	private $defaultErrorReporting;
+
+	/**
+	 * User defined "display_errors" value before Serve runs.
+	 *
+	 * @var bool
+	 */
+	private $defaultDisplayErrors;
+
+	/**
+	 * Logger.
+	 *
+	 * @var \serve\exception\ErrorLogger
+	 */
+	private $logger;
+
+    /**
+     * Constructor.
+     */
+    public function __construct(bool $displayErrors, int $errorReporting, int $dieLevel = 0)
+    {
+    	// Save the previously set error reporting levels
+        $this->defaultErrorReporting = $this->error_reporting();
+
+        $this->defaultDisplayErrors = $this->display_errors();
+
+        // Set the user defined error reporting levels
+        $this->display_errors($displayErrors);
+
+        $this->error_reporting($errorReporting);
+
+    	// Add a basic exception handler to the stack as a fullback
+		$this->handle(Throwable::class, function($e)
+		{
+			echo '[ ' . get_class($e) . '] ' . $e->getMessage() . ' on line [ ' . $e->getLine() . ' ] in [ ' . $e->getFile() . ' ]';
+
+			echo PHP_EOL;
+
+			echo $e->getTraceAsString();
+
+			return false;
+		});
+
+		// Set the die level
+		$this->dieLevel = $dieLevel;
+
+		$this->register();
+    }
+
+	/**
+	 * Registers the exception handler.
+	 */
+	protected function register(): void
+	{
+		// Allows us to handle "fatal" errors
+		register_shutdown_function(function(): void
+		{
+			$e = error_get_last();
+
+			if($e !== null && ($this->error_reporting() & $e['type']) !== 0 && !$this->disableShutdownHandler)
+			{
+				$this->handler(new ErrorException($e['message'], $e['type'], 0, $e['file'], $e['line']));
+
+				exit(1);
+			}
+		});
+
+		// Set the exception handler
+		set_exception_handler([$this, 'handler']);
+	}
+
+	/**
+	 * Set logger instance.
+	 *
+	 * @param \serve\exception\ErrorLogger $logger Error logger
+	 */
+	public function setLogger(ErrorLogger $logger): void
+	{
+		$this->logger = $logger;
+	}
+
+	/**
+	 * Disables logging for an exception type.
+	 *
+	 * @param string|array $exceptionType Exception type or array of exception types
+	 */
+	public function disableLoggingFor($exceptionType): void
+	{
+		$this->disableLoggingFor = array_unique(array_merge($this->disableLoggingFor, (array) $exceptionType));
+	}
+
+	/**
+	 * Disables the shutdown handler.
+	 */
+	public function disableShutdownHandler(): void
+	{
+		$this->disableShutdownHandler = true;
+	}
+
+	/**
+	 * Prepends an exception handler to the stack.
+	 *
+	 * @param string   $exceptionType Exception type
+	 * @param \Closure $handler       Exception handler
+	 */
+	public function handle(string $exceptionType, Closure $handler): void
+	{
+		array_unshift($this->handlers, ['exceptionType' => $exceptionType, 'handler' => $handler]);
+	}
+
+	/**
+	 * Clears all error handlers for an exception type.
+	 *
+	 * @param string $exceptionType Exception type
+	 */
+	public function clearHandlers(string $exceptionType): void
+	{
+		foreach($this->handlers as $key => $handler)
+		{
+			if($handler['exceptionType'] === $exceptionType)
+			{
+				unset($this->handlers[$key]);
+			}
+		}
+	}
+
+	/**
+	 * Replaces all error handlers for an exception type with a new one.
+	 *
+	 * @param string   $exceptionType Exception type
+	 * @param \Closure $handler       Exception handler
+	 */
+	public function replaceHandlers(string $exceptionType, Closure $handler): void
+	{
+		$this->clearHandlers($exceptionType);
+
+		$this->handle($exceptionType, $handler);
+	}
+
+    /**
+     * Restore the default error handler.
+     */
+    public function restore(): void
+    {
+        $this->display_errors($this->defaultDisplayErrors);
+
+        $this->error_reporting($this->defaultErrorReporting);
+
+    	restore_error_handler();
+
+    	restore_exception_handler();
+    }
+
+	/**
+	 * Clear output buffers.
+	 */
+	protected function clearOutputBuffers(): void
+	{
+		//while(ob_get_level() > 0) ob_end_clean();
+	}
+
+	/**
+	 * Should the exception be logged?
+	 *
+	 * @param  \Throwable $exception An exception object
+	 * @return bool
+	 */
+	protected function shouldExceptionBeLogged(Throwable $exception): bool
+	{
+		$error_reporting = $this->error_reporting();
+
+		$code = intval($exception->getCode());
+
+		// No error reporting or no error logging
+		if (!$error_reporting || !$this->logger)
+		{
+			return false;
+		}
+
+		if ($error_reporting > 0 && $error_reporting >= $code)
+		{
+			foreach($this->disableLoggingFor as $exceptionType)
+			{
+				if ($exception instanceof $exceptionType)
+				{
+					return false;
+				}
+			}
+
+			return true;
+		}
+
+		return false;
+	}
+
+	/**
+	 * Should the exception force a shutdown
+	 *
+	 * @param  \Throwable $exception An exception object
+	 * @return bool
+	 */
+	protected function shouldShutdown(Throwable $exception): bool
+	{
+		$code = intval($exception->getCode());
+
+		// No error reporting or no error logging
+		if ($this->dieLevel === 0)
+		{
+			return false;
+		}
+
+		if ($this->dieLevel > 0 && $this->dieLevel >= $code)
+		{
+			return true;
+		}
+
+		return false;
+	}
+
+	/**
+	 * Handles uncaught exceptions.
+	 *
+	 * @param \Throwable $exception An exception object
+	 */
+	public function handler(Throwable $exception): void
+	{
+		try
+		{
+			// Empty output buffers
+
+			$this->clearOutputBuffers();
+
+			// Loop through the exception handlers
+
+			foreach($this->handlers as $handler)
+			{
+				if($exception instanceof $handler['exceptionType'])
+				{
+					if($handler['handler']($exception) !== null)
+					{
+						break;
+					}
+				}
+			}
+
+			// Log exception
+			if($this->shouldExceptionBeLogged($exception))
+			{
+				$this->logger->write();
+			}
+		}
+		catch(Throwable $e)
+		{
+			// Empty output buffers
+
+			$this->clearOutputBuffers();
+
+			// One of the exception handlers failed so we'll just show the user a generic error screen
+
+			echo $e->getMessage() . ' on line [ ' . $e->getLine() . ' ] in [ ' . $e->getFile() . ' ]' . PHP_EOL;
+		}
+
+		if ($this->shouldShutdown($exception))
+		{
+			exit(1);
+		}
+	}
+
+    /**
+     * Set or get the Serve error reporting level.
+     *
+     * @param  int|null $errorReporting (optional) (default NULL)
+     * @return int
+     */
+    public function error_reporting(int $errorReporting = null): int
+    {
+    	if (!is_null($errorReporting))
+    	{
+    		error_reporting($errorReporting);
+
+    		ini_set('error_reporting', strval($errorReporting));
+    	}
+
+    	return error_reporting();
+    }
+
+    /**
+     * Set or get the Serve "display_errors" value.
+     *
+     * @param  bool|null $display_errors (optional) (default NULL)
+     * @return bool
+     */
+    public function display_errors(bool $display_errors = null): bool
+    {
+    	if (!is_null($display_errors))
+    	{
+    		ini_set('display_errors', $display_errors === true ? '1' : '0');
+    	}
+
+    	return ini_get('display_errors');
+    }
+}
