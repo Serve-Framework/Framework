@@ -288,7 +288,7 @@ class GithubTest extends TestCase
      *
      */
     public function testDeploySuccessful(): void
-    {        
+    {
         $request        = $this->mock('\serve\http\request\Request');
         $env            = $this->mock('\serve\http\request\Environment');
         $headers        = $this->mock('\serve\http\request\Headers');

@@ -8,8 +8,8 @@
 namespace serve\tests\unit\framework\utility;
 
 use InvalidArgumentException;
-use serve\utility\UUID;
 use serve\tests\TestCase;
+use serve\utility\UUID;
 
 /**
  * @group unit
@@ -59,7 +59,7 @@ class UUIDTest extends TestCase
 	}
 
 	/**
-	 * 
+	 *
 	 */
 	public function testV3WithInvalidNamespace(): void
 	{
@@ -99,7 +99,7 @@ class UUIDTest extends TestCase
 	}
 
 	/**
-	 * 
+	 *
 	 */
 	public function testV5WithInvalidNamespace(): void
 	{

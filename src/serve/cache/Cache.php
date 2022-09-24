@@ -33,7 +33,7 @@ class Cache
     /**
      * Constructor.
      *
-     * @param int                                          $lifetime Date the cache will expire (unix timestamp)
+     * @param int                                $lifetime Date the cache will expire (unix timestamp)
      * @param \serve\cache\stores\StoreInterface $store    Storage impementation
      */
     public function __construct(int $lifetime, StoreInterface $store)

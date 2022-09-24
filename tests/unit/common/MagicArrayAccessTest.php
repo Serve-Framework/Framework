@@ -16,7 +16,7 @@ use serve\tests\TestCase;
 
 class TestMagicObjectArray extends MagicObjectArray
 {
-    
+
 }
 
 // --------------------------------------------------------------------------

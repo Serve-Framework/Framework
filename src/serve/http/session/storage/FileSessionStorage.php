@@ -7,10 +7,10 @@
 
 namespace serve\http\session\storage;
 
+use RuntimeException;
 use serve\file\Filesystem;
 use serve\security\Crypto;
 use serve\utility\UUID;
-use RuntimeException;
 
 /**
  * Session encrypt/decrypt.
@@ -80,8 +80,8 @@ class FileSessionStorage implements StoreInterface
      *
      * @param \serve\security\Crypto $crypto       Crypto instance
      * @param \serve\file\Filesystem $filesystem   Filesystem instance
-     * @param array                            $cookieParams Assoc array of cookie configurations
-     * @param string|null                      $storageDir   Path to save session files to (optional) (default null)
+     * @param array                  $cookieParams Assoc array of cookie configurations
+     * @param string|null            $storageDir   Path to save session files to (optional) (default null)
      */
     public function __construct(Crypto $crypto, Filesystem $filesystem, array $cookieParams = [], string $storageDir = null)
     {

@@ -7,9 +7,9 @@
 
 namespace serve\database;
 
+use RuntimeException;
 use serve\database\connection\Connection;
 use serve\database\query\Builder;
-use RuntimeException;
 
 /**
  * Database manager.
@@ -54,7 +54,7 @@ class Database
 	/**
 	 * Create a new database from the config.
 	 *
-	 * @param  string|null                                     $connectionName Name of the connection (optional) (default null)
+	 * @param  string|null                           $connectionName Name of the connection (optional) (default null)
 	 * @throws \RuntimeException
 	 * @return \serve\database\connection\Connection
 	 */
@@ -88,7 +88,7 @@ class Database
 	/**
 	 * Get a database connection by name.
 	 *
-	 * @param  string|null                                     $connectionName Name of the connection (optional) (default null)
+	 * @param  string|null                           $connectionName Name of the connection (optional) (default null)
 	 * @return \serve\database\connection\Connection
 	 */
 	public function connection(string $connectionName = null): Connection
@@ -101,7 +101,7 @@ class Database
 	/**
 	 * Connect to a database by name.
 	 *
-	 * @param  string                                          $connectionName Name of the connection
+	 * @param  string                                $connectionName Name of the connection
 	 * @throws \RuntimeException
 	 * @return \serve\database\connection\Connection
 	 */
@@ -125,7 +125,7 @@ class Database
 	/**
 	 * Get a database builder by connection name.
 	 *
-	 * @param  string                                  $connectionName Name of the connection
+	 * @param  string                        $connectionName Name of the connection
 	 * @return \serve\database\query\Builder
 	 */
 	public function builder(string $connectionName): Builder

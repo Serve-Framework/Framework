@@ -57,7 +57,7 @@ class RoutesList extends Command
 			$rows[] = array_values($route);
 		}
 
-		$this->write(count($rows) . ' available '. Pluralize::convert('route', count($rows)) .':');
+		$this->write(count($rows) . ' available ' . Pluralize::convert('route', count($rows)) . ':');
 
 		$this->table($cols, $rows);
 	}

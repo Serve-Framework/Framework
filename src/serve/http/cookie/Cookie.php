@@ -56,8 +56,8 @@ class Cookie extends MagicObjectArray
      * Constructor.
      *
      * @param \serve\http\cookie\storage\StoreInterface $store         Cookie storage implementation
-     * @param string                                              $cookieName    Name of the cookie
-     * @param int                                                 $cookieExpires Date the cookie will expire (unix timestamp)
+     * @param string                                    $cookieName    Name of the cookie
+     * @param int                                       $cookieExpires Date the cookie will expire (unix timestamp)
      */
     public function __construct(StoreInterface $store, string $cookieName, int $cookieExpires)
     {

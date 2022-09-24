@@ -7,8 +7,8 @@
 
 namespace serve\tests\unit\framework\utility;
 
-use serve\utility\Arr;
 use serve\tests\TestCase;
+use serve\utility\Arr;
 
 // --------------------------------------------------------------------------
 // START CLASSES

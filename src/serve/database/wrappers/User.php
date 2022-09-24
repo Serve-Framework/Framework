@@ -15,7 +15,7 @@ use serve\utility\UUID;
  * User utility wrapper.
  *
  * @author Joe J. Howard
- * 
+ *
  * @property int    $id
  * @property string $username
  * @property string $email

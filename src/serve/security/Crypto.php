@@ -49,9 +49,9 @@ class Crypto
 	/**
 	 * Constructor.
 	 *
-	 * @param \serve\security\crypto\Signer                          $signer    Encryption/Decryption signer
-	 * @param \serve\security\crypto\encrypters\EncrypterInterface   $encrytper Encryption/Decryption library
-	 * @param \serve\security\password\hashers\HasherInterface       $password  Password hashing library
+	 * @param \serve\security\crypto\Signer                        $signer    Encryption/Decryption signer
+	 * @param \serve\security\crypto\encrypters\EncrypterInterface $encrytper Encryption/Decryption library
+	 * @param \serve\security\password\hashers\HasherInterface     $password  Password hashing library
 	 */
 	public function __construct(Signer $signer, EncrypterInterface $encrytper, HasherInterface $password)
 	{

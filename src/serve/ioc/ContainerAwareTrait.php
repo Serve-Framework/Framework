@@ -10,7 +10,7 @@ namespace serve\ioc;
 /**
  * Container aware trait.
  *
- * @property \serve\application\Application               $Application
+ * @property \serve\application\Application     $Application
  * @property \serve\access\Access               $Access
  * @property \serve\cache\Cache                 $Cache
  * @property \serve\config\Config               $Config
@@ -34,10 +34,10 @@ namespace serve\ioc;
  * @property \serve\pixl\processor\GD           $Pixl
  * @property \serve\security\spam\SpamProtector $Spam
  * @property \serve\validator\ValidatorFactory  $Validator
- * 
- * @property \serve\cli\Cli                     $Cli
- * @property \serve\cli\input\Input             $Input
- * @property \serve\cli\output\Output           $Output
+ *
+ * @property \serve\cli\Cli           $Cli
+ * @property \serve\cli\input\Input   $Input
+ * @property \serve\cli\output\Output $Output
  */
 trait ContainerAwareTrait
 {

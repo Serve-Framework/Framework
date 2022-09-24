@@ -97,7 +97,7 @@ class SpamProtector
         {
             $rating = ($rating - $linkCount);
         }
-        
+
         // Rate Length
         if ($bodyCount > 20)
         {

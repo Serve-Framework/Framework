@@ -77,7 +77,7 @@ class Github implements WebhookInterface
      * @param \serve\http\request\Request   $request  Request object
      * @param \serve\http\response\Response $response Response object
      * @param \serve\shell\Shell            $shell    Shell utility
-     * @param string                                  $secret   Github token
+     * @param string                        $secret   Github token
      */
     public function __construct(Request $request, Response $response, Shell $shell, string $secret)
     {

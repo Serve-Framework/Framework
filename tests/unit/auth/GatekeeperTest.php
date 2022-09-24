@@ -9,12 +9,12 @@ namespace serve\tests\unit\cms\auth;
 
 use serve\auth\Gatekeeper;
 use serve\database\query\Builder;
-use serve\database\wrappers\User;
 use serve\database\wrappers\providers\UserProvider;
-use serve\security\Crypto;
+use serve\database\wrappers\User;
 use serve\http\cookie\Cookie;
 use serve\http\session\Session;
 use serve\http\session\Token;
+use serve\security\Crypto;
 use serve\security\password\hashers\NativePHP;
 use serve\tests\TestCase;
 
@@ -55,7 +55,7 @@ class GatekeeperTest extends TestCase
 		$crypto       = $this->mock(Crypto::class);
 		$cookie       = $this->mock(Cookie::class);
 		$session      = $this->mock(Session::class);
-		
+
 		$token        = $this->mock(Token::class);
 		$user         = $this->mock(User::class);
 
@@ -80,13 +80,13 @@ class GatekeeperTest extends TestCase
 	public function testConstructorExpiredCSRF(): void
 	{
 		$this->expectNotToPerformAssertions();
-		
+
 		$sql          = $this->mock(Builder::class);
 		$userProvider = $this->mock(UserProvider::class);
 		$crypto       = $this->mock(Crypto::class);
 		$cookie       = $this->mock(Cookie::class);
 		$session      = $this->mock(Session::class);
-		
+
 		$token        = $this->mock(Token::class);
 		$user         = $this->mock(User::class);
 
@@ -121,7 +121,7 @@ class GatekeeperTest extends TestCase
 		$crypto       = $this->mock(Crypto::class);
 		$cookie       = $this->mock(Cookie::class);
 		$session      = $this->mock(Session::class);
-		
+
 		$token        = $this->mock(Token::class);
 		$user         = $this->mock(User::class);
 
@@ -152,7 +152,6 @@ class GatekeeperTest extends TestCase
 		$crypto       = $this->mock(Crypto::class);
 		$cookie       = $this->mock(Cookie::class);
 		$session      = $this->mock(Session::class);
-		
 
 		$cookie->shouldReceive('isLoggedIn')->andReturn(false);
 
@@ -173,7 +172,7 @@ class GatekeeperTest extends TestCase
 		$crypto       = $this->mock(Crypto::class);
 		$cookie       = $this->mock(Cookie::class);
 		$session      = $this->mock(Session::class);
-		
+
 		$token        = $this->mock(Token::class);
 		$user         = $this->mock(User::class);
 
@@ -204,7 +203,6 @@ class GatekeeperTest extends TestCase
 		$crypto       = $this->mock(Crypto::class);
 		$cookie       = $this->mock(Cookie::class);
 		$session      = $this->mock(Session::class);
-		
 
 		$cookie->shouldReceive('isLoggedIn')->andReturn(false);
 
@@ -225,7 +223,7 @@ class GatekeeperTest extends TestCase
 		$crypto       = $this->mock(Crypto::class);
 		$cookie       = $this->mock(Cookie::class);
 		$session      = $this->mock(Session::class);
-		
+
 		$token        = $this->mock(Token::class);
 		$user         = $this->mock(User::class);
 
@@ -291,7 +289,7 @@ class GatekeeperTest extends TestCase
 		$crypto       = $this->mock(Crypto::class);
 		$cookie       = $this->mock(Cookie::class);
 		$session      = $this->mock(Session::class);
-		
+
 		$token        = $this->mock(Token::class);
 		$user         = $this->mock(User::class);
 
@@ -322,7 +320,7 @@ class GatekeeperTest extends TestCase
 		$crypto       = $this->mock(Crypto::class);
 		$cookie       = $this->mock(Cookie::class);
 		$session      = $this->mock(Session::class);
-		
+
 		$token        = $this->mock(Token::class);
 
 		$cookie->shouldReceive('isLoggedIn')->andReturn(false);
@@ -348,7 +346,6 @@ class GatekeeperTest extends TestCase
 		$crypto       = $this->mock(Crypto::class);
 		$cookie       = $this->mock(Cookie::class);
 		$session      = $this->mock(Session::class);
-		
 
 		$cookie->shouldReceive('isLoggedIn')->andReturn(false);
 
@@ -369,7 +366,7 @@ class GatekeeperTest extends TestCase
 		$crypto       = $this->mock(Crypto::class);
 		$cookie       = $this->mock(Cookie::class);
 		$session      = $this->mock(Session::class);
-		
+
 		$token        = $this->mock(Token::class);
 		$user         = $this->mock(User::class);
 
@@ -406,7 +403,7 @@ class GatekeeperTest extends TestCase
 		$crypto       = $this->mock(Crypto::class);
 		$cookie       = $this->mock(Cookie::class);
 		$session      = $this->mock(Session::class);
-		
+
 		$token        = $this->mock(Token::class);
 		$user         = $this->mock(User::class);
 
@@ -443,7 +440,7 @@ class GatekeeperTest extends TestCase
 		$crypto       = $this->mock(Crypto::class);
 		$cookie       = $this->mock(Cookie::class);
 		$session      = $this->mock(Session::class);
-		
+
 		$token        = $this->mock(Token::class);
 		$user         = $this->mock(User::class);
 
@@ -475,7 +472,7 @@ class GatekeeperTest extends TestCase
 		$crypto       = $this->mock(Crypto::class);
 		$cookie       = $this->mock(Cookie::class);
 		$session      = $this->mock(Session::class);
-		
+
 		$token        = $this->mock(Token::class);
 
 		$cookie->shouldReceive('isLoggedIn')->andReturn(false);
@@ -503,7 +500,7 @@ class GatekeeperTest extends TestCase
 		$crypto       = $this->mock(Crypto::class);
 		$cookie       = $this->mock(Cookie::class);
 		$session      = $this->mock(Session::class);
-		
+
 		$token        = $this->mock(Token::class);
 		$user         = $this->mock(User::class);
 		$password     = $this->mock(NativePHP::class);
@@ -568,7 +565,7 @@ class GatekeeperTest extends TestCase
 		$crypto       = $this->mock(Crypto::class);
 		$cookie       = $this->mock(Cookie::class);
 		$session      = $this->mock(Session::class);
-		
+
 		$token        = $this->mock(Token::class);
 		$user         = $this->mock(User::class);
 		$password     = $this->mock(NativePHP::class);
@@ -604,7 +601,7 @@ class GatekeeperTest extends TestCase
 		$crypto       = $this->mock(Crypto::class);
 		$cookie       = $this->mock(Cookie::class);
 		$session      = $this->mock(Session::class);
-		
+
 		$token        = $this->mock(Token::class);
 		$user         = $this->mock(User::class);
 		$password     = $this->mock(NativePHP::class);
@@ -636,7 +633,7 @@ class GatekeeperTest extends TestCase
 		$crypto       = $this->mock(Crypto::class);
 		$cookie       = $this->mock(Cookie::class);
 		$session      = $this->mock(Session::class);
-		
+
 		$token        = $this->mock(Token::class);
 		$user         = $this->mock(User::class);
 		$password     = $this->mock(NativePHP::class);
@@ -668,7 +665,7 @@ class GatekeeperTest extends TestCase
 		$crypto       = $this->mock(Crypto::class);
 		$cookie       = $this->mock(Cookie::class);
 		$session      = $this->mock(Session::class);
-		
+
 		$token        = $this->mock(Token::class);
 		$user         = $this->mock(User::class);
 		$password     = $this->mock(NativePHP::class);
@@ -700,7 +697,7 @@ class GatekeeperTest extends TestCase
 		$crypto       = $this->mock(Crypto::class);
 		$cookie       = $this->mock(Cookie::class);
 		$session      = $this->mock(Session::class);
-		
+
 		$token        = $this->mock(Token::class);
 		$user         = $this->mock(User::class);
 		$password     = $this->mock(NativePHP::class);
@@ -732,7 +729,7 @@ class GatekeeperTest extends TestCase
 		$crypto       = $this->mock(Crypto::class);
 		$cookie       = $this->mock(Cookie::class);
 		$session      = $this->mock(Session::class);
-		
+
 		$token        = $this->mock(Token::class);
 		$user         = $this->mock(User::class);
 		$password     = $this->mock(NativePHP::class);
@@ -764,7 +761,7 @@ class GatekeeperTest extends TestCase
 		$crypto       = $this->mock(Crypto::class);
 		$cookie       = $this->mock(Cookie::class);
 		$session      = $this->mock(Session::class);
-		
+
 		$token        = $this->mock(Token::class);
 		$user         = $this->mock(User::class);
 
@@ -801,7 +798,7 @@ class GatekeeperTest extends TestCase
 		$crypto       = $this->mock(Crypto::class);
 		$cookie       = $this->mock(Cookie::class);
 		$session      = $this->mock(Session::class);
-		
+
 		$token        = $this->mock(Token::class);
 		$user         = $this->mock(User::class);
 		$password     = $this->mock(NativePHP::class);
@@ -831,7 +828,7 @@ class GatekeeperTest extends TestCase
 		$crypto       = $this->mock(Crypto::class);
 		$cookie       = $this->mock(Cookie::class);
 		$session      = $this->mock(Session::class);
-		
+
 		$token        = $this->mock(Token::class);
 		$user         = $this->mock(User::class);
 		$password     = $this->mock(NativePHP::class);
@@ -861,7 +858,7 @@ class GatekeeperTest extends TestCase
 		$crypto       = $this->mock(Crypto::class);
 		$cookie       = $this->mock(Cookie::class);
 		$session      = $this->mock(Session::class);
-		
+
 		$token        = $this->mock(Token::class);
 		$user         = $this->mock(User::class);
 		$password     = $this->mock(NativePHP::class);

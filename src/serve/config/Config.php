@@ -7,8 +7,8 @@
 
 namespace serve\config;
 
-use serve\utility\Str;
 use serve\utility\Arr;
+use serve\utility\Str;
 
 /**
  * Serve framework configuration manager.
@@ -50,7 +50,6 @@ class Config
 		$this->environment = $environment;
 	}
 
-
 	/**
 	 * Sets the environment.
 	 *
@@ -62,7 +61,7 @@ class Config
 	}
 
 	/**
-	 * Get settings using dot notation
+	 * Get settings using dot notation.
 	 *
 	 * @param  string $key Config key
 	 * @return mixed
@@ -97,7 +96,7 @@ class Config
 	/**
 	 * Get a default setting - bypass the environment.
 	 *
-	 * @param  string     $key Config key
+	 * @param  string $key Config key
 	 * @return mixed
 	 */
 	public function getDefault(string $key)
@@ -120,14 +119,14 @@ class Config
 
         $data =
         [
-        	$file => $this->loader->load($file, null)
+        	$file => $this->loader->load($file, null),
         ];
 
 		return Arr::get($data, $key);
 	}
 
-	/**
-     * Set a key value using dot notation
+    /**
+     * Set a key value using dot notation.
      *
      * @param string $key   Key to use
      * @param mixed  $value Value to save
@@ -157,7 +156,7 @@ class Config
         }
     }
 
-	/**
+    /**
      * Remove a key/value from the internal array using dot notation.
      *
      * @param string $key Key to use
@@ -169,7 +168,6 @@ class Config
 
 	/**
 	 * Save the configuration.
-	 *
 	 */
 	public function save(): void
 	{

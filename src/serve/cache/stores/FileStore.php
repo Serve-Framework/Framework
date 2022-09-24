@@ -32,7 +32,7 @@ class FileStore implements StoreInterface
      * Constructo.
      *
      * @param \serve\file\Filesystem $filesystem Filesystem instance
-     * @param string                           $path       Directory to store cache files
+     * @param string                 $path       Directory to store cache files
      */
     public function __construct(Filesystem $filesystem, string $path)
     {

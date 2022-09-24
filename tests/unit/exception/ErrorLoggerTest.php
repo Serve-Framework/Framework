@@ -22,7 +22,7 @@ class ErrorLoggerTest extends TestCase
     public function testWebHandler(): void
     {
         $this->expectNotToPerformAssertions();
-        
+
         $path        = dirname(__FILE__);
         $environment = $this->mock('\serve\http\request\Environment');
         $fileSystem  = $this->mock('\serve\file\Filesystem');

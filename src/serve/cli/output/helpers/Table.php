@@ -7,8 +7,8 @@
 
 namespace serve\cli\output\helpers;
 
-use serve\cli\output\Output;
 use RuntimeException;
+use serve\cli\output\Output;
 
 /**
  * CLI table.

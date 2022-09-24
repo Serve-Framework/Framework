@@ -216,7 +216,7 @@ class FlashTest extends TestCase
                 $this->assertEquals('bar', $k);
                 $this->assertEquals('foo', $v);
             }
-            
+
             $i++;
         }
     }

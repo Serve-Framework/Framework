@@ -5,8 +5,9 @@
  * @license   https://github.com/Serve-Framework/Framework/blob/master/LICENSE
  */
 
-namespace serve\application\services;
+namespace serve\application\services\framework;
 
+use serve\application\services\Service;
 use serve\security\Crypto;
 use serve\security\crypto\encrypters\OpenSSL;
 use serve\security\crypto\Key;
@@ -74,7 +75,7 @@ class SecurityService extends Service
 	/**
 	 * Returns the the Open SSL Encrypter/Decrypter implementation.
 	 *
-	 * @param  array                                               $configuration Encryption configuration
+	 * @param  array                                     $configuration Encryption configuration
 	 * @return \serve\security\crypto\encrypters\OpenSSL
 	 */
 	protected function openSSLEncrypter(array $configuration): OpenSSL
@@ -102,7 +103,7 @@ class SecurityService extends Service
 	/**
 	 * Returns the the native PHP password hasher.
 	 *
-	 * @param  array                                                   $passwordConfiguration Configuration to pass to constructor
+	 * @param  array                                      $passwordConfiguration Configuration to pass to constructor
 	 * @return \serve\security\password\hashers\NativePHP
 	 */
 	protected function nativePasswordHasher(array $passwordConfiguration): NativePHP

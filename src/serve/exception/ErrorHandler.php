@@ -26,7 +26,7 @@ class ErrorHandler
 	protected $disableShutdownHandler = false;
 
 	/**
-	 * Die on error level
+	 * Die on error level.
 	 *
 	 * @var bool
 	 */
@@ -247,7 +247,7 @@ class ErrorHandler
 	}
 
 	/**
-	 * Should the exception force a shutdown
+	 * Should the exception force a shutdown.
 	 *
 	 * @param  \Throwable $exception An exception object
 	 * @return bool

@@ -9,8 +9,8 @@ namespace serve\access;
 
 use serve\file\Filesystem;
 use serve\http\request\Request;
-use serve\http\response\Response;
 use serve\http\response\exceptions\ForbiddenException;
+use serve\http\response\Response;
 
 /**
  * Access/Security.
@@ -67,8 +67,8 @@ class Access
      * @param \serve\http\request\Request   $request     Request object
      * @param \serve\http\response\Response $response    Response object
      * @param \serve\file\Filesystem        $filesystem  Filesystem instancea
-     * @param bool                                    $blockIps    Should we block all IP address except the whitelist (optional) (default false)
-     * @param array                                   $ipWhitelist Array of whitelisted ip addresses (optional) (default [])
+     * @param bool                          $blockIps    Should we block all IP address except the whitelist (optional) (default false)
+     * @param array                         $ipWhitelist Array of whitelisted ip addresses (optional) (default [])
      */
     public function __construct(Request $request, Response $response, Filesystem $filesystem, $blockIps = false, $ipWhitelist = [])
     {

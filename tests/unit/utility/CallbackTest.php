@@ -7,8 +7,8 @@
 
 namespace serve\tests\unit\framework\utility;
 
-use serve\utility\Callback;
 use serve\tests\TestCase;
+use serve\utility\Callback;
 
 // --------------------------------------------------------------------------
 // START CLASSES

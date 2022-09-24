@@ -5,13 +5,14 @@
  * @license   https://github.com/Serve-Framework/Framework/blob/master/LICENSE
  */
 
-namespace serve\application\services;
+namespace serve\application\services\framework;
 
+use RuntimeException;
+use serve\application\services\Service;
 use serve\deployment\Deployment;
 use serve\deployment\webhooks\Github;
 use serve\deployment\webhooks\WebhookInterface;
 use serve\shell\Shell;
-use RuntimeException;
 
 /**
  * Framework deployment service.

@@ -55,7 +55,7 @@ class WebHandler
 	/**
 	 * Constructor.
 	 *
-	 * @param \Throwable                              $exception Throwable
+	 * @param \Throwable                    $exception Throwable
 	 * @param \serve\http\request\Request   $request   Request instance
 	 * @param \serve\http\response\Response $response  Response instance
 	 * @param \serve\mvc\view\View          $view      View instance

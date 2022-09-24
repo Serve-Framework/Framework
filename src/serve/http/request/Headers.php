@@ -48,10 +48,10 @@ namespace serve\http\request;
  * @property string $AUTH_TYPE
  * @property string $PATH_INFO
  * @property string $ORIG_PATH_INFO
- * @property string $HTTP_X_HUB_SIGNATURE  
+ * @property string $HTTP_X_HUB_SIGNATURE
  * @property string $HTTP_X_GITHUB_EVENT
  * @property string $HTTP_IF_NONE_MATCH
- * 
+ *
  * @property string $X_CONTENT_TYPE
  * @property string $X_CONTENT_LENGTH
  * @property string $X_PHP_AUTH_USER
@@ -59,7 +59,7 @@ namespace serve\http\request;
  * @property string $X_PHP_AUTH_DIGEST
  * @property string $X_AUTH_TYPE
  * @property string $X_X-PJAX
- * 
+ *
  * @property string $HTTP_CONTENT_TYPE
  * @property string $HTTP_CONTENT_LENGTH
  * @property string $HTTP_PHP_AUTH_USER

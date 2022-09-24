@@ -7,8 +7,6 @@
 
 namespace serve\shell;
 
-use serve\shell\Process;
-
 /**
  * Shell interface utility class.
  *
@@ -120,7 +118,7 @@ class Shell
     /**
      * Cd into a directory.
      *
-     * @param  int                          $timeout Timeout to set
+     * @param  int                $timeout Timeout to set
      * @return \serve\shell\Shell
      */
     public function setTimeout(int $timeout)
@@ -135,7 +133,7 @@ class Shell
     /**
      * Cd into a directory.
      *
-     * @param  string                       $dir Directory to move to
+     * @param  string             $dir Directory to move to
      * @return \serve\shell\Shell
      */
     public function cd(string $dir): Shell
@@ -148,8 +146,8 @@ class Shell
     /**
      * Run a command and optional sub command.
      *
-     * @param  string                       $cmd    Command name
-     * @param  string|null                  $subCmd sub command name (optional) (default null)
+     * @param  string             $cmd    Command name
+     * @param  string|null        $subCmd sub command name (optional) (default null)
      * @return \serve\shell\Shell
      */
     public function cmd(string $cmd, string $subCmd = null): Shell
@@ -167,8 +165,8 @@ class Shell
     /**
      * Add an option or flag to the current command.
      *
-     * @param  string                       $flag  Option key or flag
-     * @param  string|null                  $value Option value (optional) (default null)
+     * @param  string             $flag  Option key or flag
+     * @param  string|null        $value Option value (optional) (default null)
      * @return \serve\shell\Shell
      */
     public function option(string $flag, string $value = null): Shell
@@ -199,7 +197,7 @@ class Shell
     /**
      * Add an array of flags and options.
      *
-     * @param  array                        $options Array of options with flags
+     * @param  array              $options Array of options with flags
      * @return \serve\shell\Shell
      */
     public function options(array $options): Shell
@@ -222,7 +220,7 @@ class Shell
     /**
      * Add parameter to the current command.
      *
-     * @param  string                       $param Parameter to add
+     * @param  string             $param Parameter to add
      * @return \serve\shell\Shell
      */
     public function param($param = null): Shell
@@ -240,7 +238,7 @@ class Shell
     /**
      * Add an array of parameters to the current command.
      *
-     * @param  array                        $params Array of parameters to add
+     * @param  array              $params Array of parameters to add
      * @return \serve\shell\Shell
      */
     public function params(array $params): Shell
@@ -256,7 +254,7 @@ class Shell
     /**
      * Add an input argument to the command.
      *
-     * @param  string                       $path Path to command input
+     * @param  string             $path Path to command input
      * @return \serve\shell\Shell
      */
     public function input(string $path): Shell
@@ -269,7 +267,7 @@ class Shell
     /**
      * Add an output argument to the command.
      *
-     * @param  string                       $path Path to command output
+     * @param  string             $path Path to command output
      * @return \serve\shell\Shell
      */
     public function output(string $path): Shell

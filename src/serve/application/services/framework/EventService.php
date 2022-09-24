@@ -5,11 +5,11 @@
  * @license   https://github.com/Serve-Framework/Framework/blob/master/LICENSE
  */
 
-namespace serve\application\services;
+namespace serve\application\services\framework;
 
+use serve\application\services\Service;
 use serve\event\Events;
 use serve\event\Filters;
-use serve\application\services\Service;
 
 /**
  * Event and Filter service.

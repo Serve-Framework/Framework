@@ -16,7 +16,7 @@ use serve\application\Application as BaseApplication;
  */
 class Application extends BaseApplication
 {
-    
+
     /**
      * Run the application.
      */

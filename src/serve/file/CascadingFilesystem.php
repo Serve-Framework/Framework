@@ -116,7 +116,7 @@ trait CascadingFilesystem
         }
 
         // Return full path to file
-        
+
         return $path . DIRECTORY_SEPARATOR . str_replace('.', DIRECTORY_SEPARATOR, $file) . '.' . str_replace('.', '', $extension ?? $this->extension);
     }
 

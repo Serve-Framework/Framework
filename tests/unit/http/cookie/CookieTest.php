@@ -111,7 +111,7 @@ class CookieTest extends TestCase
 	public function testExpired(): void
 	{
 		$this->expectNotToPerformAssertions();
-		
+
 		$store = $this->mock('serve\http\cookie\storage\NativeCookieStorage');
 
 		$store->shouldReceive('read')->withArgs(['cookie_name'])->andReturn(['last_active' => strtotime('-34 days'), 'foo' => 'bar']);

@@ -43,12 +43,13 @@ class ConsoleTest extends TestCase
 		$output->shouldReceive('formatter')->once()->andReturn($formatter);
 
 		$output->shouldReceive('write')->once()->with(
-'------------------------------
+		    '------------------------------
 | <green>Command</green> | <green>Description</green>      |
 ------------------------------
 | foo     | Foo description. |
 ------------------------------
-');
+'
+		);
 
 		$console->registerCommand('foo', '\serve\tests\unit\framework\console\Foo');
 
@@ -77,12 +78,13 @@ class ConsoleTest extends TestCase
 		$output->shouldReceive('formatter')->once()->andReturn($formatter);
 
 		$output->shouldReceive('write')->once()->with(
-'------------------------------
+		    '------------------------------
 | <green>Command</green> | <green>Description</green>      |
 ------------------------------
 | foo     | Foo description. |
 ------------------------------
-');
+'
+		);
 
 		$console->registerCommand('foo', '\serve\tests\unit\framework\console\Foo');
 

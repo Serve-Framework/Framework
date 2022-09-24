@@ -87,7 +87,7 @@ class LoaderTest extends TestCase
 
         $loader = new Loader($fileSystem, '/app/config');
 
-        $loader->save(['settings' => ['greeting' => 'konnichiwa', 'goodbye' => 'sayonara']]);        
+        $loader->save(['settings' => ['greeting' => 'konnichiwa', 'goodbye' => 'sayonara']]);
     }
 
     /**

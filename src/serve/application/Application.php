@@ -7,14 +7,11 @@
 
 namespace serve\application;
 
-use serve\Serve;
 use serve\config\Config;
 use serve\config\Loader;
 use serve\file\Filesystem;
 use serve\ioc\Container;
-use \RuntimeException;
-
-use function is_null;
+use serve\Serve;
 
 /**
  * Serve framework main class file.
@@ -45,7 +42,7 @@ abstract class Application extends Serve
     protected $container;
 
     /**
-     * Application path
+     * Application path.
      *
      * @var string
      */
@@ -60,7 +57,7 @@ abstract class Application extends Serve
 
     /**
      * Constructor.
-     * 
+     *
      * @param string $applicationPath Application path
      */
     final protected function __construct(string $applicationPath)
@@ -111,7 +108,7 @@ abstract class Application extends Serve
 
     /**
      * Boot the application dependencies.
-     * 
+     *
      * @return $this
      */
     protected function boot()
@@ -144,7 +141,7 @@ abstract class Application extends Serve
      */
     protected function bootstrap(): void
     {
-        (function ($serve, $container): void
+        (function($serve, $container): void
         {
             include "{$this->applicationPath}/bootstrap.php";
 

@@ -43,7 +43,7 @@ class CascadingFilesystemTest extends TestCase
 	{
 		return dirname(__FILE__) . DIRECTORY_SEPARATOR . 'files';
 	}
-	
+
 	/**
 	 *
 	 */
@@ -55,7 +55,7 @@ class CascadingFilesystemTest extends TestCase
 
 		$this->assertEquals($expected, $loader->getFilePath('two'));
 	}
-	
+
 	/**
 	 *
 	 */
@@ -69,7 +69,7 @@ class CascadingFilesystemTest extends TestCase
 
 		$this->assertEquals($expected, $loader->getFilePath('two'));
 	}
-	
+
 	/**
 	 *
 	 */
@@ -87,7 +87,7 @@ class CascadingFilesystemTest extends TestCase
 
 		$this->assertEquals($expected, $loader->getFilePath('one'));
 	}
-	
+
 	/**
 	 *
 	 */
@@ -101,7 +101,7 @@ class CascadingFilesystemTest extends TestCase
 
 		$this->assertEquals($expected, $loader->getFilePath('files::two'));
 	}
-	
+
 	/**
 	 *
 	 */

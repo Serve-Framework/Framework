@@ -51,7 +51,7 @@ class Middleware
      *
      * @param \serve\http\request\Request   $request
      * @param \serve\http\response\Response $response
-     * @param \Closure                                $next
+     * @param \Closure                      $next
      */
     public function execute(Request $request, Response $response, Closure $next)
     {

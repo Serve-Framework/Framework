@@ -7,8 +7,8 @@
 
 namespace serve\tests\unit\database\wrappers\providers;
 
-use serve\database\query\Builder;
 use serve\database\connection\ConnectionHandler;
+use serve\database\query\Builder;
 use serve\database\wrappers\providers\UserProvider;
 use serve\tests\TestCase;
 
@@ -105,7 +105,7 @@ class UserProviderTest extends TestCase
     /**
      *
      */
-    public function testByEmail()
+    public function testByEmail(): void
     {
         $sql = $this->mock(Builder::class);
 
@@ -125,7 +125,7 @@ class UserProviderTest extends TestCase
     /**
      *
      */
-    public function TestByUsername()
+    public function TestByUsername(): void
     {
         $sql = $this->mock(Builder::class);
 
@@ -145,7 +145,7 @@ class UserProviderTest extends TestCase
     /**
      *
      */
-    public function testByToken()
+    public function testByToken(): void
     {
         $sql = $this->mock(Builder::class);
 

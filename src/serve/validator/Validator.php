@@ -7,6 +7,7 @@
 
 namespace serve\validator;
 
+use RuntimeException;
 use serve\ioc\Container;
 use serve\utility\Arr;
 use serve\utility\Str;
@@ -34,8 +35,8 @@ use serve\validator\rules\Email;
 use serve\validator\rules\ExactLength;
 use serve\validator\rules\FloatingPoint;
 use serve\validator\rules\GreaterThan;
-use serve\validator\rules\GreaterThanOrEqualTo;
 
+use serve\validator\rules\GreaterThanOrEqualTo;
 use serve\validator\rules\In;
 use serve\validator\rules\Integer;
 use serve\validator\rules\IP;
@@ -51,7 +52,6 @@ use serve\validator\rules\Required;
 use serve\validator\rules\RuleInterface;
 use serve\validator\rules\URL;
 use serve\validator\rules\WithParametersInterface;
-use RuntimeException;
 
 use function array_unique;
 use function compact;
@@ -172,9 +172,9 @@ class Validator
 	/**
 	 * Constructor.
 	 *
-	 * @param array                               $input     Input
-	 * @param array                               $ruleSets  Rule sets
-	 * @param array                               $filters   Filter sets (optional default [])
+	 * @param array                     $input     Input
+	 * @param array                     $ruleSets  Rule sets
+	 * @param array                     $filters   Filter sets (optional default [])
 	 * @param \serve\ioc\Container|null $container Container (optional) (default null)
 	 */
 	public function __construct(array $input, array $ruleSets, array $filters = [], Container $container = null)
@@ -273,7 +273,7 @@ class Validator
 	/**
 	 * Creates a filter instance.
 	 *
-	 * @param  string                                             $name Rule name
+	 * @param  string                                   $name Rule name
 	 * @return \serve\validator\filters\FilterInterface
 	 */
 	private function filterFactory(string $name): FilterInterface
@@ -391,7 +391,7 @@ class Validator
 	/**
 	 * Creates a rule instance.
 	 *
-	 * @param  string                                         $name Rule name
+	 * @param  string                               $name Rule name
 	 * @return \serve\validator\rules\RuleInterface
 	 */
 	private function ruleFactory(string $name): RuleInterface
@@ -424,8 +424,8 @@ class Validator
 	 * Returns the error message.
 	 *
 	 * @param  \serve\validator\rules\RuleInterface $rule       Rule
-	 * @param  string                                         $field      Field name
-	 * @param  object                                         $parsedRule Parsed rule
+	 * @param  string                               $field      Field name
+	 * @param  object                               $parsedRule Parsed rule
 	 * @return string
 	 */
 	private function getErrorMessage(RuleInterface $rule, $field, $parsedRule): string

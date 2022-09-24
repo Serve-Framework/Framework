@@ -5,8 +5,9 @@
  * @license   https://github.com/Serve-Framework/Framework/blob/master/LICENSE
  */
 
-namespace serve\application\services;
+namespace serve\application\services\framework;
 
+use serve\application\services\Service;
 use serve\onion\Onion;
 
 /**

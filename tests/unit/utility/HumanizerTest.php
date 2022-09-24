@@ -7,8 +7,8 @@
 
 namespace serve\tests\unit\framework\utility;
 
-use serve\utility\Humanizer;
 use serve\tests\TestCase;
+use serve\utility\Humanizer;
 
 /**
  * @group unit

@@ -7,9 +7,7 @@
 
 namespace serve\database\wrappers\managers;
 
-use Exception;
 use serve\database\wrappers\providers\UserProvider;
-use serve\http\request\Environment;
 use serve\security\Crypto;
 use serve\utility\Str;
 use serve\utility\UUID;
@@ -26,21 +24,21 @@ class UserManager extends Manager
      *
      * @var int
      */
-    const EMAIL_EXISTS = 104;
+    public const EMAIL_EXISTS = 104;
 
     /**
      * Status code for users that already exists by username.
      *
      * @var int
      */
-    const USERNAME_EXISTS = 105;
+    public const USERNAME_EXISTS = 105;
 
     /**
      * Status code for users that already exists by username.
      *
      * @var int
      */
-    const SLUG_EXISTS = 106;
+    public const SLUG_EXISTS = 106;
 
     /**
      * Encryption manager.
@@ -52,8 +50,8 @@ class UserManager extends Manager
     /**
      * Override inherited constructor.
      *
-     * @param \serve\database\wrappers\providers\UserProvider $provider    User provider instance
-     * @param \serve\security\Crypto           $crypto      Encryption manager
+     * @param \serve\database\wrappers\providers\UserProvider $provider User provider instance
+     * @param \serve\security\Crypto                          $crypto   Encryption manager
      */
     public function __construct(UserProvider $provider, Crypto $crypto)
     {
@@ -62,16 +60,15 @@ class UserManager extends Manager
         $this->crypto = $crypto;
     }
 
-
     /**
      * Create a new user.
      *
-     * @param  string $email     Valid email address
-     * @param  string $password  Password string (optional) (default '')
-     * @param  string $name      Users name  (optional) (default '')
-     * @param  string $username  Username (optional) (default '')
-     * @param  string $role      User role  (optional) (default 'guest')
-     * @param  bool   $activate  Activate the user straight away (optional) (default false)
+     * @param  string $email    Valid email address
+     * @param  string $password Password string (optional) (default '')
+     * @param  string $name     Users name  (optional) (default '')
+     * @param  string $username Username (optional) (default '')
+     * @param  string $role     User role  (optional) (default 'guest')
+     * @param  bool   $activate Activate the user straight away (optional) (default false)
      * @return mixed
      */
     public function create(string $email, string $password = '', string $name = '', string $username = '', string $role = 'guest', bool $activate = false)
@@ -143,8 +140,8 @@ class UserManager extends Manager
     /**
      * Registers a new admin user for the CMS.
      *
-     * @param  string $email     Valid email address
-     * @param  string $role      'administrator' or 'writer'
+     * @param  string $email Valid email address
+     * @param  string $role  'administrator' or 'writer'
      * @return mixed
      */
     public function createAdmin(string $email, string $role = 'administrator', $activate = false)

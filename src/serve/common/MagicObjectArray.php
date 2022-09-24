@@ -7,7 +7,7 @@
 
 namespace serve\common;
 
-use \Iterator;
+use Iterator;
 use serve\utility\Arr;
 
 /**
@@ -26,7 +26,7 @@ abstract class MagicObjectArray implements Iterator
 
     /**
      * Constructor.
-     * 
+     *
      * @param array $data Data to construct with (optional)
      */
     public function __construct(array $data = [])

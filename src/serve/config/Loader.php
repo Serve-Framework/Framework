@@ -7,8 +7,8 @@
 
 namespace serve\config;
 
+use RuntimeException;
 use serve\file\Filesystem;
-use \RuntimeException;
 use function vsprintf;
 
 /**
@@ -26,7 +26,7 @@ class Loader
 	protected $filesystem;
 
 	/**
-	 * Path to config
+	 * Path to config.
 	 *
 	 * @var string
 	 */
@@ -36,7 +36,7 @@ class Loader
 	 * Constructor.
 	 *
 	 * @param \serve\file\Filesystem $filesystem File system instance
-	 * @param string                           $path       Default path
+	 * @param string                 $path       Default path
 	 */
 	public function __construct(Filesystem $filesystem, string $path)
 	{
@@ -85,8 +85,8 @@ class Loader
 	/**
 	 * Saves the configuration data.
 	 *
-	 * @param  array       $data        Data to save
-	 * @param  null|string $environment Environment
+	 * @param array       $data        Data to save
+	 * @param null|string $environment Environment
 	 */
 	public function save(array $data, string $environment = null)
 	{
@@ -101,7 +101,7 @@ class Loader
 	}
 
 	/**
-	 * Returns the path for a config file
+	 * Returns the path for a config file.
 	 *
 	 * @param  string      $file        File name
 	 * @param  null|string $environment Environment

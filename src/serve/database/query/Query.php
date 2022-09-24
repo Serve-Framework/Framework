@@ -7,8 +7,8 @@
 
 namespace serve\database\query;
 
-use serve\database\connection\ConnectionHandler;
 use PDOException;
+use serve\database\connection\ConnectionHandler;
 
 /**
  * Database SQL builder.

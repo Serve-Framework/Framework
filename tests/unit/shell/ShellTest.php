@@ -116,7 +116,7 @@ class ShellTest extends TestCase
 
 		$this->assertTrue(str_contains($output, 'Usage: ruby'));
 	}
-	
+
 	/**
 	 *
 	 */
@@ -135,7 +135,7 @@ class ShellTest extends TestCase
 		$this->assertTrue($cli->is_successful());
 
 		$this->assertEquals('Test', trim(file_get_contents($output)));
-		
+
 		unlink($input);
 
 		unlink($output);

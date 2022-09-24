@@ -7,9 +7,9 @@
 
 namespace serve\exception;
 
+use PDOException;
 use serve\file\Filesystem;
 use serve\http\request\Environment;
-use PDOException;
 use Throwable;
 
 /**
@@ -45,10 +45,10 @@ class ErrorLogger
     /**
      * Constructor.
      *
-     * @param \Throwable                                $exception   Throwable
+     * @param \Throwable                      $exception   Throwable
      * @param \serve\file\Filesystem          $filesystem  Filesystem instance
      * @param \serve\http\request\Environment $environment HttpEnv instance for logging details
-     * @param string                                    $path        Directory to store log files in
+     * @param string                          $path        Directory to store log files in
      */
     public function __construct(Throwable $exception, Filesystem $filesystem, Environment $environment, string $path)
     {

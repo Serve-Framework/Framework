@@ -7,8 +7,8 @@
 
 namespace serve\tests\unit\framework\utility;
 
-use serve\utility\Mime;
 use serve\tests\TestCase;
+use serve\utility\Mime;
 
 /**
  * @group unit

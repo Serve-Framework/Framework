@@ -13,7 +13,7 @@ use serve\common\MagicObjectArray;
  * Environment class.
  *
  * @author Joe J. Howard
- * 
+ *
  * @property string $REQUEST_METHOD
  * @property string $SCRIPT_NAME
  * @property string $SERVER_NAME
@@ -31,7 +31,6 @@ use serve\common\MagicObjectArray;
  * @property string $HTTP_USER_AGENT
  * @property string $REQUEST_TIME
  * @property string $REQUEST_TIME_FLOAT
- * 
  */
 class Environment extends MagicObjectArray
 {

@@ -8,8 +8,8 @@
 namespace serve\tests\unit\framework\validator;
 
 use serve\ioc\Container;
-use serve\validator\Validator;
 use serve\tests\TestCase;
+use serve\validator\Validator;
 
 /**
  * @group unit

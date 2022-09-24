@@ -9,7 +9,6 @@ namespace serve\http\request;
 
 use serve\utility\Mime;
 use serve\utility\Str;
-use serve\http\request\Environment;
 
 /**
  * Request manager class.
@@ -23,14 +22,14 @@ class Request
      *
      * @var string
      */
-    const METHOD_HEAD     = 'HEAD';
-    const METHOD_GET      = 'GET';
-    const METHOD_POST     = 'POST';
-    const METHOD_PUT      = 'PUT';
-    const METHOD_PATCH    = 'PATCH';
-    const METHOD_DELETE   = 'DELETE';
-    const METHOD_OPTIONS  = 'OPTIONS';
-    const METHOD_OVERRIDE = '_METHOD';
+    public const METHOD_HEAD     = 'HEAD';
+    public const METHOD_GET      = 'GET';
+    public const METHOD_POST     = 'POST';
+    public const METHOD_PUT      = 'PUT';
+    public const METHOD_PATCH    = 'PATCH';
+    public const METHOD_DELETE   = 'DELETE';
+    public const METHOD_OPTIONS  = 'OPTIONS';
+    public const METHOD_OVERRIDE = '_METHOD';
 
     /**
      * Request headers.

@@ -22,7 +22,7 @@ class AlterTest extends TestCase
     public function testAddColumn(): void
     {
         $this->expectNotToPerformAssertions();
-        
+
         $query = 'ALTER TABLE `prefixed_my_table_name` ADD `thumbnail_id` INTEGER | UNSIGNED';
 
         $columns =
@@ -61,7 +61,7 @@ class AlterTest extends TestCase
     public function testDropColumn(): void
     {
         $this->expectNotToPerformAssertions();
-        
+
         $query = 'ALTER TABLE `prefixed_my_table_name` DROP `id`';
 
         $columns =
@@ -100,7 +100,7 @@ class AlterTest extends TestCase
     public function testModifyColumn(): void
     {
         $this->expectNotToPerformAssertions();
-        
+
         $query = 'ALTER TABLE `prefixed_my_table_name` MODIFY COLUMN `id` INTEGER | UNSIGNED | PRIMARY KEY | UNIQUE | AUTO INCREMENT';
 
         $columns =
@@ -139,7 +139,7 @@ class AlterTest extends TestCase
     public function testAddPrimaryKey(): void
     {
         $this->expectNotToPerformAssertions();
-        
+
         $columns =
         [
             [
@@ -180,7 +180,7 @@ class AlterTest extends TestCase
     public function testDropPrimaryKey(): void
     {
         $this->expectNotToPerformAssertions();
-        
+
         $columns =
         [
             [
@@ -219,7 +219,7 @@ class AlterTest extends TestCase
     public function testAddNotNull(): void
     {
         $this->expectNotToPerformAssertions();
-        
+
         $columns =
         [
             [
@@ -260,7 +260,7 @@ class AlterTest extends TestCase
     public function testDropNotNull(): void
     {
         $this->expectNotToPerformAssertions();
-        
+
         $columns =
         [
             [
@@ -299,7 +299,7 @@ class AlterTest extends TestCase
     public function testAddUnsigned(): void
     {
         $this->expectNotToPerformAssertions();
-        
+
         $columns =
         [
             [
@@ -338,7 +338,7 @@ class AlterTest extends TestCase
     public function testDropUnsigned(): void
     {
         $this->expectNotToPerformAssertions();
-        
+
         $columns =
         [
             [
@@ -377,7 +377,7 @@ class AlterTest extends TestCase
     public function testSetAutoIncrement(): void
     {
         $this->expectNotToPerformAssertions();
-        
+
         $columns =
         [
             [
@@ -416,7 +416,7 @@ class AlterTest extends TestCase
     public function testDropAutoIncrement(): void
     {
         $this->expectNotToPerformAssertions();
-        
+
         $columns =
         [
             [
@@ -455,7 +455,7 @@ class AlterTest extends TestCase
     public function testSetSetDefault(): void
     {
         $this->expectNotToPerformAssertions();
-        
+
         $columns =
         [
             [
@@ -492,7 +492,7 @@ class AlterTest extends TestCase
     public function testDropSetDefault(): void
     {
         $this->expectNotToPerformAssertions();
-        
+
         $columns =
         [
             [
@@ -529,7 +529,7 @@ class AlterTest extends TestCase
     public function testAddUnique(): void
     {
         $this->expectNotToPerformAssertions();
-        
+
          $columns =
         [
             [
@@ -566,7 +566,7 @@ class AlterTest extends TestCase
     public function testAddFrogeinKey(): void
     {
         $this->expectNotToPerformAssertions();
-        
+
         $columns =
         [
             [
@@ -603,7 +603,7 @@ class AlterTest extends TestCase
     public function testDropFrogeinKey(): void
     {
         $this->expectNotToPerformAssertions();
-        
+
         $columns =
         [
             [
@@ -640,7 +640,7 @@ class AlterTest extends TestCase
     public function testChainable(): void
     {
         $this->expectNotToPerformAssertions();
-        
+
         $columns =
         [
             [

@@ -5,9 +5,10 @@
  * @license   https://github.com/Serve-Framework/Framework/blob/master/LICENSE
  */
 
-namespace serve\application\services;
+namespace serve\application\services\framework;
 
 use RuntimeException;
+use serve\application\services\Service;
 use serve\pixl\Image;
 use serve\pixl\processor\GD;
 use serve\pixl\processor\ProcessorInterface;
@@ -33,7 +34,7 @@ class PixlService extends Service
 	/**
 	 * Returns the image processor.
 	 *
-	 * @param  array                                              $config Pixl configuration
+	 * @param  array                                    $config Pixl configuration
 	 * @return \serve\pixl\processor\ProcessorInterface
 	 */
 	private function getImageProcessor(array $config): ProcessorInterface

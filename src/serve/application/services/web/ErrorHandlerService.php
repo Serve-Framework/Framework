@@ -23,7 +23,7 @@ class ErrorHandlerService extends Service
 	/**
 	 * Return the error logger if we are logging errors.
 	 *
-	 * @param  \Throwable                                  $exception "caught" exception
+	 * @param  \Throwable                        $exception "caught" exception
 	 * @return \serve\exception\ErrorLogger|null
 	 */
 	private function getLogger(Throwable $exception)

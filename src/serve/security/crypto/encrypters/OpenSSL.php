@@ -7,9 +7,6 @@
 
 namespace serve\security\crypto\encrypters;
 
-use serve\security\crypto\encrypters\Encrypter;
-use serve\security\crypto\encrypters\EncrypterInterface;
-
 /**
  * Encryption/Decryption interface.
  *

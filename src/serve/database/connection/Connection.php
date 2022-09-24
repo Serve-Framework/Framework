@@ -7,11 +7,11 @@
 
 namespace serve\database\connection;
 
-use serve\database\query\Builder;
-use serve\database\query\Query;
 use PDO;
 use PDOException;
 use RuntimeException;
+use serve\database\query\Builder;
+use serve\database\query\Query;
 
 /**
  * Database connection.

@@ -7,15 +7,14 @@
 
 namespace serve\shell;
 
-use function proc_open;
+use function fclose;
+use function is_resource;
+use function microtime;
 use function proc_close;
 use function proc_get_status;
-use function is_resource;
-use function stream_set_blocking;
+use function proc_open;
 use function stream_get_contents;
-use function fwrite;
-use function fclose;
-use function microtime;
+use function stream_set_blocking;
 use function time;
 use function trim;
 
@@ -48,14 +47,14 @@ class Process
     private $result = false;
 
     /**
-     * Errors from the output
+     * Errors from the output.
      *
      * @var string
      */
     private $errors = '';
 
     /**
-     * Output from command
+     * Output from command.
      *
      * @var string
      */
@@ -64,11 +63,11 @@ class Process
     /**
      * Constructor.
      *
-     * @param array  $options            Array of options (optional)
-     * $options = [
-     *  'cmd'     => (string) Command to run (optional) (default null)
-     *  'timeout' => (int) imout in seconds (optional) (default 10)
-     * ];
+     * @param array $options Array of options (optional)
+     *                       $options = [
+     *                       'cmd'     => (string) Command to run (optional) (default null)
+     *                       'timeout' => (int) imout in seconds (optional) (default 10)
+     *                       ];
      */
     public function __construct(array $options)
     {
@@ -79,7 +78,6 @@ class Process
 
     /**
      * Run the command.
-     *
      */
     public function run(): string
     {
@@ -87,7 +85,7 @@ class Process
         [
             ['pipe', 'r'],
             ['pipe', 'w'],
-            ['pipe', 'w']
+            ['pipe', 'w'],
         ];
 
         // Start the process.
@@ -120,8 +118,8 @@ class Process
             $start = microtime(true);
 
             // Wait until we have output or the timer expired.
-            $read  = array($pipes[1]);
-            $other = array();
+            $read  = [$pipes[1]];
+            $other = [];
             stream_select($read, $other, $other, 0, intval($timeout));
 
             // Get the status of the process.
@@ -174,7 +172,7 @@ class Process
     }
 
     /**
-     * Set command timeout
+     * Set command timeout.
      *
      * @param int $timeout Timeout in seconds
      */
@@ -225,7 +223,6 @@ class Process
 
     /**
      * Clear output.
-     *
      */
     public function clearOutput(): void
     {

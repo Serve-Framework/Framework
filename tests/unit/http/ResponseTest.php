@@ -104,7 +104,7 @@ class ResponseTest extends TestCase
 	public function testSendCacheEnabled(): void
 	{
 		$this->expectNotToPerformAssertions();
-		
+
 		ob_start();
 
 		$hash = '"' . hash('sha256', 'foobar') . '"';

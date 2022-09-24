@@ -7,8 +7,8 @@
 
 namespace serve\database\query;
 
-use serve\database\connection\ConnectionHandler;
 use PDOException;
+use serve\database\connection\ConnectionHandler;
 
 /**
  * Alter table class.
@@ -50,7 +50,7 @@ class Alter
      * Constructor.
      *
      * @param \serve\database\connection\ConnectionHandler $connectionHandler The database connection handler to use
-     * @param string                                                 $tableName         The table name we are altering
+     * @param string                                       $tableName         The table name we are altering
      */
     public function __construct(ConnectionHandler $connectionHandler, string $tableName)
     {
@@ -71,9 +71,9 @@ class Alter
     /**
      * Add a new column to the current table.
      *
-     * @param  string                                $column
-     * @param  string                                $dataType The column parameters
-     * @throws PDOException                          If the column already exists
+     * @param  string                      $column
+     * @param  string                      $dataType The column parameters
+     * @throws PDOException                If the column already exists
      * @return \serve\database\query\Alter
      */
     public function ADD_COLUMN(string $column, string $dataType): Alter
@@ -100,8 +100,8 @@ class Alter
     /**
      * Drop an existing column from the current table.
      *
-     * @param  string                                $column The column name to drop
-     * @throws PDOException                          If the column does not exist
+     * @param  string                      $column The column name to drop
+     * @throws PDOException                If the column does not exist
      * @return \serve\database\query\Alter
      */
     public function DROP_COLUMN(string $column): Alter
@@ -132,9 +132,9 @@ class Alter
      * Note this function must be called before using
      * any of the configuration/constraint methods below
      *
-     * @param  string                                $column
-     * @param  string|null                           $dataType (optional) (default null)
-     * @throws PDOException                          If the column does not exist
+     * @param  string                      $column
+     * @param  string|null                 $dataType (optional) (default null)
+     * @throws PDOException                If the column does not exist
      * @return \serve\database\query\Alter
      */
     public function MODIFY_COLUMN(string $column, string $dataType = null): Alter
@@ -227,7 +227,7 @@ class Alter
     /**
      * Add not null to a column.
      *
-     * @param  $notNull mixed Value to set null values to (optional) (default 0)
+     * @param                              $notNull mixed Value to set null values to (optional) (default 0)
      * @return \serve\database\query\Alter
      */
     public function ADD_NOT_NULL($notNull = 0): Alter
@@ -501,9 +501,9 @@ class Alter
     /**
      * Add a foreign key constraint to a column.
      *
-     * @param  string                                $referenceTable The name of the reference table
-     * @param  string                                $referenceKey   The name of the column on the reference table
-     * @param  string|null                           $constraint     The constraint name to add (optional) (default null)
+     * @param  string                      $referenceTable The name of the reference table
+     * @param  string                      $referenceKey   The name of the column on the reference table
+     * @param  string|null                 $constraint     The constraint name to add (optional) (default null)
      * @return \serve\database\query\Alter
      */
     public function ADD_FOREIGN_KEY(string $referenceTable, string $referenceKey, string $constraint = null): Alter
@@ -530,9 +530,9 @@ class Alter
     /**
      * Drop a foreign key constraint to a column.
      *
-     * @param  string                                $referenceTable The name of the reference table
-     * @param  string                                $referenceKey   The name of the column on the reference table
-     * @param  string                                $constraint     The constraint name to remove (optional) (default null)
+     * @param  string                      $referenceTable The name of the reference table
+     * @param  string                      $referenceKey   The name of the column on the reference table
+     * @param  string                      $constraint     The constraint name to remove (optional) (default null)
      * @return \serve\database\query\Alter
      */
     public function DROP_FOREIGN_KEY($referenceTable, $referenceKey, $constraint = null): Alter

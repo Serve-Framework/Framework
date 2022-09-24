@@ -61,7 +61,7 @@ class SpamProtectorTest extends TestCase
 	public function testIpUnBlacklist(): void
 	{
 		$this->expectNotToPerformAssertions();
-		
+
 		$gibberish = $this->mock('\serve\security\spam\gibberish\Gibberish');
 
 		$config = $this->mock('\serve\config\Config');

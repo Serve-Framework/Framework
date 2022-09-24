@@ -82,7 +82,7 @@ class Session extends MagicObjectArray
     /**
      * Set cookie the configuration.
      *
-     * @param  $configuration array Array of configuration options
+     * @param $configuration array Array of configuration options
      */
     public function configure(array $configuration): void
     {

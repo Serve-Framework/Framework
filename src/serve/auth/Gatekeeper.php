@@ -7,8 +7,8 @@
 
 namespace serve\auth;
 
-use serve\database\wrappers\providers\UserProvider;
 use serve\database\query\Builder;
+use serve\database\wrappers\providers\UserProvider;
 use serve\http\cookie\Cookie;
 use serve\http\session\Session;
 use serve\security\Crypto;
@@ -26,28 +26,28 @@ class Gatekeeper
      *
      * @var int
      */
-    const LOGIN_BANNED = 100;
+    public const LOGIN_BANNED = 100;
 
     /**
      * Status code for users who need to activate their account.
      *
      * @var int
      */
-    const LOGIN_ACTIVATING = 101;
+    public const LOGIN_ACTIVATING = 101;
 
     /**
      * Status code for users who fail to provide the correct credentials.
      *
      * @var int
      */
-    const LOGIN_INCORRECT = 102;
+    public const LOGIN_INCORRECT = 102;
 
     /**
      * Status code for users that are temporarily locked.
      *
      * @var int
      */
-    const LOGIN_LOCKED = 103;
+    public const LOGIN_LOCKED = 103;
 
     /**
      * SQL Query Builder.
@@ -94,11 +94,11 @@ class Gatekeeper
     /**
      * Constructor.
      *
-     * @param \serve\database\query\Builder    $SQL          Query builder instance
-     * @param \serve\database\wrappers\providers\UserProvider $provider     User provider instance
-     * @param \serve\security\Crypto           $crypto       Encryption manager
-     * @param \serve\http\cookie\Cookie        $cookie       Cookie manager
-     * @param \serve\http\session\Session      $session      Session manager
+     * @param \serve\database\query\Builder                   $SQL      Query builder instance
+     * @param \serve\database\wrappers\providers\UserProvider $provider User provider instance
+     * @param \serve\security\Crypto                          $crypto   Encryption manager
+     * @param \serve\http\cookie\Cookie                       $cookie   Cookie manager
+     * @param \serve\http\session\Session                     $session  Session manager
      */
     public function __construct(Builder $SQL, UserProvider $provider, Crypto $crypto, Cookie $cookie, Session $session)
     {
@@ -345,7 +345,7 @@ class Gatekeeper
     /**
      * Forgot password.
      *
-     * @param  string $username  Username or email address for user to reset password
+     * @param  string $username Username or email address for user to reset password
      * @return bool
      */
     public function forgotPassword(string $username): mixed
@@ -377,8 +377,8 @@ class Gatekeeper
     /**
      * Reset password.
      *
-     * @param  string $password  New password
-     * @param  string $token     Reset token from the database
+     * @param  string $password New password
+     * @param  string $token    Reset token from the database
      * @return bool
      */
     public function resetPassword(string $password, string $token): bool
@@ -401,7 +401,7 @@ class Gatekeeper
     /**
      * Forgot username.
      *
-     * @param  string $email Email for username
+     * @param  string       $email Email for username
      * @return string|false
      */
     public function forgotUsername(string $email): mixed

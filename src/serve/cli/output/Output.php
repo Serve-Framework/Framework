@@ -42,7 +42,7 @@ class Output
 	 *
 	 * @param \serve\cli\output\Formatter $formatter   Formatter   instance
 	 * @param \serve\cli\Environment      $environment Environment instance
-	 * @param resource|null                         $stdout      Output buffer instance (optional) (default null)
+	 * @param resource|null               $stdout      Output buffer instance (optional) (default null)
 	 */
 	public function __construct(Formatter $formatter, Environment $environment, $stdout = null)
 	{

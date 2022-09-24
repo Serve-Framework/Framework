@@ -7,8 +7,8 @@
 
 namespace serve\tests\unit\database\wrappers\managers;
 
-use serve\database\wrappers\providers\UserProvider;
 use serve\database\wrappers\managers\UserManager;
+use serve\database\wrappers\providers\UserProvider;
 use serve\security\Crypto;
 use serve\security\password\hashers\NativePHP;
 use serve\tests\TestCase;
@@ -42,7 +42,6 @@ class User
 // END CLASSES
 // --------------------------------------------------------------------------
 
-
 /**
  * @group unit
  */
@@ -60,7 +59,7 @@ class UserManagerTest extends TestCase
         $user     = $this->mock(User::class);
         $provider = $this->mock(UserProvider::class);
         $manager  = new UserManager($provider, $crypto);
-        
+
         $crypto->shouldReceive('password')->andReturn($password);
         $password->shouldReceive('hash')->andReturn('hashedpass');
         $provider->shouldReceive('byKey')->andReturn(null);
@@ -88,7 +87,7 @@ class UserManagerTest extends TestCase
         $user     = $this->mock(User::class);
         $provider = $this->mock(UserProvider::class);
         $manager  = new UserManager($provider, $crypto);
-        
+
         $crypto->shouldReceive('password')->andReturn($password);
         $password->shouldReceive('hash')->andReturn('hashedpass');
         $provider->shouldReceive('byKey')->andReturn(null);
@@ -109,7 +108,7 @@ class UserManagerTest extends TestCase
         $user     = new User;
         $provider = $this->mock(UserProvider::class);
         $manager  = new UserManager($provider, $crypto);
-        
+
         $provider->shouldReceive('byKey')->andReturn($user);
 
         $manager->activate('csrf_token');
@@ -132,7 +131,7 @@ class UserManagerTest extends TestCase
         $this->assertTrue($manager->delete('foo@bar.com'));
     }
 
-     /**
+    /**
      *
      */
     public function testNoDelete(): void
@@ -145,5 +144,5 @@ class UserManagerTest extends TestCase
 
         $this->assertFalse($manager->delete('foo@bar.com'));
     }
-   
+
 }

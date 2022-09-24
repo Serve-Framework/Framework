@@ -5,8 +5,9 @@
  * @license   https://github.com/Serve-Framework/Framework/blob/master/LICENSE
  */
 
-namespace serve\application\services;
+namespace serve\application\services\framework;
 
+use serve\application\services\Service;
 use serve\http\cookie\Cookie;
 use serve\http\cookie\storage\NativeCookieStorage;
 use serve\http\request\Environment;
@@ -100,8 +101,8 @@ class HttpService extends Service
 	/**
 	 * Loads the cookie storage implementation.
 	 *
-	 * @param  array                                                    $storeConfig         Configuration for the storage
-	 * @param  array                                                    $cookieConfiguration Configuration for cookie sending/reading
+	 * @param  array                                          $storeConfig         Configuration for the storage
+	 * @param  array                                          $cookieConfiguration Configuration for cookie sending/reading
 	 * @return \serve\http\cookie\storage\NativeCookieStorage
 	 */
 	private function nativeCookieStore(array $storeConfig, array $cookieConfiguration): NativeCookieStorage
@@ -152,8 +153,8 @@ class HttpService extends Service
 	/**
 	 * Loads the native session storage implementation.
 	 *
-	 * @param  array                                                      $storeConfig         Configuration for the storage
-	 * @param  array                                                      $cookieConfiguration Configuration for session sending/reading
+	 * @param  array                                            $storeConfig         Configuration for the storage
+	 * @param  array                                            $cookieConfiguration Configuration for session sending/reading
 	 * @return \serve\http\session\storage\NativeSessionStorage
 	 */
 	private function nativeSessionStore(array $storeConfig, array $cookieConfiguration): NativeSessionStorage
@@ -164,8 +165,8 @@ class HttpService extends Service
 	/**
 	 * Loads the file session storage implementation.
 	 *
-	 * @param  array                                                    $storeConfig         Configuration for the storage
-	 * @param  array                                                    $cookieConfiguration Configuration for session sending/reading
+	 * @param  array                                          $storeConfig         Configuration for the storage
+	 * @param  array                                          $cookieConfiguration Configuration for session sending/reading
 	 * @return \serve\http\session\storage\FileSessionStorage
 	 */
 	private function fileSessionStore(array $storeConfig, array $cookieConfiguration): FileSessionStorage

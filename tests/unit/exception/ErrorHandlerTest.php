@@ -19,7 +19,7 @@ use Throwable;
 class ErrorHandlerTest extends TestCase
 {
     /**
-     * 
+     *
      */
     public function testWebHandler(): void
     {
@@ -30,7 +30,7 @@ class ErrorHandlerTest extends TestCase
         $webHandler = $this->mock('\serve\exception\handlers\WebHandler');
 
         $handler->handle(ErrorException::class, function($exception) use ($handler, $logger, $webHandler)
-        {            
+        {
             // Logger
             $handler->setLogger($logger);
 
@@ -46,7 +46,7 @@ class ErrorHandlerTest extends TestCase
     }
 
     /**
-     * 
+     *
      */
     public function testDifferentError(): void
     {
@@ -73,7 +73,7 @@ class ErrorHandlerTest extends TestCase
     }
 
     /**
-     * 
+     *
      */
     public function testDisableLogging(): void
     {
@@ -98,7 +98,7 @@ class ErrorHandlerTest extends TestCase
     }
 
     /**
-     * 
+     *
      */
     public function testDisplayErrors(): void
     {

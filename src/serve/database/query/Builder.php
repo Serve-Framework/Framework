@@ -62,8 +62,8 @@ class Builder
     /**
      * Create a new table with given columns and paramters.
      *
-     * @param  string                                  $tableName Table name to create
-     * @param  array                                   $params    Table parameters
+     * @param  string                        $tableName Table name to create
+     * @param  array                         $params    Table parameters
      * @return \serve\database\query\Builder
      */
     public function CREATE_TABLE(string $tableName, array $params): Builder
@@ -100,7 +100,7 @@ class Builder
     /**
      * Drop an existing table.
      *
-     * @param  string                                  $tableName Table name to use
+     * @param  string                        $tableName Table name to use
      * @return \serve\database\query\Builder
      */
     public function DROP_TABLE(string $tableName): Builder
@@ -117,7 +117,7 @@ class Builder
     /**
      * Truncate an existing table.
      *
-     * @param  string                                  $tableName Table name to use
+     * @param  string                        $tableName Table name to use
      * @return \serve\database\query\Builder
      */
     public function TRUNCATE_TABLE(string $tableName): Builder
@@ -134,7 +134,7 @@ class Builder
     /**
      * Initialize an alter statement.
      *
-     * @param  string                                $tableName
+     * @param  string                      $tableName
      * @return \serve\database\query\Alter
      */
     public function ALTER_TABLE(string $tableName): Alter
@@ -153,7 +153,7 @@ class Builder
     /**
      * Set the query to query a given table.
      *
-     * @param  string                                  $tableName The table name to use
+     * @param  string                        $tableName The table name to use
      * @return \serve\database\query\Builder
      */
     public function FROM(string $tableName): Builder
@@ -170,7 +170,7 @@ class Builder
     /**
      * Set the query to UPDATE a given table.
      *
-     * @param  string                                  $tableName The table name to use
+     * @param  string                        $tableName The table name to use
      * @return \serve\database\query\Builder
      */
     public function UPDATE(string $tableName): Builder
@@ -185,7 +185,7 @@ class Builder
     /**
      * Set the query to INSERT INTO a given table.
      *
-     * @param  string                                  $tableName The table name to use
+     * @param  string                        $tableName The table name to use
      * @return \serve\database\query\Builder
      */
     public function INSERT_INTO(string $tableName): Builder
@@ -202,7 +202,7 @@ class Builder
     /**
      * Add the values to set.
      *
-     * @param  array                                   $values The values to apply
+     * @param  array                         $values The values to apply
      * @return \serve\database\query\Builder
      */
     public function VALUES(array $values): Builder
@@ -215,7 +215,7 @@ class Builder
     /**
      * Set the query to SET and load values.
      *
-     * @param  array                                   $values The values to apply
+     * @param  array                         $values The values to apply
      * @return \serve\database\query\Builder
      */
     public function SET(array $values): Builder
@@ -228,7 +228,7 @@ class Builder
     /**
      * Set the query to DELETE and load table.
      *
-     * @param  string                                  $tableName The table name to use
+     * @param  string                        $tableName The table name to use
      * @return \serve\database\query\Builder
      */
     public function DELETE_FROM(string $tableName): Builder
@@ -259,7 +259,7 @@ class Builder
     /**
      * Select values from a table.
      *
-     * @param  string                                  $columnNames Column names to select
+     * @param  string                        $columnNames Column names to select
      * @return \serve\database\query\Builder
      */
     public function SELECT(string $columnNames): Builder
@@ -274,9 +274,9 @@ class Builder
     /**
      * Set a where clause.
      *
-     * @param  string                                  $column Column name
-     * @param  string                                  $op     Logical operator
-     * @param  mixed                                   $value  Value
+     * @param  string                        $column Column name
+     * @param  string                        $op     Logical operator
+     * @param  mixed                         $value  Value
      * @return \serve\database\query\Builder
      */
     public function WHERE(string $column, string $op, $value): Builder
@@ -291,9 +291,9 @@ class Builder
     /**
      * Set an and_where clause.
      *
-     * @param  string                                  $column Column name
-     * @param  string                                  $op     Logical operator
-     * @param  mixed                                   $value  Value
+     * @param  string                        $column Column name
+     * @param  string                        $op     Logical operator
+     * @param  mixed                         $value  Value
      * @return \serve\database\query\Builder
      */
     public function AND_WHERE(string $column, string $op, $value): Builder
@@ -308,9 +308,9 @@ class Builder
     /**
      * Set an or_where clause.
      *
-     * @param  string                                  $column Column name
-     * @param  string                                  $op     Logical operator
-     * @param  mixed                                   $value  Value
+     * @param  string                        $column Column name
+     * @param  string                        $op     Logical operator
+     * @param  mixed                         $value  Value
      * @return \serve\database\query\Builder
      */
     public function OR_WHERE(string $column, string $op, $value): Builder
@@ -325,8 +325,8 @@ class Builder
     /**
      * Set an join clause.
      *
-     * @param  string                                  $tableName The table name to join
-     * @param  string                                  $query     Column comparison e.g table1.id = table2.column_name
+     * @param  string                        $tableName The table name to join
+     * @param  string                        $query     Column comparison e.g table1.id = table2.column_name
      * @return \serve\database\query\Builder
      */
     public function JOIN_ON(string $tableName, string $query): Builder
@@ -343,8 +343,8 @@ class Builder
     /**
      * Set an inner join clause.
      *
-     * @param  string                                  $tableName The table name to join
-     * @param  string                                  $query     Column comparison e.g table1.id = table2.column_name
+     * @param  string                        $tableName The table name to join
+     * @param  string                        $query     Column comparison e.g table1.id = table2.column_name
      * @return \serve\database\query\Builder
      */
     public function INNER_JOIN_ON(string $tableName, string $query): Builder
@@ -361,8 +361,8 @@ class Builder
     /**
      * Set a left join clause.
      *
-     * @param  string                                  $tableName The table name to join
-     * @param  string                                  $query     Column comparison e.g table1.id = table2.column_name
+     * @param  string                        $tableName The table name to join
+     * @param  string                        $query     Column comparison e.g table1.id = table2.column_name
      * @return \serve\database\query\Builder
      */
     public function LEFT_JOIN_ON(string $tableName, string $query): Builder
@@ -379,8 +379,8 @@ class Builder
     /**
      * Set a right join clause.
      *
-     * @param  string                                  $tableName The table name to join
-     * @param  string                                  $query     Column comparison e.g table1.id = table2.column_name
+     * @param  string                        $tableName The table name to join
+     * @param  string                        $query     Column comparison e.g table1.id = table2.column_name
      * @return \serve\database\query\Builder
      */
     public function RIGHT_JOIN_ON(string $tableName, string $query): Builder
@@ -397,8 +397,8 @@ class Builder
     /**
      * Set an outer join clause.
      *
-     * @param  string                                  $table The table name to join
-     * @param  string                                  $query Column comparison e.g table1.id = table2.column_name
+     * @param  string                        $table The table name to join
+     * @param  string                        $query Column comparison e.g table1.id = table2.column_name
      * @return \serve\database\query\Builder
      */
     public function OUTER_JOIN_ON(string $table, string $query): Builder
@@ -415,8 +415,8 @@ class Builder
     /**
      * Set the orderby.
      *
-     * @param  string                                  $key       The column name to use
-     * @param  string                                  $direction 'DESC'|'ASC' (optional) (default 'DESC')
+     * @param  string                        $key       The column name to use
+     * @param  string                        $direction 'DESC'|'ASC' (optional) (default 'DESC')
      * @return \serve\database\query\Builder
      */
     public function ORDER_BY(string $key, string $direction = 'DESC'): Builder
@@ -431,7 +431,7 @@ class Builder
     /**
      * Set group by.
      *
-     * @param  string                                  $key The column name to group on
+     * @param  string                        $key The column name to group on
      * @return \serve\database\query\Builder
      */
     public function GROUP_BY(string $key): Builder
@@ -446,8 +446,8 @@ class Builder
     /**
      * Add group concat.
      *
-     * @param  string                                  $keys Concat keys
-     * @param  string                                  $as   As value
+     * @param  string                        $keys Concat keys
+     * @param  string                        $as   As value
      * @return \serve\database\query\Builder
      */
     public function GROUP_CONCAT(string $keys, string $as): Builder
@@ -462,8 +462,8 @@ class Builder
     /**
      * Set the limit/offset.
      *
-     * @param  int                                     $offset Offset to start at
-     * @param  int|null                                $limit  Limit results (optional) (default null)
+     * @param  int                           $offset Offset to start at
+     * @param  int|null                      $limit  Limit results (optional) (default null)
      * @return \serve\database\query\Builder
      */
     public function LIMIT(int $offset, int $limit = null): Builder

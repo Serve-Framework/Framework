@@ -7,9 +7,6 @@
 
 namespace serve\security\password\hashers;
 
-use serve\security\password\hashers\Hasher;
-use serve\security\password\hashers\HasherInterface;
-
 /**
  * Native PHP hashing with polyfill fallback.
  *

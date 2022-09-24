@@ -50,8 +50,8 @@ interface ProcessorInterface
     /**
      * Resize to height.
      *
-     * @param  int                                                $height        Height in px
-     * @param  bool                                               $allow_enlarge Allow image to be enlarged ? (optional) (default FALSE)
+     * @param  int                                      $height        Height in px
+     * @param  bool                                     $allow_enlarge Allow image to be enlarged ? (optional) (default FALSE)
      * @return \serve\pixl\processor\ProcessorInterface
      */
     public function resizeToHeight(int $height, bool $allow_enlarge = false);
@@ -59,8 +59,8 @@ interface ProcessorInterface
     /**
      * Resize to width.
      *
-     * @param  int                                                $width         Width in px
-     * @param  bool                                               $allow_enlarge Allow image to be enlarged ? (optional) (default FALSE)
+     * @param  int                                      $width         Width in px
+     * @param  bool                                     $allow_enlarge Allow image to be enlarged ? (optional) (default FALSE)
      * @return \serve\pixl\processor\ProcessorInterface
      */
     public function resizeToWidth(int $width, bool $allow_enlarge = false);
@@ -68,7 +68,7 @@ interface ProcessorInterface
     /**
      * Scale image by a percentage.
      *
-     * @param  int                                                $scale Scale percentage
+     * @param  int                                      $scale Scale percentage
      * @return \serve\pixl\processor\ProcessorInterface
      */
     public function scale(int $scale);
@@ -76,9 +76,9 @@ interface ProcessorInterface
     /**
      * Resize image to height and width.
      *
-     * @param  int                                                $width         Width in px
-     * @param  int                                                $height        Height in px
-     * @param  bool                                               $allow_enlarge Allow image to be enlarged ? (optional) (default FALSE)
+     * @param  int                                      $width         Width in px
+     * @param  int                                      $height        Height in px
+     * @param  bool                                     $allow_enlarge Allow image to be enlarged ? (optional) (default FALSE)
      * @return \serve\pixl\processor\ProcessorInterface
      */
     public function resize(int $width, int $height, bool $allow_enlarge = false);
@@ -86,9 +86,9 @@ interface ProcessorInterface
     /**
      * Crop to width and height.
      *
-     * @param  int                                                $width         Width in px
-     * @param  int                                                $height        Height in px
-     * @param  bool                                               $allow_enlarge Allow image to be enlarged ? (optional) (default FALSE)
+     * @param  int                                      $width         Width in px
+     * @param  int                                      $height        Height in px
+     * @param  bool                                     $allow_enlarge Allow image to be enlarged ? (optional) (default FALSE)
      * @return \serve\pixl\processor\ProcessorInterface
      */
     public function crop(int $width, int $height, bool $allow_enlarge = false);
@@ -96,10 +96,10 @@ interface ProcessorInterface
     /**
      * Add a background to the image.
      *
-     * @param  int                                                $red   Red color value
-     * @param  int                                                $green Green color value
-     * @param  int                                                $blue  Blue color value
-     * @throws \RuntimeException                                  If file is not an image or not provided
+     * @param  int                                      $red   Red color value
+     * @param  int                                      $green Green color value
+     * @param  int                                      $blue  Blue color value
+     * @throws \RuntimeException                        If file is not an image or not provided
      * @return \serve\pixl\processor\ProcessorInterface
      */
     public function addBackground(int $red, int $green, int $blue);

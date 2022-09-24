@@ -28,7 +28,7 @@ abstract class Wrapper extends MagicObjectArray
      * Constructor.
      *
      * @param \serve\database\query\Builder $SQL  SQL query builder
-     * @param array                                   $data Array row from Database
+     * @param array                         $data Array row from Database
      */
     public function __construct(Builder $SQL, array $data = [])
     {

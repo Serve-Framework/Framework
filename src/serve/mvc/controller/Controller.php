@@ -7,7 +7,7 @@
 
 namespace serve\mvc\controller;
 
-use \Closure;
+use Closure;
 use serve\http\request\Request;
 use serve\http\response\Response;
 use serve\mvc\model\Model;
@@ -41,8 +41,8 @@ abstract class Controller
      *
      * @param \serve\http\request\Request   $request    Request instance
      * @param \serve\http\response\Response $response   Response instance
-     * @param \Closure                                $next       Next middleware closure
-     * @param string                                  $modelClass Full namespaced class name of the model
+     * @param \Closure                      $next       Next middleware closure
+     * @param string                        $modelClass Full namespaced class name of the model
      */
     public function __construct(Request $request, Response $response, Closure $next, string $modelClass)
     {
@@ -64,7 +64,7 @@ abstract class Controller
 	/**
 	 * Instantiates and returns the model instance.
 	 *
-	 * @param  string $class Full namespaced class name of the model
+	 * @param  string                 $class Full namespaced class name of the model
 	 * @return \serve\mvc\model\Model
 	 */
 	private function instantiateModel(string $class): Model

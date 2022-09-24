@@ -82,7 +82,7 @@ class AccessTest extends TestCase
 	 *
 	 */
 	public function testIpNotAllowed(): void
-	{		
+	{
 		$request    = $this->mock('\serve\http\request\Request');
 		$response   = $this->mock('\serve\http\response\Response');
 		$env        = $this->mock('\serve\http\request\Environment');
@@ -101,7 +101,7 @@ class AccessTest extends TestCase
 	}
 
 	/**
-	 * 
+	 *
 	 */
 	public function testBlock(): void
 	{
@@ -156,7 +156,7 @@ class AccessTest extends TestCase
 	public function testDeleteRobots(): void
 	{
 		$this->expectNotToPerformAssertions();
-		
+
 		$request    = $this->mock('\serve\http\request\Request');
 		$response   = $this->mock('\serve\http\response\Response');
 		$env        = $this->mock('\serve\http\request\Environment');

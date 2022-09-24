@@ -7,8 +7,8 @@
 
 namespace serve\validator\rules;
 
-use serve\validator\rules\traits\WithParametersTrait;
 use RuntimeException;
+use serve\validator\rules\traits\WithParametersTrait;
 
 use function filter_var;
 use function sprintf;

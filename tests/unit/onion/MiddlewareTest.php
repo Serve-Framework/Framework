@@ -7,7 +7,7 @@
 
 namespace serve\tests\unit\framework\onion;
 
-use \Closure;
+use Closure;
 use serve\http\request\Request;
 use serve\http\response\Response;
 use serve\onion\Middleware;

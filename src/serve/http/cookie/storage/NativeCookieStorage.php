@@ -34,7 +34,7 @@ class NativeCookieStorage implements StoreInterface
      * Constructor.
      *
      * @param \serve\security\Crypto $crypto        Encryption service
-     * @param array                            $configuration Assoc array of cookie configurations
+     * @param array                  $configuration Assoc array of cookie configurations
      */
     public function __construct(Crypto $crypto, array $configuration)
     {

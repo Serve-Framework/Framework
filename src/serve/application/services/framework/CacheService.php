@@ -5,8 +5,9 @@
  * @license   https://github.com/Serve-Framework/Framework/blob/master/LICENSE
  */
 
-namespace serve\application\services;
+namespace serve\application\services\framework;
 
+use serve\application\services\Service;
 use serve\cache\Cache;
 use serve\cache\stores\FileStore;
 
@@ -54,7 +55,7 @@ class CacheService extends Service
 	/**
 	 * Returns the file storage implementation.
 	 *
-	 * @param  string                                  $path Directory to store cached files
+	 * @param  string                        $path Directory to store cached files
 	 * @return \serve\cache\stores\FileStore
 	 */
 	private function fileStore(string $path): FileStore

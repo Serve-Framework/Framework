@@ -7,8 +7,8 @@
 
 namespace serve\tests\unit\framework\http;
 
-use serve\http\response\exceptions\NotFoundException;
 use serve\http\response\exceptions\MethodNotAllowedException;
+use serve\http\response\exceptions\NotFoundException;
 use serve\http\route\Router;
 use serve\tests\TestCase;
 
@@ -77,7 +77,7 @@ class RouterTest extends TestCase
 	public function testRegex(): void
 	{
 		$this->expectNotToPerformAssertions();
-		
+
 		$regex =
 		[
 			'(:any)'      => 'barfdf-343423-fsd#$@43',

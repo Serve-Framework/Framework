@@ -48,7 +48,7 @@ class CliHandler
 	/**
 	 * Constructor.
 	 *
-	 * @param \Throwable                         $exception Exception being thrown
+	 * @param \Throwable               $exception Exception being thrown
 	 * @param \serve\cli\input\Input   $input     Input
 	 * @param \serve\cli\output\Output $output    Output
 	 */

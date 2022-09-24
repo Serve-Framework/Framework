@@ -127,8 +127,8 @@ class Response
      * @param \serve\http\response\CDN      $CDN
      * @param \serve\mvc\view\View          $view
      * @param \serve\http\request\Request   $request
-     * @param bool                                    $responseCache
-     * @param int                                     $maxCacheAge   Max cache age in seconds (optional) (default 3600)
+     * @param bool                          $responseCache
+     * @param int                           $maxCacheAge   Max cache age in seconds (optional) (default 3600)
      */
     public function __construct(Protocol $protocol, Format $format, Body $body, Status $status, Headers $headers, Cookie $cookie, Session $session, CDN $CDN, View $view, Request $request, bool $responseCache, int $maxCacheAge = 3600)
     {
@@ -389,8 +389,8 @@ class Response
     /**
      * Immediately send a redirect response.
      *
-     * @param  string                                         $url    The absolute URL to redirect to
-     * @param  int                                            $status The redirect status (optional) (default 302)
+     * @param  string                               $url    The absolute URL to redirect to
+     * @param  int                                  $status The redirect status (optional) (default 302)
      * @throws \serve\http\response\exceptions\Stop
      */
     public function redirect(string $url, int $status = 302): void

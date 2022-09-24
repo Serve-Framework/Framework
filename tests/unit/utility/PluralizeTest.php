@@ -7,8 +7,8 @@
 
 namespace serve\tests\unit\framework\utility;
 
-use serve\utility\Pluralize;
 use serve\tests\TestCase;
+use serve\utility\Pluralize;
 
 /**
  * @group unit

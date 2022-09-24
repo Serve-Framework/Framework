@@ -7,8 +7,8 @@
 
 namespace serve\pixl;
 
-use serve\pixl\processor\ProcessorInterface;
 use RuntimeException;
+use serve\pixl\processor\ProcessorInterface;
 
 /**
  * Image manager.
@@ -35,7 +35,7 @@ class Image
      * Constructor.
      *
      * @param \serve\pixl\processor\ProcessorInterface $processor Image processor implementation
-     * @param string                                             $image     Absolute path to file (optional) (default '')
+     * @param string                                   $image     Absolute path to file (optional) (default '')
      */
     public function __construct(ProcessorInterface $processor, string $image = '')
     {
@@ -121,8 +121,8 @@ class Image
     /**
      * Resize to height.
      *
-     * @param  int                         $height        Height in px
-     * @param  bool                        $allow_enlarge Allow image to be enlarged ? (optional) (default FALSE)
+     * @param  int               $height        Height in px
+     * @param  bool              $allow_enlarge Allow image to be enlarged ? (optional) (default FALSE)
      * @return \serve\pixl\Image
      */
     public function resizeToHeight(int $height, bool $allow_enlarge = false): Image
@@ -135,8 +135,8 @@ class Image
     /**
      * Resize to width.
      *
-     * @param  int                         $width         Width in px
-     * @param  bool                        $allow_enlarge Allow image to be enlarged ? (optional) (default FALSE)
+     * @param  int               $width         Width in px
+     * @param  bool              $allow_enlarge Allow image to be enlarged ? (optional) (default FALSE)
      * @return \serve\pixl\Image
      */
     public function resizeToWidth(int $width, bool $allow_enlarge = false): Image
@@ -149,7 +149,7 @@ class Image
     /**
      * Scale image by a percentage.
      *
-     * @param  int                         $scale Scale percentage
+     * @param  int               $scale Scale percentage
      * @return \serve\pixl\Image
      */
     public function scale(int $scale): Image
@@ -162,9 +162,9 @@ class Image
     /**
      * Resize image to height and width.
      *
-     * @param  int                         $width         Width in px
-     * @param  int                         $height        Height in px
-     * @param  bool                        $allow_enlarge Allow image to be enlarged ? (optional) (default FALSE)
+     * @param  int               $width         Width in px
+     * @param  int               $height        Height in px
+     * @param  bool              $allow_enlarge Allow image to be enlarged ? (optional) (default FALSE)
      * @return \serve\pixl\Image
      */
     public function resize(int $width, int $height, bool $allow_enlarge = false): Image
@@ -177,9 +177,9 @@ class Image
     /**
      * Crop to width and height.
      *
-     * @param  int                         $width         Width in px
-     * @param  int                         $height        Height in px
-     * @param  bool                        $allow_enlarge Allow image to be enlarged ? (optional) (default FALSE)
+     * @param  int               $width         Width in px
+     * @param  int               $height        Height in px
+     * @param  bool              $allow_enlarge Allow image to be enlarged ? (optional) (default FALSE)
      * @return \serve\pixl\Image
      */
     public function crop(int $width, int $height, bool $allow_enlarge = false): Image
@@ -192,9 +192,9 @@ class Image
     /**
      * Add a background to the image.
      *
-     * @param  int                         $red   Red color value
-     * @param  int                         $green Green color value
-     * @param  int                         $blue  Blue color value
+     * @param  int               $red   Red color value
+     * @param  int               $green Green color value
+     * @param  int               $blue  Blue color value
      * @return \serve\pixl\Image
      */
     public function addBackground(int $red, int $green, int $blue): Image

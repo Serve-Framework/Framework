@@ -7,6 +7,7 @@
 
 namespace serve\tests\unit\framework\http\response;
 
+use RuntimeException;
 use serve\http\response\exceptions\ForbiddenException;
 use serve\http\response\exceptions\InvalidTokenException;
 use serve\http\response\exceptions\MethodNotAllowedException;
@@ -14,7 +15,6 @@ use serve\http\response\exceptions\NotFoundException;
 use serve\http\response\exceptions\RequestException;
 use serve\http\response\exceptions\Stop;
 use serve\tests\TestCase;
-use RuntimeException;
 
 /**
  * @group unit

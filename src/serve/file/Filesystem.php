@@ -129,7 +129,7 @@ class Filesystem
 	/**
 	 * Returns the mime type of the file.
 	 *
-	 * @param  string      $file  Path to file
+	 * @param  string      $file Path to file
 	 * @return string|bool
 	 */
 	public static function mime(string $file)
@@ -205,7 +205,7 @@ class Filesystem
 	/**
 	 * Deletes a directory contents from disk.
 	 *
-	 * @param  string $path Path to directory
+	 * @param string $path Path to directory
 	 */
 	public static function emptyDirectory(string $path): void
 	{
@@ -322,7 +322,7 @@ class Filesystem
 	{
 		return mkdir($path, $mode, $recursive);
 	}
-	
+
 	/**
 	 * Includes a file.
 	 *
@@ -366,7 +366,6 @@ class Filesystem
 	{
 		return require_once $file;
 	}
-
 
 	/**
 	 * Returns a SplFileObject.

@@ -7,9 +7,9 @@
 
 namespace serve\tests\unit\framework\file;
 
-use SplFileObject;
 use serve\file\Filesystem;
 use serve\tests\TestCase;
+use SplFileObject;
 
 /**
  * @group unit
@@ -24,7 +24,6 @@ class FilesystemTest extends TestCase
 	{
 		return dirname(__FILE__) . DIRECTORY_SEPARATOR . 'files' . DIRECTORY_SEPARATOR . 'one.txt';
 	}
-
 
 	/**
 	 *
@@ -63,19 +62,19 @@ class FilesystemTest extends TestCase
 	/**
 	 *
 	 */
-	public function testIsReadable()
+	public function testIsReadable(): void
 	{
 		$dir = dirname(__FILE__);
 
 		$this->assertTrue(Filesystem::isReadable($dir));
 
-		$this->assertFalse(Filesystem::isReadable($dir . DIRECTORY_SEPARATOR . 'files' . DIRECTORY_SEPARATOR . 'seven.txt' ));
+		$this->assertFalse(Filesystem::isReadable($dir . DIRECTORY_SEPARATOR . 'files' . DIRECTORY_SEPARATOR . 'seven.txt'));
 	}
 
 	/**
 	 *
 	 */
-	public function testIsWritable()
+	public function testIsWritable(): void
 	{
 		$this->assertEquals(true, Filesystem::isWritable($this->testFle()));
 	}
@@ -83,17 +82,17 @@ class FilesystemTest extends TestCase
 	/**
 	 *
 	 */
-	public function testLastModified()
+	public function testLastModified(): void
 	{
 		$modified = Filesystem::lastModified($this->testFle());
 
-		$this->assertTrue(time() >=  $modified );
+		$this->assertTrue(time() >=  $modified);
 	}
 
 	/**
 	 *
 	 */
-	public function testSize()
+	public function testSize(): void
 	{
 		$this->assertTrue(Filesystem::size($this->testFle()) > 0);
 	}
@@ -101,7 +100,7 @@ class FilesystemTest extends TestCase
 	/**
 	 *
 	 */
-	public function testExtension()
+	public function testExtension(): void
 	{
 		$this->assertEquals('txt', Filesystem::extension($this->testFle()));
 	}
@@ -117,7 +116,7 @@ class FilesystemTest extends TestCase
 	/**
 	 *
 	 */
-	public function testDelete()
+	public function testDelete(): void
 	{
 		Filesystem::delete($this->testFle());
 
@@ -189,9 +188,9 @@ class FilesystemTest extends TestCase
 	 */
 	public function testGlob(): void
 	{
-		$glob = glob(dirname(__FILE__) . DIRECTORY_SEPARATOR . 'files' . DIRECTORY_SEPARATOR . "*.txt");
+		$glob = glob(dirname(__FILE__) . DIRECTORY_SEPARATOR . 'files' . DIRECTORY_SEPARATOR . '*.txt');
 
-		$this->assertTrue( is_array($glob) && !empty($glob) && str_contains($glob[0], 'tests/unit/file/files/one.txt') );
+		$this->assertTrue(is_array($glob) && !empty($glob) && str_contains($glob[0], 'tests/unit/file/files/one.txt'));
 	}
 
 	/**
@@ -207,7 +206,7 @@ class FilesystemTest extends TestCase
 	/**
 	 *
 	 */
-	public function testGetContents()
+	public function testGetContents(): void
 	{
 		$this->assertEquals('Test', Filesystem::getContents($this->testFle()));
 	}
@@ -218,7 +217,7 @@ class FilesystemTest extends TestCase
 	public function testPutContents(): void
 	{
 		Filesystem::putContents(dirname(__FILE__) . DIRECTORY_SEPARATOR . 'files' . DIRECTORY_SEPARATOR . 'one.txt', 'Tests');
-	
+
 		$this->assertEquals('Tests', Filesystem::getContents($this->testFle()));
 
 		Filesystem::putContents(dirname(__FILE__) . DIRECTORY_SEPARATOR . 'files' . DIRECTORY_SEPARATOR . 'one.txt', 'Test');
@@ -230,7 +229,7 @@ class FilesystemTest extends TestCase
 	public function testPrependContents(): void
 	{
 		Filesystem::prependContents(dirname(__FILE__) . DIRECTORY_SEPARATOR . 'files' . DIRECTORY_SEPARATOR . 'one.txt', '_');
-	
+
 		$this->assertEquals('_Test', Filesystem::getContents($this->testFle()));
 
 		Filesystem::putContents(dirname(__FILE__) . DIRECTORY_SEPARATOR . 'files' . DIRECTORY_SEPARATOR . 'one.txt', 'Test');
@@ -242,7 +241,7 @@ class FilesystemTest extends TestCase
 	public function testAppendContents(): void
 	{
 		Filesystem::appendContents(dirname(__FILE__) . DIRECTORY_SEPARATOR . 'files' . DIRECTORY_SEPARATOR . 'one.txt', '_');
-	
+
 		$this->assertEquals('Test_', Filesystem::getContents($this->testFle()));
 
 		Filesystem::putContents(dirname(__FILE__) . DIRECTORY_SEPARATOR . 'files' . DIRECTORY_SEPARATOR . 'one.txt', 'Test');
@@ -301,5 +300,3 @@ class FilesystemTest extends TestCase
 		$this->assertEquals('bar', Filesystem::ob_read($path, $vars));
 	}
 }
-
-

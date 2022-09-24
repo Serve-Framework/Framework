@@ -37,7 +37,7 @@ class ImageTest extends TestCase
 	}
 
 	/**
-	 * 
+	 *
 	 */
 	public function testConstructorWithNonExistingFile(): void
 	{
@@ -49,7 +49,7 @@ class ImageTest extends TestCase
 	}
 
 	/**
-	 * 
+	 *
 	 */
 	public function testSave(): void
 	{

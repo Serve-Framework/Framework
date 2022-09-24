@@ -254,7 +254,7 @@ class SessionTest extends TestCase
 	 *
 	 */
 	public function testConfigure(): void
-	{		
+	{
 		$token = $this->mock('serve\http\session\Token');
 
 		$flash = $this->mock('serve\http\session\Flash');

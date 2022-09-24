@@ -93,7 +93,7 @@ class Router
      *
      * @param \serve\http\request\Request $request       Request instance
      * @param \serve\onion\Onion          $onion         Onion instance
-     * @param bool                                  $throwNotFound Throw not found error if route not matched (optional) (default true)
+     * @param bool                        $throwNotFound Throw not found error if route not matched (optional) (default true)
      */
     public function __construct(Request $request, Onion $onion, bool $throwNotFound = true)
     {
@@ -128,9 +128,9 @@ class Router
     /**
      * Add a http POST route.
      *
-     * @param  string                             $uri      URI to apply
-     * @param  mixed                              $callback Callback to apply
-     * @param  mixed                              $args     Args to add (optional) (default null)
+     * @param  string                   $uri      URI to apply
+     * @param  mixed                    $callback Callback to apply
+     * @param  mixed                    $args     Args to add (optional) (default null)
      * @return \serve\http\route\Router
      */
     public function post(string $uri, $callback, $args = null): Router
@@ -141,9 +141,9 @@ class Router
     /**
      * Add a http GET route.
      *
-     * @param  string                             $uri      URI to apply
-     * @param  mixed                              $callback Callback to apply
-     * @param  mixed                              $args     Args to add (optional) (default null)
+     * @param  string                   $uri      URI to apply
+     * @param  mixed                    $callback Callback to apply
+     * @param  mixed                    $args     Args to add (optional) (default null)
      * @return \serve\http\route\Router
      */
     public function get(string $uri, $callback, $args = null): Router
@@ -156,9 +156,9 @@ class Router
     /**
      * Add a http HEAD route.
      *
-     * @param  string                             $uri      URI to apply
-     * @param  mixed                              $callback Callback to apply
-     * @param  mixed                              $args     Args to add (optional) (default null)
+     * @param  string                   $uri      URI to apply
+     * @param  mixed                    $callback Callback to apply
+     * @param  mixed                    $args     Args to add (optional) (default null)
      * @return \serve\http\route\Router
      */
     public function head(string $uri, $callback, $args = null): Router
@@ -169,9 +169,9 @@ class Router
     /**
      * Add a http PUT route.
      *
-     * @param  string                             $uri      URI to apply
-     * @param  mixed                              $callback Callback to apply
-     * @param  mixed                              $args     Args to add (optional) (default null)
+     * @param  string                   $uri      URI to apply
+     * @param  mixed                    $callback Callback to apply
+     * @param  mixed                    $args     Args to add (optional) (default null)
      * @return \serve\http\route\Router
      */
     public function put(string $uri, $callback, $args = null): Router
@@ -182,9 +182,9 @@ class Router
     /**
      * Add a http PATCH route.
      *
-     * @param  string                             $uri      URI to apply
-     * @param  mixed                              $callback Callback to apply
-     * @param  mixed                              $args     Args to add (optional) (default null)
+     * @param  string                   $uri      URI to apply
+     * @param  mixed                    $callback Callback to apply
+     * @param  mixed                    $args     Args to add (optional) (default null)
      * @return \serve\http\route\Router
      */
     public function patch(string $uri, $callback, $args = null): Router
@@ -195,9 +195,9 @@ class Router
     /**
      * Add a http DELETE route.
      *
-     * @param  string                             $uri      URI to apply
-     * @param  mixed                              $callback Callback to apply
-     * @param  mixed                              $args     Args to add (optional) (default null)
+     * @param  string                   $uri      URI to apply
+     * @param  mixed                    $callback Callback to apply
+     * @param  mixed                    $args     Args to add (optional) (default null)
      * @return \serve\http\route\Router
      */
     public function delete(string $uri, $callback, $args = null): Router
@@ -208,9 +208,9 @@ class Router
     /**
      * Add a http OPTIONS route.
      *
-     * @param  string                             $uri      URI to apply
-     * @param  mixed                              $callback Callback to apply
-     * @param  mixed                              $args     Args to add (optional) (default null)
+     * @param  string                   $uri      URI to apply
+     * @param  mixed                    $callback Callback to apply
+     * @param  mixed                    $args     Args to add (optional) (default null)
      * @return \serve\http\route\Router
      */
     public function options(string $uri, $callback, $args = null): Router
@@ -221,10 +221,10 @@ class Router
     /**
      * Map the route to internal arrays.
      *
-     * @param  string                             $method   http request method
-     * @param  string                             $uri      URI to apply
-     * @param  mixed                              $callback Callback to apply
-     * @param  mixed                              $args     Args to add (optional) (default null)
+     * @param  string                   $method   http request method
+     * @param  string                   $uri      URI to apply
+     * @param  mixed                    $callback Callback to apply
+     * @param  mixed                    $args     Args to add (optional) (default null)
      * @return \serve\http\route\Router
      */
     private function map(string $method, string $uri, $callback, $args = null): Router

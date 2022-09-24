@@ -7,8 +7,8 @@
 
 namespace serve\tests\unit\framework\utility;
 
-use serve\utility\Str;
 use serve\tests\TestCase;
+use serve\utility\Str;
 
 /**
  * @group unit

@@ -5,13 +5,13 @@
  * @license   https://github.com/Serve-Framework/Framework/blob/master/LICENSE
  */
 
-namespace serve\application\services;
+namespace serve\application\services\framework;
 
-use serve\application\services\Service;
 use serve\application\cli\commands\Encrypt;
 use serve\application\cli\commands\GenerateSecret;
 use serve\application\cli\commands\RoutesList;
 use serve\application\cli\commands\ServicesList;
+use serve\application\services\Service;
 use serve\cli\Cli;
 use serve\cli\Environment;
 use serve\cli\input\Input;
@@ -43,9 +43,8 @@ class CliService extends Service
 	}
 
 	/**
-     * Registers the CLI.
-     *
-     */
+	 * Registers the CLI.
+	 */
 	protected function registerCli(): void
 	{
 		$this->container->singleton('Cli', function($container)
@@ -55,9 +54,8 @@ class CliService extends Service
 	}
 
 	/**
-     * Registers the CLI input reader.
-     *
-     */
+	 * Registers the CLI input reader.
+	 */
 	protected function registerInput(): void
 	{
 		$this->container->singleton('Input', function()
@@ -67,9 +65,8 @@ class CliService extends Service
 	}
 
 	/**
-     * Registers the CLI output.
-     *
-     */
+	 * Registers the CLI output.
+	 */
 	protected function registerOutput(): void
 	{
 		$this->container->singleton('Output', function()
@@ -79,9 +76,8 @@ class CliService extends Service
 	}
 
 	/**
-     * Registers the Console.
-     *
-     */
+	 * Registers the Console.
+	 */
 	protected function registerConsole(): void
 	{
 		$this->container->singleton('Console', function($container)
@@ -91,9 +87,8 @@ class CliService extends Service
 	}
 
 	/**
-     * Registers application commands.
-     *
-     */
+	 * Registers application commands.
+	 */
 	protected function registerCommands(): void
 	{
 		// Register reactor commands
@@ -103,7 +98,7 @@ class CliService extends Service
         }
 	}
 
-	/**
+    /**
      * Returns all registered commands.
      *
      * @return array

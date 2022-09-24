@@ -36,8 +36,8 @@ class ValidatorFactory
 	/**
 	 * Creates and returns a validator instance.
 	 *
-	 * @param  array                                $input Array to validate
-	 * @param  array                                $rules Array of validation rules
+	 * @param  array                      $input Array to validate
+	 * @param  array                      $rules Array of validation rules
 	 * @return \serve\validator\Validator
 	 */
 	public function create(array $input, array $rules, array $filters = []): Validator

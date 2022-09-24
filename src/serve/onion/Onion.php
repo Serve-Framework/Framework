@@ -8,9 +8,9 @@
 namespace serve\onion;
 
 use Closure;
+use RuntimeException;
 use serve\http\request\Request;
 use serve\http\response\Response;
-use RuntimeException;
 
 /**
  * Array access trait.
