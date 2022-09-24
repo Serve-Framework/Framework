@@ -7,6 +7,16 @@
 
 namespace serve\http\request;
 
+use function array_merge;
+use function array_values;
+use function explode;
+use function krsort;
+use function str_replace;
+use function strpos;
+use function strtoupper;
+use function substr;
+use function trim;
+
 /**
  * Request headers class.
  *

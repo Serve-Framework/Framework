@@ -7,6 +7,8 @@
 
 namespace serve\validator\filters;
 
+use function filter_var;
+
 /**
  * Filter email.
  *

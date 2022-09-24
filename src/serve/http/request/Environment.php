@@ -8,6 +8,19 @@
 namespace serve\http\request;
 
 use serve\common\MagicObjectArray;
+use function array_pop;
+use function dirname;
+use function explode;
+use function intval;
+use function ltrim;
+use function microtime;
+use function rtrim;
+use function str_replace;
+use function strpos;
+use function strrpos;
+use function substr;
+use function time;
+use function trim;
 
 /**
  * Environment class.

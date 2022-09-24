@@ -6,6 +6,24 @@ use ErrorException;
 use serve\http\response\exceptions\RequestException;
 use serve\utility\Str;
 use Throwable;
+use function array_keys;
+use function array_pop;
+use function array_reverse;
+use function array_shift;
+use function count;
+use function explode;
+use function fclose;
+use function feof;
+use function fgets;
+use function file_get_contents;
+use function fopen;
+use function get_class;
+use function get_parent_class;
+use function in_array;
+use function is_readable;
+use function strpos;
+use function substr;
+use function token_get_all;
 
 /**
  * Exception helper functions.

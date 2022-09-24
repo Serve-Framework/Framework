@@ -8,6 +8,11 @@
 namespace serve\file;
 
 use RuntimeException;
+use function array_unshift;
+use function explode;
+use function str_replace;
+use function strpos;
+use function vsprintf;
 
 /**
  * Namespaced file loader trait.

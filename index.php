@@ -1,6 +1,7 @@
 <?php
 
 use serve\application\web\Application;
+use function dirname;
 
 /**
  * Include the application init file.

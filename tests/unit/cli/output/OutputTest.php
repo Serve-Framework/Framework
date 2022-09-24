@@ -9,6 +9,12 @@ namespace serve\tests\unit\framework\cli\output;
 
 use serve\cli\output\Output;
 use serve\tests\TestCase;
+use function fclose;
+use function file_get_contents;
+use function fopen;
+use function stream_get_meta_data;
+use function tmpfile;
+use function var_export;
 
 /**
  * @group unit

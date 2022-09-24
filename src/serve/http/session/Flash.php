@@ -9,6 +9,11 @@ namespace serve\http\session;
 
 use Iterator;
 use serve\utility\Arr;
+use function current;
+use function intval;
+use function key;
+use function next;
+use function reset;
 
 /**
  * Session Manager.

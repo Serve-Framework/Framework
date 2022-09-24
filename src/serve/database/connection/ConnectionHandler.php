@@ -9,6 +9,22 @@ namespace serve\database\connection;
 
 use PDO;
 use PDOStatement;
+use function array_keys;
+use function array_merge;
+use function array_reverse;
+use function explode;
+use function implode;
+use function is_array;
+use function is_bool;
+use function is_int;
+use function is_null;
+use function is_string;
+use function microtime;
+use function preg_replace;
+use function str_replace;
+use function strtolower;
+use function trim;
+use function utf8_encode;
 
 /**
  * Database connection handler.

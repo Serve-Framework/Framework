@@ -7,6 +7,8 @@
 
 namespace serve\validator\filters;
 
+use function html_entity_decode;
+
 /**
  * Html decode.
  *

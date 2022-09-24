@@ -13,6 +13,10 @@ use serve\http\cookie\Cookie;
 use serve\http\session\Session;
 use serve\security\Crypto;
 use serve\utility\UUID;
+use function filter_var;
+use function is_null;
+use function utf8_decode;
+use function utf8_encode;
 
 /**
  * CMS gatekeeper.

@@ -7,6 +7,8 @@
 
 namespace serve\security\crypto\encrypters;
 
+use function hash_pbkdf2;
+
 /**
  * Encryption/Decryption base.
  *

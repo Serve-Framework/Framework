@@ -9,6 +9,10 @@ namespace serve\tests\unit\http\session\storage;
 
 use serve\http\session\storage\NativeSessionStorage;
 use serve\tests\TestCase;
+use function is_int;
+use function md5;
+use function session_save_path;
+use function strtotime;
 
 /**
  * @group unit

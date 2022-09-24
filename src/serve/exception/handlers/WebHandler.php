@@ -15,6 +15,13 @@ use serve\http\response\exceptions\RequestException;
 use serve\http\response\Response;
 use serve\mvc\view\View;
 use Throwable;
+use function dirname;
+use function file_exists;
+use function implode;
+use function in_array;
+use function intval;
+use function json_encode;
+use function time;
 
 /**
  * Error web handler.

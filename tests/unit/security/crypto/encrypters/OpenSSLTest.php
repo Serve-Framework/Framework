@@ -9,6 +9,8 @@ namespace serve\tests\unit\framework\security\crypto\encrypters;
 
 use serve\security\crypto\encrypters\OpenSSL;
 use serve\tests\TestCase;
+use function openssl_get_cipher_methods;
+use function str_contains;
 
 /**
  * @group unit

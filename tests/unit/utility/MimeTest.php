@@ -9,6 +9,7 @@ namespace serve\tests\unit\framework\utility;
 
 use serve\tests\TestCase;
 use serve\utility\Mime;
+use function explode;
 
 /**
  * @group unit

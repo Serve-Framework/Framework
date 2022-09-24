@@ -8,6 +8,18 @@
 namespace serve\cli\output;
 
 use Exception;
+use function array_merge;
+use function array_pop;
+use function end;
+use function implode;
+use function preg_match_all;
+use function preg_replace;
+use function sprintf;
+use function str_replace;
+use function strlen;
+use function strpos;
+use function substr;
+use function vsprintf;
 
 /**
  * Formatter.

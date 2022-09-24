@@ -9,6 +9,7 @@ namespace serve\tests\unit\framework\common;
 
 use serve\common\MagicObjectArray;
 use serve\tests\TestCase;
+use function is_array;
 
 // --------------------------------------------------------------------------
 // START CLASSES

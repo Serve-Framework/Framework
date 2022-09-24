@@ -9,6 +9,8 @@ namespace serve\tests\unit\framework\http\response;
 
 use serve\http\request\Files;
 use serve\tests\TestCase;
+use function count;
+use function is_array;
 
 /**
  * @group unit

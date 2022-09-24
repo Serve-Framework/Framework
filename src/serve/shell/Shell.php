@@ -7,6 +7,20 @@
 
 namespace serve\shell;
 
+use function array_map;
+use function escapeshellarg;
+use function escapeshellcmd;
+use function explode;
+use function file_exists;
+use function getenv;
+use function in_array;
+use function ini_set;
+use function is_array;
+use function is_numeric;
+use function putenv;
+use function rtrim;
+use function strlen;
+
 /**
  * Shell interface utility class.
  *
@@ -178,12 +192,12 @@ class Shell
         }
         elseif ($value === null)
         {
-            $this->options[$flag] = htmlspecialchars($flag, ENT_QUOTES);
+            $this->options[$flag] = \htmlspecialchars($flag, ENT_QUOTES);
         }
         // Value is true we use the flat key
         elseif ($value === true)
         {
-            $this->options[$flag] = htmlspecialchars($flag, ENT_QUOTES);
+            $this->options[$flag] = \htmlspecialchars($flag, ENT_QUOTES);
         }
         // Flag is a key/value
         else

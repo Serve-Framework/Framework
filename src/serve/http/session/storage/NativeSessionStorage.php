@@ -7,6 +7,18 @@
 
 namespace serve\http\session\storage;
 
+use function function_exists;
+use function session_destroy;
+use function session_gc;
+use function session_get_cookie_params;
+use function session_id;
+use function session_name;
+use function session_regenerate_id;
+use function session_save_path;
+use function session_set_cookie_params;
+use function session_start;
+use function session_status;
+
 /**
  * Session encrypt/decrypt.
  *

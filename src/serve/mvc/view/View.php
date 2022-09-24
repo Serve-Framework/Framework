@@ -8,6 +8,11 @@
 namespace serve\mvc\view;
 
 use serve\Serve;
+use function array_merge;
+use function extract;
+use function file_exists;
+use function ob_get_clean;
+use function ob_start;
 
 /**
  * Default view implementation.

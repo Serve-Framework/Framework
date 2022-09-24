@@ -11,6 +11,14 @@ use serve\http\request\Request;
 use serve\http\response\exceptions\MethodNotAllowedException;
 use serve\http\response\exceptions\NotFoundException;
 use serve\onion\Onion;
+use function array_keys;
+use function array_push;
+use function array_values;
+use function in_array;
+use function preg_match;
+use function str_replace;
+use function strpos;
+use function trim;
 
 /**
  * Application router.

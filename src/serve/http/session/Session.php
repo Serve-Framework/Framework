@@ -9,6 +9,7 @@ namespace serve\http\session;
 
 use serve\common\MagicObjectArray;
 use serve\http\session\storage\StoreInterface;
+use function is_array;
 
 /**
  * Session Manager.

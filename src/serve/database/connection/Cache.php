@@ -8,6 +8,17 @@
 namespace serve\database\connection;
 
 use Exception;
+use function array_key_exists;
+use function explode;
+use function implode;
+use function in_array;
+use function is_array;
+use function is_bool;
+use function is_null;
+use function md5;
+use function preg_match;
+use function strtolower;
+use function trim;
 
 /**
  * Database Connection Cache.

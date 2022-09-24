@@ -9,6 +9,7 @@ namespace serve\validator\rules;
 
 use serve\validator\rules\traits\WithParametersTrait;
 
+use function intval;
 use function mb_strlen;
 use function sprintf;
 

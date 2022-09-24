@@ -9,6 +9,20 @@ namespace serve\config;
 
 use RuntimeException;
 use serve\file\Filesystem;
+use function array_keys;
+use function array_map;
+use function array_merge;
+use function array_replace_recursive;
+use function count;
+use function gettype;
+use function implode;
+use function max;
+use function range;
+use function str_pad;
+use function str_repeat;
+use function str_replace;
+use function strlen;
+use function var_export;
 use function vsprintf;
 
 /**

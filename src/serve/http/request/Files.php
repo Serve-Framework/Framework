@@ -8,6 +8,9 @@
 namespace serve\http\request;
 
 use serve\common\MagicObjectArray;
+use function array_keys;
+use function count;
+use function is_array;
 
 /**
  * Files manager.

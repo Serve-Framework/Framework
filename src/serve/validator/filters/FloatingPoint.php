@@ -7,6 +7,8 @@
 
 namespace serve\validator\filters;
 
+use function floatval;
+
 /**
  * Filter float.
  *

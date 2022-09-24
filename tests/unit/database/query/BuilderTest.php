@@ -10,6 +10,8 @@ namespace serve\tests\unit\framework\database\query;
 use serve\database\query\Builder;
 use serve\database\query\Query;
 use serve\tests\TestCase;
+use function preg_replace;
+use function trim;
 
 /**
  * @group unit

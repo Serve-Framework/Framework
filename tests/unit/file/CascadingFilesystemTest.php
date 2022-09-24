@@ -9,6 +9,7 @@ namespace serve\tests\unit\framework\file;
 
 use serve\file\CascadingFilesystem;
 use serve\tests\TestCase;
+use function dirname;
 
 // --------------------------------------------------------------------------
 // START CLASSES

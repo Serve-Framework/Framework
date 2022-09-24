@@ -11,6 +11,11 @@ use serve\cli\input\Input;
 use serve\cli\output\helpers\Table;
 use serve\cli\output\Output;
 use serve\ioc\Container;
+use function array_map;
+use function in_array;
+use function is_null;
+use function is_string;
+use function ksort;
 
 /**
  * PHP Console.

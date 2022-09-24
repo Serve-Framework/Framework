@@ -11,6 +11,7 @@ use serve\file\Filesystem;
 use serve\http\request\Request;
 use serve\http\response\exceptions\ForbiddenException;
 use serve\http\response\Response;
+use function in_array;
 
 /**
  * Access/Security.

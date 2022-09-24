@@ -9,6 +9,7 @@ namespace serve\config;
 
 use serve\utility\Arr;
 use serve\utility\Str;
+use function count;
 
 /**
  * Serve framework configuration manager.

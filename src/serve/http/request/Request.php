@@ -9,6 +9,17 @@ namespace serve\http\request;
 
 use serve\utility\Mime;
 use serve\utility\Str;
+use function array_merge;
+use function count;
+use function explode;
+use function intval;
+use function parse_url;
+use function preg_match_all;
+use function rtrim;
+use function strtolower;
+use function strtoupper;
+use function trim;
+use function urldecode;
 
 /**
  * Request manager class.

@@ -9,6 +9,11 @@ namespace serve\common;
 
 use Iterator;
 use serve\utility\Arr;
+use function current;
+use function key;
+use function next;
+use function reset;
+use function strpos;
 
 /**
  * Array access magic methods trait.

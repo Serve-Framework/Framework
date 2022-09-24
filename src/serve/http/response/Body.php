@@ -7,6 +7,8 @@
 
 namespace serve\http\response;
 
+use function strlen;
+
 /**
  * Http response body.
  *

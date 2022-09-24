@@ -7,6 +7,14 @@
 
 namespace serve\utility;
 
+use function floor;
+use function intval;
+use function is_numeric;
+use function log;
+use function round;
+use function strtotime;
+use function time;
+
 /**
  * Humanizer class.
  *

@@ -8,6 +8,7 @@
 namespace serve\cache\stores;
 
 use serve\file\Filesystem;
+use function time;
 
 /**
  * Cache file storage.

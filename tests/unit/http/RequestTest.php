@@ -12,6 +12,7 @@ use serve\http\request\Files;
 use serve\http\request\Headers;
 use serve\http\request\Request;
 use serve\tests\TestCase;
+use function is_array;
 
 /**
  * @group unit

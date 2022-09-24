@@ -11,6 +11,7 @@ use Closure;
 use serve\http\request\Request;
 use serve\http\response\Response;
 use serve\utility\Callback;
+use function array_merge;
 
 /**
  * Middleware object.

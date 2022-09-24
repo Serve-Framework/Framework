@@ -12,6 +12,14 @@ use serve\config\Loader;
 use serve\file\Filesystem;
 use serve\ioc\Container;
 use serve\Serve;
+use function array_keys;
+use function date_default_timezone_set;
+use function getenv;
+use function ini_set;
+use function mb_internal_encoding;
+use function mb_language;
+use function mb_regex_encoding;
+use function microtime;
 
 /**
  * Serve framework main class file.

@@ -9,6 +9,7 @@ namespace serve\tests\unit\framework\security\spam;
 
 use serve\security\spam\gibberish\Gibberish;
 use serve\tests\TestCase;
+use function dirname;
 
 /**
  * @group unit

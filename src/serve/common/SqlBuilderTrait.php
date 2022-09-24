@@ -9,6 +9,7 @@ namespace serve\common;
 
 use serve\database\query\Builder;
 use serve\ioc\Container;
+use function is_null;
 
 /**
  * SQL Builder Trait.

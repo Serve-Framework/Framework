@@ -2,6 +2,8 @@
 
 namespace serve\http\response;
 
+use function in_array;
+
 class Status {
 
     /**

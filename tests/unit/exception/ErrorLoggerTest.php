@@ -10,6 +10,7 @@ namespace serve\tests\unit\framework\exception;
 use ErrorException;
 use serve\exception\ErrorLogger;
 use serve\tests\TestCase;
+use function dirname;
 
 /**
  * @group unit

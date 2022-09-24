@@ -10,6 +10,8 @@ namespace serve\security;
 use serve\security\crypto\encrypters\EncrypterInterface;
 use serve\security\crypto\Signer;
 use serve\security\password\hashers\HasherInterface;
+use function ini_get;
+use function ini_set;
 
 /**
  * Encryption/Decryption and password hashing.

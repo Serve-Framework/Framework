@@ -7,6 +7,19 @@
 
 namespace serve\security\crypto\encrypters;
 
+use function array_filter;
+use function base64_decode;
+use function base64_encode;
+use function in_array;
+use function mb_substr;
+use function openssl_cipher_iv_length;
+use function openssl_decrypt;
+use function openssl_encrypt;
+use function openssl_get_cipher_methods;
+use function openssl_random_pseudo_bytes;
+use function strpos;
+use function strtolower;
+
 /**
  * Encryption/Decryption interface.
  *

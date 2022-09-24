@@ -9,6 +9,7 @@ namespace serve\tests\unit\framework\http\request;
 
 use serve\http\request\Headers;
 use serve\tests\TestCase;
+use function count;
 
 /**
  * @group unit

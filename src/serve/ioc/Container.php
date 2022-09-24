@@ -36,6 +36,11 @@ use ArrayIterator;
 use Closure;
 use Countable;
 use IteratorAggregate;
+use function array_key_exists;
+use function array_keys;
+use function count;
+use function is_object;
+use function method_exists;
 
 /**
  * Container.

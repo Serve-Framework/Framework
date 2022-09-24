@@ -7,6 +7,11 @@
 
 namespace serve\cli;
 
+use function current;
+use function exec;
+use function getenv;
+use function preg_match;
+
 /**
  * CLI environment.
  *

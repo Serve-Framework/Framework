@@ -7,6 +7,19 @@
 
 namespace serve\utility;
 
+use function array_keys;
+use function array_map;
+use function array_merge;
+use function curl_close;
+use function curl_exec;
+use function curl_init;
+use function curl_setopt_array;
+use function implode;
+use function json_decode;
+use function json_encode;
+use function json_last_error;
+use function urlencode;
+
 /**
  * curl Helper.
  *

@@ -9,6 +9,7 @@ namespace serve\tests\unit\framework\cache\stores;
 
 use serve\cache\stores\FileStore;
 use serve\tests\TestCase;
+use function strtotime;
 
 /**
  * @group unit

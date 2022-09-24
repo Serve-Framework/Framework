@@ -11,6 +11,15 @@ use RuntimeException;
 use serve\file\Filesystem;
 use serve\security\Crypto;
 use serve\utility\UUID;
+use function abs;
+use function mt_rand;
+use function scandir;
+use function serialize;
+use function setcookie;
+use function strtotime;
+use function sys_get_temp_dir;
+use function time;
+use function unserialize;
 
 /**
  * Session encrypt/decrypt.
@@ -170,7 +179,7 @@ class FileSessionStorage implements StoreInterface
         {
             if ($this->started)
             {
-                throw new RuntimeException('Error replacing session id. This method must be called before "session_start()" is called.');
+                throw new RuntimeException('Error replacing session id. This method must be called before "\session_start()" is called.');
             }
 
             if (!UUID::validate($id))
@@ -193,7 +202,7 @@ class FileSessionStorage implements StoreInterface
         {
             if ($this->started)
             {
-                throw new RuntimeException('Error replacing session name. This method must be called before "session_start()" is called.');
+                throw new RuntimeException('Error replacing session name. This method must be called before "\session_start()" is called.');
             }
 
             $this->session_name = $name;

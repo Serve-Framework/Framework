@@ -2,6 +2,27 @@
 
 namespace serve\security\spam\gibberish;
 
+use function array_flip;
+use function array_push;
+use function array_sum;
+use function count;
+use function exp;
+use function file;
+use function file_get_contents;
+use function file_put_contents;
+use function is_array;
+use function is_file;
+use function log;
+use function max;
+use function min;
+use function preg_replace;
+use function range;
+use function serialize;
+use function str_split;
+use function strlen;
+use function strtolower;
+use function unserialize;
+
 /**
  * A small program to determine if text content contains gibberish.
  * Translated into PHP by Oliver Lillie originally written in Python by Rob Renaud.

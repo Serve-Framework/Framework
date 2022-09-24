@@ -8,6 +8,11 @@
 namespace serve\database\query;
 
 use serve\database\connection\ConnectionHandler;
+use function implode;
+use function preg_replace;
+use function str_replace;
+use function strpos;
+use function strtolower;
 
 /**
  * Database SQL builder.

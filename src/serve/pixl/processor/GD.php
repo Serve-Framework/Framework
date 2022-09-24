@@ -8,6 +8,23 @@
 namespace serve\pixl\processor;
 
 use RuntimeException;
+use function chmod;
+use function getimagesize;
+use function imagealphablending;
+use function imagecolorallocate;
+use function imagecolorallocatealpha;
+use function imagecolortransparent;
+use function imagecopyresampled;
+use function imagecreatefromgif;
+use function imagecreatefromjpeg;
+use function imagecreatefrompng;
+use function imagecreatetruecolor;
+use function imagefill;
+use function imagefilledrectangle;
+use function imagegif;
+use function imagejpeg;
+use function imagepng;
+use function imagesavealpha;
 
 /**
  * GD image manager.

@@ -8,6 +8,9 @@
 namespace serve\http\cookie\storage;
 
 use serve\security\Crypto;
+use function serialize;
+use function setcookie;
+use function unserialize;
 
 /**
  * Cookie encrypt/decrypt.

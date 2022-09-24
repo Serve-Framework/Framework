@@ -8,6 +8,13 @@
 namespace serve\utility;
 
 use ReflectionClass;
+use function call_user_func_array;
+use function end;
+use function explode;
+use function is_array;
+use function is_null;
+use function is_string;
+use function strpos;
 
 /**
  * Callback helper.

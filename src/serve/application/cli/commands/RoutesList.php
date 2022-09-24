@@ -9,6 +9,13 @@ namespace serve\application\cli\commands;
 
 use serve\console\Command;
 use serve\utility\Pluralize;
+use function array_values;
+use function count;
+use function implode;
+use function is_array;
+use function strcmp;
+use function strtoupper;
+use function usort;
 
 /**
  * Generate application secret.

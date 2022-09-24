@@ -8,6 +8,7 @@
 namespace serve\validator\filters;
 
 use serve\validator\filters\traits\FiltersWhenUnset;
+use function intval;
 
 /**
  * Integer.

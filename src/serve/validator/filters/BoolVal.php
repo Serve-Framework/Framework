@@ -8,6 +8,17 @@
 namespace serve\validator\filters;
 
 use serve\validator\filters\traits\FiltersWhenUnset;
+use function boolval;
+use function floatval;
+use function intval;
+use function is_bool;
+use function is_float;
+use function is_int;
+use function is_null;
+use function is_numeric;
+use function is_string;
+use function strtolower;
+use function trim;
 
 /**
  * Boolean filter.

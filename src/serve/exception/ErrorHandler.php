@@ -10,6 +10,21 @@ namespace serve\exception;
 use Closure;
 use ErrorException;
 use Throwable;
+use function array_merge;
+use function array_unique;
+use function array_unshift;
+use function error_get_last;
+use function error_reporting;
+use function get_class;
+use function ini_get;
+use function ini_set;
+use function intval;
+use function is_null;
+use function register_shutdown_function;
+use function restore_error_handler;
+use function restore_exception_handler;
+use function set_exception_handler;
+use function strval;
 
 /**
  * Error handler.
@@ -47,7 +62,7 @@ class ErrorHandler
 	protected $handlers = [];
 
 	/**
-	 * User defined "error_reporting()" value before Serve runs.
+	 * User defined "\error_reporting()" value before Serve runs.
 	 *
 	 * @var int
 	 */
@@ -209,7 +224,7 @@ class ErrorHandler
 	 */
 	protected function clearOutputBuffers(): void
 	{
-		//while(ob_get_level() > 0) ob_end_clean();
+		//while(\ob_get_level() > 0) \ob_end_clean();
 	}
 
 	/**

@@ -10,6 +10,29 @@ namespace serve\file;
 use FilesystemIterator;
 use serve\utility\Mime;
 use SplFileObject;
+use function array_diff;
+use function array_values;
+use function extract;
+use function file_exists;
+use function file_get_contents;
+use function file_put_contents;
+use function filemtime;
+use function filesize;
+use function glob;
+use function is_dir;
+use function is_file;
+use function is_readable;
+use function is_writable;
+use function mkdir;
+use function ob_get_clean;
+use function ob_start;
+use function pathinfo;
+use function rename;
+use function rmdir;
+use function scandir;
+use function tmpfile;
+use function touch;
+use function unlink;
 
 /**
  * Filesystem helper.

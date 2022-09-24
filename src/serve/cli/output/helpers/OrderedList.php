@@ -8,6 +8,11 @@
 namespace serve\cli\output\helpers;
 
 use serve\cli\output\Output;
+use function is_array;
+use function sprintf;
+use function str_repeat;
+use function strlen;
+use function strval;
 
 /**
  * CLI ordered list.

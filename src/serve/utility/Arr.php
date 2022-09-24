@@ -7,6 +7,29 @@
 
 namespace serve\utility;
 
+use function explode;
+use function is_array;
+use function array_shift;
+use function count;
+use function array_map;
+use function is_object;
+use function array_filter;
+use function array_keys;
+use function array_splice;
+use function array_slice;
+use function array_key_exists;
+use function in_array;
+use function strpos;
+use function usort;
+use function intval;
+use function is_numeric;
+use function is_string;
+use function strcasecmp;
+use function array_reverse;
+use function implode;
+use function ceil;
+use function min;
+
 /**
  * Array utility functions.
  *

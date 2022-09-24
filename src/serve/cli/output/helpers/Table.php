@@ -9,6 +9,12 @@ namespace serve\cli\output\helpers;
 
 use RuntimeException;
 use serve\cli\output\Output;
+use function array_sum;
+use function array_values;
+use function count;
+use function implode;
+use function mb_strwidth;
+use function str_repeat;
 
 /**
  * CLI table.

@@ -7,6 +7,42 @@
 
 namespace serve\utility;
 
+use function array_pop;
+use function array_slice;
+use function boolval;
+use function count;
+use function ctype_upper;
+use function explode;
+use function floatval;
+use function html_entity_decode;
+use function htmlentities;
+use function implode;
+use function intval;
+use function is_bool;
+use function is_float;
+use function is_int;
+use function is_numeric;
+use function is_string;
+use function ltrim;
+use function mb_strlen;
+use function mb_strtolower;
+use function mb_strtoupper;
+use function mb_substr;
+use function preg_replace;
+use function preg_replace_callback;
+use function random_int;
+use function rtrim;
+use function str_ireplace;
+use function str_replace;
+use function str_split;
+use function strlen;
+use function strpos;
+use function strrpos;
+use function strtolower;
+use function substr;
+use function trim;
+use function urlencode;
+
 /**
  * String helper.
  *
@@ -126,7 +162,7 @@ class Str
 	 */
 	public static function underscored2camel(string $string, bool $upper = false): string
 	{
-		return preg_replace_callback(($upper ? '/(?:^|_)(.?)/u' : '/_(.?)/u'), function ($matches) { return mb_strtoupper($matches[1]); }, $string);
+		return preg_replace_callback(($upper ? '/(?:^|_)(.?)/u' : '/\_(.?)/u'), function ($matches) { return mb_strtoupper($matches[1]); }, $string);
 	}
 
 	/**

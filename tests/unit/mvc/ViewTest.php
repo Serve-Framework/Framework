@@ -9,6 +9,11 @@ namespace serve\tests\unit\framework\mvc;
 
 use serve\mvc\view\View;
 use serve\tests\TestCase;
+use function fclose;
+use function file_put_contents;
+use function rename;
+use function stream_get_meta_data;
+use function tmpfile;
 
 /**
  * @group unit

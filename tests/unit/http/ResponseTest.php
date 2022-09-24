@@ -9,6 +9,10 @@ namespace serve\tests\unit\framework\http\response;
 
 use serve\http\response\Response;
 use serve\tests\TestCase;
+use function extract;
+use function hash;
+use function ob_end_clean;
+use function ob_start;
 
 /**
  * @group unit

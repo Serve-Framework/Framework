@@ -9,6 +9,26 @@ namespace serve\database\query;
 
 use PDOException;
 use serve\database\connection\ConnectionHandler;
+use function array_filter;
+use function array_keys;
+use function array_map;
+use function array_merge;
+use function array_shift;
+use function count;
+use function explode;
+use function implode;
+use function in_array;
+use function is_array;
+use function preg_replace;
+use function rtrim;
+use function str_replace;
+use function strlen;
+use function strpos;
+use function strrpos;
+use function strtoupper;
+use function substr;
+use function trim;
+use function vsprintf;
 
 /**
  * Database SQL builder.

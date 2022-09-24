@@ -8,12 +8,15 @@
 namespace serve\shell;
 
 use function fclose;
+use function intval;
 use function is_resource;
 use function microtime;
 use function proc_close;
 use function proc_get_status;
 use function proc_open;
+use function proc_terminate;
 use function stream_get_contents;
+use function stream_select;
 use function stream_set_blocking;
 use function time;
 use function trim;

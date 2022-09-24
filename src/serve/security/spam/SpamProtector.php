@@ -10,6 +10,18 @@ namespace serve\security\spam;
 use serve\config\Config;
 use serve\security\spam\gibberish\Gibberish;
 use serve\utility\Str;
+use function array_unique;
+use function array_values;
+use function count;
+use function in_array;
+use function is_array;
+use function preg_match_all;
+use function preg_replace;
+use function preg_split;
+use function sort;
+use function strlen;
+use function strtolower;
+use function trim;
 
 /**
  * SPAM manager.
