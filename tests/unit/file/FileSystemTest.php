@@ -11,12 +11,11 @@ use serve\file\Filesystem;
 use serve\tests\TestCase;
 use SplFileObject;
 use function dirname;
-use function is_resource;
-use function touch;
-use function time;
 use function glob;
 use function is_array;
+use function is_resource;
 use function str_contains;
+use function time;
 
 /**
  * @group unit
