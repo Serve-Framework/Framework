@@ -9,6 +9,8 @@ namespace serve\application\services\framework;
 
 use serve\application\services\Service;
 use serve\auth\Gatekeeper;
+use serve\database\wrappers\providers\UserProvider;
+use serve\database\wrappers\managers\UserManager;
 
 /**
  * CMS Gatekeeper.
@@ -22,6 +24,18 @@ class GatekeeperService extends Service
 	 */
 	public function register(): void
 	{
+		$this->registerGatekeeper();
+
+		$this->registerProviders();
+
+		$this->registerManagers();
+	}
+
+	/**
+	 * Registers the Gatekeeper
+	 */
+	private function registerGatekeeper(): void
+	{
 		$this->container->singleton('Gatekeeper', function ($container)
 		{
 			return new Gatekeeper(
@@ -33,4 +47,30 @@ class GatekeeperService extends Service
 			);
 		});
 	}
+
+	/**
+	 * Registers the wrapper providers.
+	 */
+	private function registerProviders(): void
+	{
+		$this->container->singleton('UserProvider', function($container)
+		{
+			return new UserProvider($container->Database->connection()->builder());
+		});
+	}
+
+	/**
+	 * Registers the managers.
+	 */
+	private function registerManagers(): void
+	{
+		$this->container->singleton('UserManager', function($container)
+		{
+			return new UserManager(
+				$container->UserProvider,
+				$container->Crypto
+			);
+		});
+	}
+
 }

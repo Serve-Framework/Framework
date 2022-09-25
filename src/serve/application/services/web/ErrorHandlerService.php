@@ -47,8 +47,11 @@ class ErrorHandlerService extends Service
 		// Log errors
 		$error_reporting = $this->container->Config->get('application.error_handler.error_reporting');
 
+		// Log errors
+		$die_level = $this->container->Config->get('application.error_handler.die_level');
+
 		// Create the error handler
-		$handler = new ErrorHandler($display_errors, $error_reporting);
+		$handler = new ErrorHandler($display_errors, $error_reporting, $die_level);
 
 		// Web handler
 		$handler->handle(Throwable::class, function ($exception) use ($handler, $display_errors)

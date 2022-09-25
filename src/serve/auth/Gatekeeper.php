@@ -371,7 +371,7 @@ class Gatekeeper
         // Create a token for them
         $password_key = UUID::v4();
 
-        $user->serve_password_key = $password_key;
+        $user->password_key = $password_key;
 
         $user->save();
 
@@ -388,14 +388,14 @@ class Gatekeeper
     public function resetPassword(string $password, string $token): bool
     {
         // Validate the user exists
-        $user = $this->provider->byKey('serve_password_key', $token, true);
+        $user = $this->provider->byKey('password_key', $token, true);
 
         if (!$user)
         {
             return false;
         }
 
-        $user->serve_password_key = '';
+        $user->password_key = '';
         $user->hashed_pass = utf8_encode($this->crypto->password()->hash($password));
         $user->save();
 
