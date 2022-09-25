@@ -12,6 +12,7 @@ use serve\config\Config;
 use serve\config\Loader;
 use serve\file\Filesystem;
 use serve\ioc\Container;
+use serve\ioc\ContainerAwareTrait;
 use serve\Serve;
 use function array_keys;
 use function date_default_timezone_set;
@@ -29,6 +30,8 @@ use function microtime;
  */
 abstract class Application extends Serve
 {
+    use ContainerAwareTrait;
+
     /**
      * Singleton instance of self.
      *
@@ -165,11 +168,11 @@ abstract class Application extends Serve
      */
     protected function bootstrap(): void
     {
-        (function ($serve, $container): void
+        (function ($serve): void
         {
             include "{$this->applicationPath}/bootstrap.php";
 
-        })($this, $this->container);
+        })($this);
     }
 
     /**
