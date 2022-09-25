@@ -141,15 +141,18 @@ class UserManager extends Manager
     }
 
     /**
-     * Registers a new admin user for the CMS.
+     * Create a new admin.
      *
-     * @param  string $email Valid email address
-     * @param  string $role  'administrator' or 'writer'
+     * @param  string $email    Valid email address
+     * @param  string $password Password string (optional) (default '')
+     * @param  string $name     Users name  (optional) (default '')
+     * @param  string $username Username (optional) (default '')
+     * @param  bool   $activate Activate the user straight away (optional) (default false)
      * @return mixed
      */
-    public function createAdmin(string $email, string $role = 'administrator', $activate = false)
+    public function createAdmin(string $email, string $password = '', string $name = '', string $username = '', bool $activate = false)
     {
-        return $this->create($email, '', '', '', $role, $activate);
+        return $this->create($email, $password, $name, $username, $activate);
     }
 
     /**
