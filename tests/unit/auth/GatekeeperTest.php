@@ -816,7 +816,7 @@ class GatekeeperTest extends TestCase
 
 		$this->assertTrue(is_string($gatekeeper->forgotPassword('foo@bar.com')));
 
-		$this->assertTrue($user->serve_password_key !== null);
+		$this->assertTrue($user->password_key !== null);
 	}
 
 	/**
@@ -846,7 +846,7 @@ class GatekeeperTest extends TestCase
 
 		$this->assertTrue(is_string($gatekeeper->forgotPassword('usernamefoo')));
 
-		$this->assertTrue($user->serve_password_key !== null);
+		$this->assertTrue($user->password_key !== null);
 	}
 
 	/**
@@ -870,7 +870,7 @@ class GatekeeperTest extends TestCase
 
 		$gatekeeper = new Gatekeeper($sql, $userProvider, $crypto, $cookie, $session);
 
-		$userProvider->shouldReceive('byKey')->with('serve_password_key', 'foobartoken', true)->andReturn($user);
+		$userProvider->shouldReceive('byKey')->with('password_key', 'foobartoken', true)->andReturn($user);
 
 		$crypto->shouldReceive('password')->andReturn($password);
 
