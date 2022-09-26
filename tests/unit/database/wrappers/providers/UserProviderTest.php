@@ -14,7 +14,6 @@ use serve\tests\TestCase;
 
 /**
  * @group unit
- * @group cms
  */
 class UserProviderTest extends TestCase
 {

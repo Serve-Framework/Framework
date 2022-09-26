@@ -13,7 +13,7 @@ use serve\database\wrappers\providers\UserProvider;
 use serve\database\wrappers\managers\UserManager;
 
 /**
- * CMS Gatekeeper.
+ * Gatekeeper Service.
  *
  * @author Joe J. Howard
  */

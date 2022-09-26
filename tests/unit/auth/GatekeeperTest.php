@@ -5,7 +5,7 @@
  * @license   https://github.com/Serve-Framework/Framework/blob/master/LICENSE
  */
 
-namespace serve\tests\unit\cms\auth;
+namespace serve\tests\unit\auth;
 
 use serve\auth\Gatekeeper;
 use serve\database\query\Builder;

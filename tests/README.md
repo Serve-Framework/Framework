@@ -1,6 +1,6 @@
 # Serve Framework Tests
 
-[![Build Status](https://github.com/serve-cms/Framework/framework/workflows/Tests/badge.svg)](https://github.com/serve-cms/Framework/framework/actions?query=workflow%3ATests)
+[![Build Status](https://github.com/Serve-Framework/Framework/workflows/Tests/badge.svg)](https://github.com/Serve-Framework/Framework/actions?query=workflow%3ATests)
 
 Here you'll find all the Serve framework tests. They are divided in to groups so you can easily run the tests you want.
 

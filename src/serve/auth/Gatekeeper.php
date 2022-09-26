@@ -19,7 +19,7 @@ use function utf8_decode;
 use function utf8_encode;
 
 /**
- * CMS gatekeeper.
+ * Gatekeeper.
  *
  * @author Joe J. Howard
  */
@@ -61,7 +61,7 @@ class Gatekeeper
     private $SQL;
 
     /**
-     * CMS User Provider.
+     * User Provider.
      *
      * @var \serve\database\wrappers\providers\UserProvider
      */
