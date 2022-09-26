@@ -7,4 +7,4 @@ parameters:
 		-
 			message: '#Constructor of class [a-zA-Z0-9\\_]+ has an unused parameter#'
 			count: 18
-			path: src/mvc/controller/Controller.php
+			path: src/serve/mvc/controller/Controller.php
