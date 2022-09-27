@@ -103,11 +103,11 @@ class FileStoreTest extends TestCase
 
 		$filesystem->shouldReceive('exists')->with('/app/storage/cache/foo.cache')->once()->andReturn(true);
 
-		$filesystem->shouldReceive('lastModified')->with('/app/storage/cache/foo.cache')->once()->andReturn(strtotime('-2 months'));
+		$filesystem->shouldReceive('modified')->with('/app/storage/cache/foo.cache')->once()->andReturn(strtotime('-2 months'));
 
 		$filesystem->shouldReceive('exists')->with('/app/storage/cache/bar.cache')->once()->andReturn(true);
 
-		$filesystem->shouldReceive('lastModified')->with('/app/storage/cache/bar.cache')->once()->andReturn(strtotime('-15 days'));
+		$filesystem->shouldReceive('modified')->with('/app/storage/cache/bar.cache')->once()->andReturn(strtotime('-15 days'));
 
 		$this->assertTrue($store->expired('foo', strtotime('+1 month')));
 

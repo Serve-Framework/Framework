@@ -9,6 +9,7 @@ namespace serve\tests\unit\framework\http\session\storage;
 
 use serve\file\Filesystem;
 use serve\http\session\storage\FileSessionStorage;
+use serve\security\Crypto;
 use serve\tests\TestCase;
 use serve\utility\UUID;
 use function serialize;
@@ -46,7 +47,7 @@ class FileStorageTest extends TestCase
 	 */
 	private function mockCrypto()
 	{
-		return $this->mock('\serve\security\Crypto');
+		return $this->mock(Crypto::class);
 	}
 
 	/**

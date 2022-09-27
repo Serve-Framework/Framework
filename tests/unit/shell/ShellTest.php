@@ -66,7 +66,7 @@ class ShellTest extends TestCase
 
 		$output = $cli->cmd('cfddfdsf ' . dirname(__FILE__))->run();
 
-		$this->assertEquals('sh: cfddfdsf: command not found', trim($output));
+		$this->assertTrue(str_contains(trim($output), 'command not found'));
 	}
 
 	/**

@@ -87,7 +87,7 @@ class FileStore implements StoreInterface
     {
         if ($this->has($key))
         {
-            if ((($maxAge - time()) + $this->filesystem->lastModified($this->keyToFile($key))) < time())
+            if ((($maxAge - time()) + $this->filesystem->modified($this->keyToFile($key))) < time())
             {
                 return true;
             }

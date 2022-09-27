@@ -123,7 +123,7 @@ class Filesystem
 	 * @param  string $file Path to file
 	 * @return int
 	 */
-	public static function lastModified(string $file): int
+	public static function modified(string $file): int
 	{
 		return filemtime($file);
 	}

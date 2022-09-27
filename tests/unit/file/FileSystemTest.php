@@ -88,9 +88,9 @@ class FilesystemTest extends TestCase
 	/**
 	 *
 	 */
-	public function testLastModified(): void
+	public function testModified(): void
 	{
-		$modified = Filesystem::lastModified($this->testFle());
+		$modified = Filesystem::modified($this->testFle());
 
 		$this->assertTrue(time() >=  $modified);
 	}

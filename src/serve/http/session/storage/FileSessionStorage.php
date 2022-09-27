@@ -275,7 +275,7 @@ class FileSessionStorage implements StoreInterface
 
                 $realPath = $this->storageDir . DIRECTORY_SEPARATOR . $file;
 
-                if (strtotime('+' . $maxAge . ' hours', $this->filesystem->lastModified($realPath)) < time())
+                if (strtotime('+' . $maxAge . ' hours', $this->filesystem->modified($realPath)) < time())
                 {
                     $this->filesystem->delete($realPath);
 
