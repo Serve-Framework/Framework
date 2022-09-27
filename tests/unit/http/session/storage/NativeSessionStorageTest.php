@@ -19,7 +19,10 @@ use function strtotime;
  */
 class NativeStorageTest extends TestCase
 {
-	private function getSessionConfig()
+	/**
+	 * 
+	 */
+	private function getSessionConfig(): array
 	{
 		return
 		[
@@ -33,11 +36,19 @@ class NativeStorageTest extends TestCase
 	}
 
 	/**
+	 * 
+	 */
+	private function sessionSavePath(): string
+	{
+		return dirname(__FILE__) . '/tmp';
+	}
+
+	/**
 	 * @runInSeparateProcess
 	 */
-	private function mockStorage()
+	private function mockStorage(): NativeSessionStorage
 	{
-		return new NativeSessionStorage($this->getSessionConfig(), session_save_path());
+		return new NativeSessionStorage($this->getSessionConfig(), $this->sessionSavePath());
 	}
 
 	/**
