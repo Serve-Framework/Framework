@@ -11,7 +11,6 @@ use serve\http\session\storage\NativeSessionStorage;
 use serve\tests\TestCase;
 use function is_int;
 use function md5;
-use function session_save_path;
 use function strtotime;
 
 /**
@@ -20,7 +19,7 @@ use function strtotime;
 class NativeStorageTest extends TestCase
 {
 	/**
-	 * 
+	 *
 	 */
 	private function getSessionConfig(): array
 	{
@@ -36,7 +35,7 @@ class NativeStorageTest extends TestCase
 	}
 
 	/**
-	 * 
+	 *
 	 */
 	private function sessionSavePath(): string
 	{

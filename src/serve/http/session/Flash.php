@@ -55,7 +55,7 @@ class Flash implements Iterator
     /**
      * {@inheritDoc}
      */
-    public function key(): string|int|null
+    public function key(): mixed
     {
         return key($this->data);
     }

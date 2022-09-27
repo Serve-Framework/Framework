@@ -82,11 +82,10 @@ abstract class Application extends Serve
     /**
      * Starts the application and returns a singleton instance of the application.
      *
-     *
      * @param  string $applicationPath Application path
-     * @return static
+     * @return self
      */
-    public static function start(string $applicationPath): static
+    public static function start(string $applicationPath): self
     {
         if(!empty(static::$instance))
         {
@@ -101,9 +100,9 @@ abstract class Application extends Serve
     /**
      * Returns the application instance if it has been instantiated.
      *
-     * @return static
+     * @return self
      */
-    public static function instance(): static
+    public static function instance(): self
     {
         if(empty(static::$instance))
         {

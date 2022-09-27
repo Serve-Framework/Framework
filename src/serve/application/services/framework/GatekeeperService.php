@@ -9,8 +9,8 @@ namespace serve\application\services\framework;
 
 use serve\application\services\Service;
 use serve\auth\Gatekeeper;
-use serve\database\wrappers\providers\UserProvider;
 use serve\database\wrappers\managers\UserManager;
+use serve\database\wrappers\providers\UserProvider;
 
 /**
  * Gatekeeper Service.
@@ -32,7 +32,7 @@ class GatekeeperService extends Service
 	}
 
 	/**
-	 * Registers the Gatekeeper
+	 * Registers the Gatekeeper.
 	 */
 	private function registerGatekeeper(): void
 	{
@@ -53,7 +53,7 @@ class GatekeeperService extends Service
 	 */
 	private function registerProviders(): void
 	{
-		$this->container->singleton('UserProvider', function($container)
+		$this->container->singleton('UserProvider', function ($container)
 		{
 			return new UserProvider($container->Database->connection()->builder());
 		});
@@ -64,7 +64,7 @@ class GatekeeperService extends Service
 	 */
 	private function registerManagers(): void
 	{
-		$this->container->singleton('UserManager', function($container)
+		$this->container->singleton('UserManager', function ($container)
 		{
 			return new UserManager(
 				$container->UserProvider,
