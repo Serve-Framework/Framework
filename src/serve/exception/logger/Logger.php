@@ -5,9 +5,11 @@
  * @license   https://github.com/Serve-Framework/Framework/blob/master/LICENSE
  */
 
-namespace serve\exception;
+namespace serve\exception\logger;
 
 use PDOException;
+use serve\exception\ExceptionParserTrait;
+use serve\exception\logger\LoggerInterface;
 use serve\file\Filesystem;
 use serve\http\request\Environment;
 use Throwable;
@@ -23,9 +25,9 @@ use function time;
  *
  * @author Joe J. Howard
  */
-class ErrorLogger
+class Logger implements LoggerInterface
 {
-    use ExceptionLogicTrait;
+    use ExceptionParserTrait;
 
     /**
      * Directory where logs are stored.
@@ -56,23 +58,21 @@ class ErrorLogger
      * @param \serve\http\request\Environment $environment HttpEnv instance for logging details
      * @param string                          $path        Directory to store log files in
      */
-    public function __construct(Throwable $exception, Filesystem $filesystem, Environment $environment, string $path)
+    public function __construct(Filesystem $filesystem, Environment $environment, string $path)
     {
         $this->fileSystem = $filesystem;
 
         $this->path = $path;
 
         $this->environment = $environment;
-
-        $this->setException($exception);
     }
 
     /**
-     * Write the current exception to file.
+     * {@inheritDoc}
      */
-    public function write(): void
+    public function write(Throwable $exception): void
     {
-        $msg = $this->logMsg();
+        $msg = $this->logMsg($exception);
 
         $this->fileSystem->appendContents($this->genericPath(), $msg);
 
@@ -80,7 +80,7 @@ class ErrorLogger
     }
 
     /**
-     * Set the error logs directory.
+     * {@inheritDoc}
      */
     public function setPath(string $path): void
     {
@@ -90,23 +90,24 @@ class ErrorLogger
     /**
      * Build and return the log text.
      *
+     * @param  Throwable $exception Exception
      * @return string
      */
-    private function logMsg(): string
+    private function logMsg(Throwable $exception): string
     {
         return
         'DATE    : ' . date('l jS \of F Y h:i:s A', time()) . "\n" .
-        'TYPE    : ' . $this->errType() . ' [' . $this->exception->getCode() . "]\n" .
+        'TYPE    : ' . $this->errType($exception) . ' [' . $exception->getCode() . "]\n" .
         'URL     : ' . $this->environment->REQUEST_URL . "\n" .
         'METHOD  : ' . $this->environment->REQUEST_METHOD . "\n" .
         'REFERER : ' . $this->environment->REFERER . "\n" .
-        'CLASS   : ' . $this->errClass() . "\n" .
-        'FILE    : ' . $this->exception->getFile() . "\n" .
-        'LINE    : ' . $this->exception->getLine() . "\n" .
-        'MESSAGE : ' . $this->exception->getMessage() . "\n" .
+        'CLASS   : ' . $this->errClass($exception) . "\n" .
+        'FILE    : ' . $exception->getFile() . "\n" .
+        'LINE    : ' . $exception->getLine() . "\n" .
+        'MESSAGE : ' . $exception->getMessage() . "\n" .
         'IP      : ' . $this->environment->REMOTE_ADDR . "\n" .
         'AGENT   : ' . $this->environment->HTTP_USER_AGENT . "\n" .
-        'TRACE   : ' . ltrim(implode("\n\t\t ", $this->errTrace())) . "\n\n\n";
+        'TRACE   : ' . ltrim(implode("\n\t\t ", $this->errTrace($exception))) . "\n\n\n";
     }
 
     /**
@@ -132,16 +133,17 @@ class ErrorLogger
     /**
      * Convert the error code to the log file name.
      *
+     * @param  Throwable $exception Exception
      * @return string
      */
-    private function errnoToFile(): string
+    private function errnoToFile(Throwable $exception): string
     {
-        if ($this->exception instanceof PDOException || get_class($this->exception) === 'PDOException' || strpos($this->exception->getMessage(), 'SQLSTATE') !== false)
+        if ($exception instanceof PDOException || get_class($exception) === 'PDOException' || strpos($exception->getMessage(), 'SQLSTATE') !== false)
         {
             return 'database_errors';
         }
 
-        switch($this->exception->getCode())
+        switch($exception->getCode())
         {
             case E_ERROR:
             case E_PARSE:

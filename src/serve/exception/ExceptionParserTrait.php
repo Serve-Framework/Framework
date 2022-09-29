@@ -30,7 +30,7 @@ use function token_get_all;
  *
  * @author Joe J. Howard
  */
-trait ExceptionLogicTrait
+trait ExceptionParserTrait
 {
 	/**
 	 * "Context" for error line.
@@ -40,33 +40,17 @@ trait ExceptionLogicTrait
 	protected $sourcePadding = 6;
 
 	/**
-	 * Exception object.
-	 *
-	 * @var Throwable
-	 */
-	protected $exception;
-
-	/**
-	 * Set the exception object.
-	 *
-	 * @param Throwable $exception Throwable
-	 */
-	protected function setException(Throwable $exception): void
-	{
-		$this->exception = $exception;
-	}
-
-	/**
 	 * Get text version of PHP error constant.
 	 *
 	 * @see    http://php.net/manual/en/errorfunc.constants.php
+	 * @param  Throwable $exception Exception
 	 * @return string
 	 */
-	protected function errType(): string
+	protected function errType(Throwable $exception): string
 	{
-		if($this->exception instanceof ErrorException || get_class($this->exception) === 'ErrorException')
+		if($exception instanceof ErrorException || get_class($exception) === 'ErrorException')
 		{
-			$code = $this->exception->getCode();
+			$code = $exception->getCode();
 
 			$codes =
 			[
@@ -87,12 +71,12 @@ trait ExceptionLogicTrait
 
 			return in_array($code, array_keys($codes)) ? $codes[$code] : 'E_ERROR';
 		}
-		elseif ($this->exception instanceof RequestException || $this->exceptionParentName() === 'RequestException')
+		elseif ($exception instanceof RequestException || $this->exceptionParentName($exception) === 'RequestException')
 		{
-			return Str::camel2case($this->exceptionClassName());
+			return Str::camel2case($this->exceptionClassName($exception));
 		}
 
-		return Str::camel2case($this->exceptionClassName());
+		return Str::camel2case($this->exceptionClassName($exception));
 	}
 
 	/**
@@ -100,9 +84,9 @@ trait ExceptionLogicTrait
 	 *
 	 * @return string
 	 */
-	protected function exceptionClassName(): string
+	protected function exceptionClassName(Throwable $exception): string
 	{
-		$class = explode('\\', get_class($this->exception));
+		$class = explode('\\', get_class($exception));
 
 		return array_pop($class);
 	}
@@ -110,11 +94,12 @@ trait ExceptionLogicTrait
 	/**
 	 * Get the current exception's parent class without namespace.
 	 *
+	 * @param  Throwable $exception Exception
 	 * @return string
 	 */
-	protected function exceptionParentName(): string
+	protected function exceptionParentName(Throwable $exception): string
 	{
-		$class = explode('\\', get_parent_class($this->exception));
+		$class = explode('\\', get_parent_class($exception));
 
 		return array_pop($class);
 	}
@@ -123,13 +108,14 @@ trait ExceptionLogicTrait
 	 * Convert PHP error code to pretty name.
 	 *
 	 * @see    http://php.net/manual/en/errorfunc.constants.php
+	 * @param  Throwable $exception Exception
 	 * @return string
 	 */
-	protected function errName(): string
+	protected function errName(Throwable $exception): string
 	{
-		if($this->exception instanceof ErrorException || get_class($this->exception) === 'ErrorException')
+		if($exception instanceof ErrorException || get_class($exception) === 'ErrorException')
 		{
-			$code = $this->exception->getCode();
+			$code = $exception->getCode();
 
 			$codes =
 			[
@@ -150,22 +136,23 @@ trait ExceptionLogicTrait
 
 			return in_array($code, array_keys($codes)) ? $codes[$code] : 'Error Exception';
 		}
-		elseif ($this->exception instanceof RequestException || $this->exceptionParentName() === 'RequestException')
+		elseif ($exception instanceof RequestException || $this->exceptionParentName($exception) === 'RequestException')
 		{
-			return Str::camel2case($this->exceptionClassName());
+			return Str::camel2case($this->exceptionClassName($exception));
 		}
 
-		return Str::camel2case($this->exceptionClassName());
+		return Str::camel2case($this->exceptionClassName($exception));
 	}
 
     /**
      * Get the exception call trace.
      *
+     * @param  Throwable $exception Exception
      * @return array
      */
-    protected function errTrace(): array
+    protected function errTrace(Throwable $exception): array
 	{
-	    $trace = array_reverse(explode("\n", $this->exception->getTraceAsString()));
+	    $trace = array_reverse(explode("\n", $exception->getTraceAsString()));
 
 	    array_shift($trace);
 
@@ -186,16 +173,17 @@ trait ExceptionLogicTrait
 	/**
 	 * Get source code of error line context.
 	 *
+	 * @param  Throwable $exception Exception
 	 * @return array
 	 */
-	protected function errSource(): array
+	protected function errSource(Throwable $exception): array
 	{
-		if(!is_readable($this->exception->getFile()))
+		if(!is_readable($exception->getFile()))
 		{
 			return [];
 		}
 
-		$handle      = fopen($this->exception->getFile(), 'r');
+		$handle      = fopen($exception->getFile(), 'r');
 		$lines       = [];
 		$currentLine = 0;
 
@@ -205,12 +193,12 @@ trait ExceptionLogicTrait
 
 			$sourceCode = fgets($handle);
 
-			if($currentLine > $this->exception->getLine() + $this->sourcePadding)
+			if($currentLine > $exception->getLine() + $this->sourcePadding)
 			{
 				break; // Exit loop after we have found what we were looking for
 			}
 
-			if($currentLine >= ($this->exception->getLine() - $this->sourcePadding) && $currentLine <= ($this->exception->getLine() + $this->sourcePadding))
+			if($currentLine >= ($exception->getLine() - $this->sourcePadding) && $currentLine <= ($exception->getLine() + $this->sourcePadding))
 			{
 				$lines[$currentLine] = $sourceCode;
 			}
@@ -224,19 +212,20 @@ trait ExceptionLogicTrait
 	/**
 	 * Get the classname of the error file.
 	 *
+	 * @param  Throwable $exception Exception
 	 * @return string
 	 */
-	protected function errClass(): string
+	protected function errClass(Throwable $exception): string
 	{
-		if(!is_readable($this->exception->getFile()))
+		if(!is_readable($exception->getFile()))
 		{
 			return '';
 		}
 
-		$handle      = fopen($this->exception->getFile(), 'r');
+		$handle      = fopen($exception->getFile(), 'r');
 		$class      = '';
 		$namespace  = '';
-		$tokens     = token_get_all(file_get_contents($this->exception->getFile()));
+		$tokens     = token_get_all(file_get_contents($exception->getFile()));
 
 		foreach ($tokens as $i => $token)
 	    {

@@ -9,22 +9,22 @@ namespace serve\exception;
 
 use Closure;
 use ErrorException;
+use serve\exception\logger\Logger;
+use serve\http\response\exceptions\RequestException;
+use serve\http\response\exceptions\Stop;
 use Throwable;
 use function array_merge;
 use function array_unique;
 use function array_unshift;
 use function error_get_last;
-use function error_reporting;
-use function get_class;
 use function ini_get;
-use function ini_set;
-use function intval;
 use function is_null;
+use function ob_end_clean;
+use function ob_get_level;
 use function register_shutdown_function;
 use function restore_error_handler;
 use function restore_exception_handler;
 use function set_exception_handler;
-use function strval;
 
 /**
  * Error handler.
@@ -34,6 +34,13 @@ use function strval;
 class ErrorHandler
 {
 	/**
+	 * Logger.
+	 *
+	 * @var \serve\exception\logger\Logger
+	 */
+	private $logger;
+
+	/**
 	 * Is the shutdown handler disabled?
 	 *
 	 * @var bool
@@ -41,18 +48,11 @@ class ErrorHandler
 	protected $disableShutdownHandler = false;
 
 	/**
-	 * Die on error level.
-	 *
-	 * @var bool
-	 */
-	protected $dieLevel = 0;
-
-	/**
 	 * Exception types that shouldn't be logged.
 	 *
 	 * @var array
 	 */
-	protected $disableLoggingFor = ['serve\http\response\exceptions\Stop'];
+	protected $disableLoggingFor = [Stop::class];
 
 	/**
 	 * Exception handlers.
@@ -62,58 +62,54 @@ class ErrorHandler
 	protected $handlers = [];
 
 	/**
-	 * User defined "\error_reporting()" value before Serve runs.
-	 *
-	 * @var int
-	 */
-	private $defaultErrorReporting;
-
-	/**
-	 * User defined "display_errors" value before Serve runs.
+	 * Are we logging errors?
 	 *
 	 * @var bool
 	 */
-	private $defaultDisplayErrors;
+	private $logErrors;
 
 	/**
-	 * Logger.
+	 * Are we displaying errors?
 	 *
-	 * @var \serve\exception\ErrorLogger
+	 * @var bool
 	 */
-	private $logger;
+	private $displayErrors;
 
     /**
      * Constructor.
+     *
+     * @param \serve\exception\logger\Logger $logger        Error logger
+     * @param bool                           $displayErrors Display errors
+     * @param bool                           $logErrors     Log errors
      */
-    public function __construct(bool $displayErrors, int $errorReporting, int $dieLevel = 0)
+    public function __construct(Logger $logger, bool $displayErrors, bool $logErrors)
     {
-    	// Save the previously set error reporting levels
-        $this->defaultErrorReporting = $this->error_reporting();
+        $this->logErrors = $displayErrors;
 
-        $this->defaultDisplayErrors = $this->display_errors();
+        $this->displayErrors = $displayErrors;
 
-        // Set the user defined error reporting levels
-        $this->display_errors($displayErrors);
-
-        $this->error_reporting($errorReporting);
-
-    	// Add a basic exception handler to the stack as a fullback
-		$this->handle(Throwable::class, function ($e)
-		{
-			echo '[ ' . get_class($e) . '] ' . $e->getMessage() . ' on line [ ' . $e->getLine() . ' ] in [ ' . $e->getFile() . ' ]';
-
-			echo PHP_EOL;
-
-			echo $e->getTraceAsString();
-
-			return false;
-		});
-
-		// Set the die level
-		$this->dieLevel = $dieLevel;
+        $this->handle(Throwable::class, $this->getFallbackHandler());
 
 		$this->register();
     }
+
+	/**
+	 * Returns the fallback handler.
+	 *
+	 * @return Closure
+	 */
+	protected function getFallbackHandler(): Closure
+	{
+		return function (Throwable $e): void
+		{
+			if($this->displayErrors())
+			{
+				$this->write('[ ' . $e::class . "]  {$e->getMessage()} on line [ {$e->getLine()} ] in [ {$e->getFile()} ]" . PHP_EOL);
+
+				$this->write($e->getTraceAsString() . PHP_EOL);
+			}
+		};
+	}
 
 	/**
 	 * Registers the exception handler.
@@ -125,7 +121,7 @@ class ErrorHandler
 		{
 			$e = error_get_last();
 
-			if($e !== null && ($this->error_reporting() & $e['type']) !== 0 && !$this->disableShutdownHandler)
+			if($e !== null && ($this->log_errors() & $e['type']) !== 0 && !$this->disableShutdownHandler)
 			{
 				$this->handler(new ErrorException($e['message'], $e['type'], 0, $e['file'], $e['line']));
 
@@ -135,16 +131,6 @@ class ErrorHandler
 
 		// Set the exception handler
 		set_exception_handler([$this, 'handler']);
-	}
-
-	/**
-	 * Set logger instance.
-	 *
-	 * @param \serve\exception\ErrorLogger $logger Error logger
-	 */
-	public function setLogger(ErrorLogger $logger): void
-	{
-		$this->logger = $logger;
 	}
 
 	/**
@@ -210,10 +196,6 @@ class ErrorHandler
      */
     public function restore(): void
     {
-        $this->display_errors($this->defaultDisplayErrors);
-
-        $this->error_reporting($this->defaultErrorReporting);
-
     	restore_error_handler();
 
     	restore_exception_handler();
@@ -224,7 +206,12 @@ class ErrorHandler
 	 */
 	protected function clearOutputBuffers(): void
 	{
-		//while(\ob_get_level() > 0) \ob_end_clean();
+		$phpunit = PHP_SAPI == 'cli' && isset($_SERVER['argv']) && is_array($_SERVER['argv']) && str_contains($_SERVER['argv'][0], 'phpunit');
+
+		if (!$phpunit)
+		{
+			while(ob_get_level() > 0) ob_end_clean();
+		}
 	}
 
 	/**
@@ -235,54 +222,34 @@ class ErrorHandler
 	 */
 	protected function shouldExceptionBeLogged(Throwable $exception): bool
 	{
-		$error_reporting = $this->error_reporting();
-
-		$code = intval($exception->getCode());
-
-		// No error reporting or no error logging
-		if (!$error_reporting || !$this->logger)
+		if(!$this->logErrors)
 		{
 			return false;
 		}
 
-		if ($error_reporting > 0 && $error_reporting >= $code)
+		foreach($this->disableLoggingFor as $exceptionType)
 		{
-			foreach($this->disableLoggingFor as $exceptionType)
+			if ($exception instanceof $exceptionType)
 			{
-				if ($exception instanceof $exceptionType)
-				{
-					return false;
-				}
+				return false;
 			}
-
-			return true;
 		}
 
-		return false;
+		return true;
 	}
 
 	/**
-	 * Should the exception force a shutdown.
+	 * Log an error.
 	 *
 	 * @param  Throwable $exception An exception object
 	 * @return bool
 	 */
-	protected function shouldShutdown(Throwable $exception): bool
+	protected function logException(Throwable $exception): void
 	{
-		$code = intval($exception->getCode());
-
-		// No error reporting or no error logging
-		if ($this->dieLevel === 0)
+		if ($this->shouldExceptionBeLogged($exception))
 		{
-			return false;
+			$this->logger->writeException($exception);
 		}
-
-		if ($this->dieLevel > 0 && $this->dieLevel >= $code)
-		{
-			return true;
-		}
-
-		return false;
 	}
 
 	/**
@@ -310,61 +277,94 @@ class ErrorHandler
 					}
 				}
 			}
-
-			// Log exception
-			if($this->shouldExceptionBeLogged($exception))
-			{
-				$this->logger->write();
-			}
 		}
 		catch(Throwable $e)
 		{
-			// Empty output buffers
+			if((PHP_SAPI === 'cli' || headers_sent() === false) && $this->displayErrors)
+			{
+				if(PHP_SAPI !== 'cli')
+				{
+					http_response_code($exception instanceof RequestException || $exception instanceof Stop ? $exception->getCode() : 500);
+				}
 
-			$this->clearOutputBuffers();
+				// Empty output buffers
 
-			// One of the exception handlers failed so we'll just show the user a generic error screen
+				$this->clearOutputBuffers();
 
-			echo $e->getMessage() . ' on line [ ' . $e->getLine() . ' ] in [ ' . $e->getFile() . ' ]' . PHP_EOL;
+				// One of the exception handlers failed so we'll just show the user a generic error screen
+
+				$this->getFallbackHandler()($exception);
+
+				// We'll also show some information about how the exception handler failed
+
+				$this->write('Additionally, the error handler failed with the following error:' . PHP_EOL);
+
+				$this->getFallbackHandler()($e);
+
+				// And finally we'll log the additional exception
+
+				$this->logException($e);
+			}
 		}
-
-		if ($this->shouldShutdown($exception))
+		finally
 		{
-			exit(1);
+			try
+			{
+				$this->logException($exception);
+			}
+			finally
+			{
+				exit(1);
+			}
 		}
 	}
 
-    /**
-     * Set or get the Serve error reporting level.
-     *
-     * @param  int|null $errorReporting (optional) (default NULL)
-     * @return int
-     */
-    public function error_reporting(?int $errorReporting = null): int
-    {
-    	if (!is_null($errorReporting))
-    	{
-    		error_reporting($errorReporting);
+	/**
+	 * Write to output.
+	 *
+	 * @param string $output String to write to output
+	 */
+	protected function write(string $output): void
+	{
+		if(PHP_SAPI === 'cli' && ini_get('display_errors') === 'stderr')
+		{
+			fwrite(STDERR, $output);
 
-    		ini_set('error_reporting', strval($errorReporting));
+			return;
+		}
+
+		echo $output;
+	}
+
+    /**
+     * Set or get the Serve "log_errors" value.
+     *
+     * @param  bool|null $errorReporting (optional) (default NULL)
+     * @return bool
+     */
+    public function logErrors(?bool $logErrors = null): bool
+    {
+    	if (!is_null($logErrors))
+    	{
+    		$this->logErrors = $logErrors;
     	}
 
-    	return error_reporting();
+    	return $this->logErrors;
     }
 
     /**
      * Set or get the Serve "display_errors" value.
      *
-     * @param  bool|null $display_errors (optional) (default NULL)
+     * @param  bool|null $displayErrors (optional) (default NULL)
      * @return bool
      */
-    public function display_errors(?bool $display_errors = null): bool
+    public function displayErrors(?bool $displayErrors = null): bool
     {
-    	if (!is_null($display_errors))
+    	if (!is_null($displayErrors))
     	{
-    		ini_set('display_errors', $display_errors === true ? '1' : '0');
+    		$this->displayErrors = $displayErrors;
     	}
 
-    	return ini_get('display_errors');
+    	return $this->displayErrors;
     }
 }

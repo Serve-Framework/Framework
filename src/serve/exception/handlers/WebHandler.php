@@ -8,7 +8,7 @@
 namespace serve\exception\handlers;
 
 use Exception;
-use serve\exception\ExceptionLogicTrait;
+use serve\exception\ExceptionParserTrait;
 use serve\http\request\Request;
 use serve\http\response\exceptions\MethodNotAllowedException;
 use serve\http\response\exceptions\RequestException;
@@ -30,7 +30,7 @@ use function time;
  */
 class WebHandler
 {
-	use ExceptionLogicTrait;
+	use ExceptionParserTrait;
 
 	/**
 	 * Request instance.
@@ -54,29 +54,19 @@ class WebHandler
 	protected $view;
 
 	/**
-	 * Error.
-	 *
-	 * @var Exception|\serve\http\response\exceptions\ForbiddenException|\serve\http\response\exceptions\InvalidTokenException|\serve\http\response\exceptions\MethodNotAllowedException|\serve\http\response\exceptions\NotFoundException|\serve\http\response\exceptions\RequestException|\serve\http\response\exceptions\Stop|Throwable
-	 */
-	protected $exception;
-
-	/**
 	 * Constructor.
 	 *
-	 * @param Throwable                     $exception Throwable
-	 * @param \serve\http\request\Request   $request   Request instance
-	 * @param \serve\http\response\Response $response  Response instance
-	 * @param \serve\mvc\view\View          $view      View instance
+	 * @param \serve\http\request\Request   $request  Request instance
+	 * @param \serve\http\response\Response $response Response instance
+	 * @param \serve\mvc\view\View          $view     View instance
 	 */
-	public function __construct(Throwable $exception, Request $request, Response $response, View $view)
+	public function __construct(Request $request, Response $response, View $view)
 	{
 		$this->request = $request;
 
 		$this->response = $response;
 
 		$this->view = $view;
-
-		$this->exception = $exception;
 	}
 
 	/**
@@ -99,27 +89,28 @@ class WebHandler
 	/**
 	 * Returns a detailed error page.
 	 *
-	 * @param  bool   $returnAsJson Should we return JSON?
-	 * @param  bool   $isBot        Is the user-agent a bot?
+	 * @param  Throwable $exception    Exception
+	 * @param  bool      $returnAsJson Should we return JSON?
+	 * @param  bool      $isBot        Is the user-agent a bot?
 	 * @return string
 	 */
-	protected function getDetailedError(bool $returnAsJson, bool $isBot): string
+	protected function getDetailedError(Throwable $exception, bool $returnAsJson, bool $isBot): string
 	{
 		$vars =
 		[
-    		'errcode'      => $this->exception->getCode(),
-    		'errName'      => $this->errName(),
-    		'errtype'      => $this->errtype(),
+    		'errcode'      => $exception->getCode(),
+    		'errName'      => $this->errName($exception),
+    		'errtype'      => $this->errtype($exception),
     		'errtime'      => time(),
-    		'errmsg'       => $this->exception->getMessage(),
-    		'errfile'      => $this->exception->getFile(),
-    		'errline'      => intval($this->exception->getLine()),
-    		'errClass'     => $this->errClass(),
-    		'errTrace'     => $this->errTrace(),
+    		'errmsg'       => $exception->getMessage(),
+    		'errfile'      => $exception->getFile(),
+    		'errline'      => intval($exception->getLine()),
+    		'errClass'     => $this->errClass($exception),
+    		'errTrace'     => $this->errTrace($exception),
     		'errUrl'       => $this->request->environment()->REQUEST_URL,
     		'clientIP'     => $this->request->environment()->REMOTE_ADDR,
     		'logFiles'     => [],
-    		'errFileLines' => $this->errSource(),
+    		'errFileLines' => $this->errSource($exception),
     	];
 
     	// Bots get a plain error message
@@ -142,13 +133,14 @@ class WebHandler
 	/**
 	 * Returns a generic error page.
 	 *
-	 * @param  bool   $returnAsJson Should we return JSON?
-	 * @param  bool   $isBot        Is the user-agent a bot?
+	 * @param  Throwable $exception    Exception
+	 * @param  bool      $returnAsJson Should we return JSON?
+	 * @param  bool      $isBot        Is the user-agent a bot?
 	 * @return string
 	 */
-	protected function getGenericError(bool $returnAsJson, bool $isBot): string
+	protected function getGenericError(Throwable $exception, bool $returnAsJson, bool $isBot): string
 	{
-		$code = $this->exception->getCode();
+		$code = $exception->getCode();
 
 		if ($isBot)
 		{
@@ -194,7 +186,7 @@ class WebHandler
 
 			$view = $dir . '/500.php';
 
-			if($this->exception instanceof RequestException)
+			if($exception instanceof RequestException)
 			{
 				if (file_exists($dir . '/' . $code . '.php'))
 				{
@@ -209,10 +201,11 @@ class WebHandler
 	/**
 	 * Display an error page to end user.
 	 *
-	 * @param  bool  $showDetails Should we show a detailed error page
+	 * @param  Throwable $exception   Exception
+	 * @param  bool      $showDetails Should we show a detailed error page
 	 * @return false
 	 */
-	public function handle(bool $showDetails = true): bool
+	public function handle(Throwable $exception, bool $showDetails = true): bool
 	{
 		// Set appropriate content type header
 		if (($returnAsJson = $this->returnAsJson()) === true)
@@ -227,21 +220,21 @@ class WebHandler
 		// Set the response body
 		if ($showDetails)
 		{
-			$this->response->body()->set($this->getDetailedError($returnAsJson, $this->request->isBot()));
+			$this->response->body()->set($this->getDetailedError($exception, $returnAsJson, $this->request->isBot()));
 		}
 		else
 		{
-			$this->response->body()->set($this->getGenericError($returnAsJson, $this->request->isBot()));
+			$this->response->body()->set($this->getGenericError($exception, $returnAsJson, $this->request->isBot()));
 		}
 
 		// Send the response along with appropriate headers
-		if ($this->exception instanceof RequestException)
+		if ($exception instanceof RequestException)
 		{
-			$status = $this->exception->getCode();
+			$status = $exception->getCode();
 
-			if ($this->exception instanceof MethodNotAllowedException)
+			if ($exception instanceof MethodNotAllowedException)
 			{
-				$this->response->headers()->set('allows', implode(',', $this->exception->getAllowedMethods()));
+				$this->response->headers()->set('allows', implode(',', $exception->getAllowedMethods()));
 			}
 		}
 		else

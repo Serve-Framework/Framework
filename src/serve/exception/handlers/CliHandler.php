@@ -13,7 +13,7 @@ use serve\cli\input\Input;
 use serve\cli\output\helpers\OrderedList;
 use serve\cli\output\helpers\UnorderedList;
 use serve\cli\output\Output;
-use serve\exception\ExceptionLogicTrait;
+use serve\exception\ExceptionParserTrait;
 use Throwable;
 use function array_keys;
 use function get_class;
@@ -27,40 +27,30 @@ use function intval;
  */
 class CliHandler
 {
-	use ExceptionLogicTrait;
-
-	/**
-	 * Error.
-	 *
-	 * @var Exception|\serve\http\response\exceptions\ForbiddenException|\serve\http\response\exceptions\InvalidTokenException|\serve\http\response\exceptions\MethodNotAllowedException|\serve\http\response\exceptions\NotFoundException|\serve\http\response\exceptions\RequestException|\serve\http\response\exceptions\Stop|Throwable
-	 */
-	protected $exception;
+	use ExceptionParserTrait;
 
 	/**
 	 * Response instance.
 	 *
 	 * @var \serve\cli\output\Output
 	 */
-	private $output;
+	protected $output;
 
 	/**
 	 * View instance.
 	 *
 	 * @var \serve\cli\input\Input
 	 */
-	private $input;
+	protected $input;
 
 	/**
 	 * Constructor.
 	 *
-	 * @param Throwable                $exception Exception being thrown
-	 * @param \serve\cli\input\Input   $input     Input
-	 * @param \serve\cli\output\Output $output    Output
+	 * @param \serve\cli\input\Input   $input  Input
+	 * @param \serve\cli\output\Output $output Output
 	 */
-	public function __construct(Throwable $exception, Input $input, Output $output)
+	public function __construct(Input $input, Output $output)
 	{
-		$this->exception = $exception;
-
 		$this->input = $input;
 
 		$this->output = $output;
@@ -69,15 +59,16 @@ class CliHandler
 	/**
 	 * Display an error page to end user.
 	 *
-	 * @param  bool  $showDetails Should we show a detailed error page
+	 * @param  Throwable $exception   Exception being thrown
+	 * @param  bool      $showDetails Should we show a detailed error page
 	 * @return false
 	 */
-	public function handle(bool $showDetails = true): bool
+	public function handle(Throwable $exception, bool $showDetails = true): bool
 	{
 		// Set the response body
 		if ($showDetails)
 		{
-			$this->output->write($this->getDetailedError());
+			$this->output->write($this->getDetailedError($exception));
 		}
 		else
 		{
@@ -124,36 +115,26 @@ class CliHandler
 	}
 
 	/**
-	 * Escape formatting tags.
-	 *
-	 * @param  string $string String to escape
-	 * @return string
-	 */
-	private function escape(string $string): string
-	{
-		return $this->output->formatter()->escape($string);
-	}
-
-	/**
 	 * Returns a detailed error page.
 	 *
+	 * @param  Throwable $exception Throwable
 	 * @return string
 	 */
-	private function getDetailedError(): string
+	protected function getDetailedError(Throwable $exception): string
 	{
 		$ul = new UnorderedList($this->output);
 		$ol = new OrderedList($this->output);
 
 		$error =
 		[
-			'TYPE    : ' . $this->determineExceptionType($this->exception),
-			'MESSAGE : ' . $this->exception->getMessage(),
-			'CLASS   : ' . $this->errClass(),
-			'FILE    : ' . $this->exception->getFile(),
-			'LINE    : ' . intval($this->exception->getLine()),
+			'TYPE    : ' . $this->determineExceptionType($exception),
+			'MESSAGE : ' . $exception->getMessage(),
+			'CLASS   : ' . $this->errClass($exception),
+			'FILE    : ' . $exception->getFile($exception),
+			'LINE    : ' . intval($exception->getLine($exception)),
 			'TRACE   : ',
 		];
 
-		return '<bg_red><white>' . $ul->render($error) . $ol->render($this->errTrace()) . '</white></bg_red>';
+		return '<bg_red><white>' . $ul->render($error) . $ol->render($this->errTrace($exception)) . '</white></bg_red>';
 	}
 }
