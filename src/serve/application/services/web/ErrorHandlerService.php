@@ -9,8 +9,8 @@ namespace serve\application\services\web;
 
 use serve\application\services\Service;
 use serve\exception\ErrorHandler;
+use serve\exception\ErrorLogger;
 use serve\exception\handlers\WebHandler;
-use serve\exception\logger\Logger;
 use Throwable;
 
 /**
@@ -21,6 +21,22 @@ use Throwable;
 class ErrorHandlerService extends Service
 {
 	/**
+	 * Return the error logger if we are logging errors.
+	 *
+	 * @param  Throwable                         $exception "caught" exception
+	 * @return \serve\exception\ErrorLogger|null
+	 */
+	private function getLogger(Throwable $exception)
+	{
+		if ($this->container->Config->get('application.error_handler.error_reporting') > 0)
+		{
+			return new ErrorLogger($exception, $this->container->Filesystem, $this->container->Request->environment(), $this->container->Config->get('application.error_handler.log_path'));
+		}
+
+		return null;
+	}
+
+	/**
 	 * {@inheritDoc}
 	 */
 	public function register(): void
@@ -29,14 +45,20 @@ class ErrorHandlerService extends Service
 		$display_errors = $this->container->Config->get('application.error_handler.display_errors');
 
 		// Log errors
-		$error_reporting = $this->container->Config->get('application.error_handler.log_errors');
+		$error_reporting = $this->container->Config->get('application.error_handler.error_reporting');
+
+		// Log errors
+		$die_level = $this->container->Config->get('application.error_handler.die_level');
 
 		// Create the error handler
-		$handler = new ErrorHandler($this->getLogger(), $display_errors, $error_reporting);
+		$handler = new ErrorHandler($display_errors, $error_reporting, $die_level);
 
 		// Web handler
 		$handler->handle(Throwable::class, function ($exception) use ($handler, $display_errors)
 		{
+			// Logger
+			$handler->setLogger($this->getLogger($exception));
+
 			// Web handler
 			$webHandler = new WebHandler($exception, $this->container->Request, $this->container->Response, $this->container->View);
 
@@ -46,15 +68,5 @@ class ErrorHandlerService extends Service
 
 		// Save the instance
 		$this->container->setInstance('ErrorHandler', $handler);
-	}
-
-	/**
-	 * Return the error logger.
-	 *
-	 * @return \serve\exception\logger\Logger
-	 */
-	private function getLogger(): Logger
-	{
-		return new Logger($this->container->Filesystem, $this->container->Request->environment(), $this->container->Config->get('application.error_handler.log_path'));
 	}
 }
