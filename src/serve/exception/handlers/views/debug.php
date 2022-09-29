@@ -3,7 +3,7 @@
 <head>
 	<meta charset="UTF-8">
 	<title>Serve Application Error</title>
-	<?php include 'style.css.php'; ?>
+	<?php include 'debug.css.php'; ?>
 </head>
 	<body>
 		<div class="interstitial-wrapper">
