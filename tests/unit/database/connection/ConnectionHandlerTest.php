@@ -9,8 +9,8 @@ namespace serve\tests\unit\framework\database\connection;
 
 use PDO;
 use PDOStatement;
-use serve\database\connection\Connection;
 use serve\database\connection\Cache;
+use serve\database\connection\Connection;
 use serve\database\connection\ConnectionHandler;
 use serve\tests\TestCase;
 
