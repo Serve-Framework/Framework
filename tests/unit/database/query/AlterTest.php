@@ -7,6 +7,7 @@
 
 namespace serve\tests\unit\framework\database\query;
 
+use serve\database\connection\ConnectionHandler;
 use serve\database\query\Builder;
 use serve\database\query\Query;
 use serve\tests\TestCase;
@@ -40,7 +41,7 @@ class AlterTest extends TestCase
             ],
         ];
 
-        $connectionHandler = $this->mock('\serve\database\connection\ConnectionHandler');
+        $connectionHandler = $this->mock(ConnectionHandler::class);
 
         $connectionHandler->shouldReceive('tablePrefix')->andReturn('prefixed_');
 
@@ -79,7 +80,7 @@ class AlterTest extends TestCase
             ],
         ];
 
-        $connectionHandler = $this->mock('\serve\database\connection\ConnectionHandler');
+        $connectionHandler = $this->mock(ConnectionHandler::class);
 
         $connectionHandler->shouldReceive('tablePrefix')->andReturn('prefixed_');
 
@@ -118,7 +119,7 @@ class AlterTest extends TestCase
             ],
         ];
 
-        $connectionHandler = $this->mock('\serve\database\connection\ConnectionHandler');
+        $connectionHandler = $this->mock(ConnectionHandler::class);
 
         $connectionHandler->shouldReceive('tablePrefix')->andReturn('prefixed_');
 
@@ -155,7 +156,7 @@ class AlterTest extends TestCase
             ],
         ];
 
-        $connectionHandler = $this->mock('\serve\database\connection\ConnectionHandler');
+        $connectionHandler = $this->mock(ConnectionHandler::class);
 
         $connectionHandler->shouldReceive('tablePrefix')->andReturn('prefixed_');
 
@@ -196,7 +197,7 @@ class AlterTest extends TestCase
             ],
         ];
 
-        $connectionHandler = $this->mock('\serve\database\connection\ConnectionHandler');
+        $connectionHandler = $this->mock(ConnectionHandler::class);
 
         $connectionHandler->shouldReceive('tablePrefix')->andReturn('prefixed_');
 
@@ -235,7 +236,7 @@ class AlterTest extends TestCase
             ],
         ];
 
-        $connectionHandler = $this->mock('\serve\database\connection\ConnectionHandler');
+        $connectionHandler = $this->mock(ConnectionHandler::class);
 
         $connectionHandler->shouldReceive('tablePrefix')->andReturn('prefixed_');
 
@@ -276,7 +277,7 @@ class AlterTest extends TestCase
             ],
         ];
 
-        $connectionHandler = $this->mock('\serve\database\connection\ConnectionHandler');
+        $connectionHandler = $this->mock(ConnectionHandler::class);
 
         $connectionHandler->shouldReceive('tablePrefix')->andReturn('prefixed_');
 
@@ -315,7 +316,7 @@ class AlterTest extends TestCase
             ],
         ];
 
-        $connectionHandler = $this->mock('\serve\database\connection\ConnectionHandler');
+        $connectionHandler = $this->mock(ConnectionHandler::class);
 
         $connectionHandler->shouldReceive('tablePrefix')->andReturn('prefixed_');
 
@@ -354,7 +355,7 @@ class AlterTest extends TestCase
             ],
         ];
 
-        $connectionHandler = $this->mock('\serve\database\connection\ConnectionHandler');
+        $connectionHandler = $this->mock(ConnectionHandler::class);
 
         $connectionHandler->shouldReceive('tablePrefix')->andReturn('prefixed_');
 
@@ -393,7 +394,7 @@ class AlterTest extends TestCase
             ],
         ];
 
-        $connectionHandler = $this->mock('\serve\database\connection\ConnectionHandler');
+        $connectionHandler = $this->mock(ConnectionHandler::class);
 
         $connectionHandler->shouldReceive('tablePrefix')->andReturn('prefixed_');
 
@@ -432,7 +433,7 @@ class AlterTest extends TestCase
             ],
         ];
 
-        $connectionHandler = $this->mock('\serve\database\connection\ConnectionHandler');
+        $connectionHandler = $this->mock(ConnectionHandler::class);
 
         $connectionHandler->shouldReceive('tablePrefix')->andReturn('prefixed_');
 
@@ -471,7 +472,7 @@ class AlterTest extends TestCase
             ],
         ];
 
-        $connectionHandler = $this->mock('\serve\database\connection\ConnectionHandler');
+        $connectionHandler = $this->mock(ConnectionHandler::class);
 
         $connectionHandler->shouldReceive('tablePrefix')->andReturn('prefixed_');
 
@@ -508,7 +509,7 @@ class AlterTest extends TestCase
             ],
         ];
 
-        $connectionHandler = $this->mock('\serve\database\connection\ConnectionHandler');
+        $connectionHandler = $this->mock(ConnectionHandler::class);
 
         $connectionHandler->shouldReceive('tablePrefix')->andReturn('prefixed_');
 
@@ -545,7 +546,7 @@ class AlterTest extends TestCase
             ],
         ];
 
-        $connectionHandler = $this->mock('\serve\database\connection\ConnectionHandler');
+        $connectionHandler = $this->mock(ConnectionHandler::class);
 
         $connectionHandler->shouldReceive('tablePrefix')->andReturn('prefixed_');
 
@@ -582,7 +583,7 @@ class AlterTest extends TestCase
             ],
         ];
 
-        $connectionHandler = $this->mock('\serve\database\connection\ConnectionHandler');
+        $connectionHandler = $this->mock(ConnectionHandler::class);
 
         $connectionHandler->shouldReceive('tablePrefix')->andReturn('prefixed_');
 
@@ -619,7 +620,7 @@ class AlterTest extends TestCase
             ],
         ];
 
-        $connectionHandler = $this->mock('\serve\database\connection\ConnectionHandler');
+        $connectionHandler = $this->mock(ConnectionHandler::class);
 
         $connectionHandler->shouldReceive('tablePrefix')->andReturn('prefixed_');
 
@@ -656,7 +657,7 @@ class AlterTest extends TestCase
             ],
         ];
 
-        $connectionHandler = $this->mock('\serve\database\connection\ConnectionHandler');
+        $connectionHandler = $this->mock(ConnectionHandler::class);
 
         $connectionHandler->shouldReceive('tablePrefix')->andReturn('prefixed_');
 

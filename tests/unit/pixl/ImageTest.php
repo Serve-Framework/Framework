@@ -9,6 +9,7 @@ namespace serve\tests\unit\framework\pixl;
 
 use RuntimeException;
 use serve\pixl\Image;
+use serve\pixl\processor\ProcessorInterface;
 use serve\tests\TestCase;
 
 /**
@@ -21,7 +22,7 @@ class ImageTest extends TestCase
 	 */
 	public function getProcessor()
 	{
-		return $this->mock('\serve\pixl\processor\ProcessorInterface');
+		return $this->mock(ProcessorInterface::class);
 	}
 
 	/**

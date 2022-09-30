@@ -7,6 +7,8 @@
 
 namespace serve\tests\unit\framework\cli\output;
 
+use serve\cli\Environment;
+use serve\cli\output\Formatter;
 use serve\cli\output\Output;
 use serve\tests\TestCase;
 
@@ -27,7 +29,7 @@ class OutputTest extends TestCase
 	 */
 	public function getFormatter()
 	{
-		return $this->mock('\serve\cli\output\Formatter');
+		return $this->mock(Formatter::class);
 	}
 
 	/**
@@ -35,7 +37,7 @@ class OutputTest extends TestCase
 	 */
 	public function getEnvironment()
 	{
-		return $this->mock('\serve\cli\Environment');
+		return $this->mock(Environment::class);
 	}
 
 	/**

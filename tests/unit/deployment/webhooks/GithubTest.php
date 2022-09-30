@@ -9,8 +9,15 @@ namespace serve\tests\unit\framework\deployment\Github;
 
 use Exception;
 use serve\deployment\webhooks\Github;
+use serve\http\request\Environment;
+use serve\http\request\Headers;
+use serve\http\request\Request;
+use serve\http\response\Body;
 use serve\http\response\exceptions\InvalidTokenException;
 use serve\http\response\exceptions\RequestException;
+use serve\http\response\Format;
+use serve\http\response\Response;
+use serve\shell\Shell;
 use serve\tests\TestCase;
 
 use function dirname;
@@ -50,10 +57,10 @@ class GithubTest extends TestCase
     {
         $this->expectNotToPerformAssertions();
 
-        $request        = $this->mock('\serve\http\request\Request');
-        $headers        = $this->mock('\serve\http\request\Headers');
-        $response       = $this->mock('\serve\http\response\Response');
-        $shell          = $this->mock('\serve\shell\Shell');
+        $request        = $this->mock(Request::class);
+        $headers        = $this->mock(Headers::class);
+        $response       = $this->mock(Response::class);
+        $shell          = $this->mock(Shell::class);
         $github         = new Github($request, $response, $shell, $this->secret);
         $requestHeaders = $this->validHeaders();
 
@@ -78,10 +85,10 @@ class GithubTest extends TestCase
      */
     public function testNoPayload(): void
     {
-        $request        = $this->mock('\serve\http\request\Request');
-        $headers        = $this->mock('\serve\http\request\Headers');
-        $response       = $this->mock('\serve\http\response\Response');
-        $shell          = $this->mock('\serve\shell\Shell');
+        $request        = $this->mock(Request::class);
+        $headers        = $this->mock(Headers::class);
+        $response       = $this->mock(Response::class);
+        $shell          = $this->mock(Shell::class);
         $github         = new Github($request, $response, $shell, $this->secret);
         $requestHeaders = $this->validHeaders();
 
@@ -104,10 +111,10 @@ class GithubTest extends TestCase
      */
     public function testWrongHeaders(): void
     {
-        $request        = $this->mock('\serve\http\request\Request');
-        $headers        = $this->mock('\serve\http\request\Headers');
-        $response       = $this->mock('\serve\http\response\Response');
-        $shell          = $this->mock('\serve\shell\Shell');
+        $request        = $this->mock(Request::class);
+        $headers        = $this->mock(Headers::class);
+        $response       = $this->mock(Response::class);
+        $shell          = $this->mock(Shell::class);
         $github         = new Github($request, $response, $shell, 'invalid_secret');
         $requestHeaders = $this->validHeaders();
 
@@ -134,10 +141,10 @@ class GithubTest extends TestCase
      */
     public function testWrongUserAgent(): void
     {
-        $request        = $this->mock('\serve\http\request\Request');
-        $headers        = $this->mock('\serve\http\request\Headers');
-        $response       = $this->mock('\serve\http\response\Response');
-        $shell          = $this->mock('\serve\shell\Shell');
+        $request        = $this->mock(Request::class);
+        $headers        = $this->mock(Headers::class);
+        $response       = $this->mock(Response::class);
+        $shell          = $this->mock(Shell::class);
         $github         = new Github($request, $response, $shell, $this->secret);
         $requestHeaders = $this->validHeaders();
 
@@ -166,10 +173,10 @@ class GithubTest extends TestCase
      */
     public function testInvalidSignature(): void
     {
-        $request        = $this->mock('\serve\http\request\Request');
-        $headers        = $this->mock('\serve\http\request\Headers');
-        $response       = $this->mock('\serve\http\response\Response');
-        $shell          = $this->mock('\serve\shell\Shell');
+        $request        = $this->mock(Request::class);
+        $headers        = $this->mock(Headers::class);
+        $response       = $this->mock(Response::class);
+        $shell          = $this->mock(Shell::class);
         $github         = new Github($request, $response, $shell, $this->secret);
         $requestHeaders = $this->validHeaders();
 
@@ -198,10 +205,10 @@ class GithubTest extends TestCase
      */
     public function testInvalidPayload(): void
     {
-        $request        = $this->mock('\serve\http\request\Request');
-        $headers        = $this->mock('\serve\http\request\Headers');
-        $response       = $this->mock('\serve\http\response\Response');
-        $shell          = $this->mock('\serve\shell\Shell');
+        $request        = $this->mock(Request::class);
+        $headers        = $this->mock(Headers::class);
+        $response       = $this->mock(Response::class);
+        $shell          = $this->mock(Shell::class);
         $github         = new Github($request, $response, $shell, $this->secret);
         $requestHeaders = $this->validHeaders();
 
@@ -230,10 +237,10 @@ class GithubTest extends TestCase
      */
     public function testEvent(): void
     {
-        $request        = $this->mock('\serve\http\request\Request');
-        $headers        = $this->mock('\serve\http\request\Headers');
-        $response       = $this->mock('\serve\http\response\Response');
-        $shell          = $this->mock('\serve\shell\Shell');
+        $request        = $this->mock(Request::class);
+        $headers        = $this->mock(Headers::class);
+        $response       = $this->mock(Response::class);
+        $shell          = $this->mock(Shell::class);
         $github         = new Github($request, $response, $shell, $this->secret);
         $requestHeaders = $this->validHeaders();
 
@@ -262,10 +269,10 @@ class GithubTest extends TestCase
      */
     public function testPayload(): void
     {
-        $request        = $this->mock('\serve\http\request\Request');
-        $headers        = $this->mock('\serve\http\request\Headers');
-        $response       = $this->mock('\serve\http\response\Response');
-        $shell          = $this->mock('\serve\shell\Shell');
+        $request        = $this->mock(Request::class);
+        $headers        = $this->mock(Headers::class);
+        $response       = $this->mock(Response::class);
+        $shell          = $this->mock(Shell::class);
         $github         = new Github($request, $response, $shell, $this->secret);
         $requestHeaders = $this->validHeaders();
 
@@ -294,13 +301,13 @@ class GithubTest extends TestCase
      */
     public function testDeploySuccessful(): void
     {
-        $request        = $this->mock('\serve\http\request\Request');
-        $env            = $this->mock('\serve\http\request\Environment');
-        $headers        = $this->mock('\serve\http\request\Headers');
-        $response       = $this->mock('\serve\http\response\Response');
-        $body           = $this->mock('\serve\http\response\Body');
-        $format         = $this->mock('\serve\http\response\Format');
-        $shell          = $this->mock('\serve\shell\Shell');
+        $request        = $this->mock(Request::class);
+        $env            = $this->mock(Environment::class);
+        $headers        = $this->mock(Headers::class);
+        $response       = $this->mock(Response::class);
+        $body           = $this->mock(Body::class);
+        $format         = $this->mock(Format::class);
+        $shell          = $this->mock(Shell::class);
         $github         = new Github($request, $response, $shell, $this->secret);
         $requestHeaders = $this->validHeaders();
 
@@ -347,13 +354,13 @@ class GithubTest extends TestCase
      */
     public function testDeployFailGit(): void
     {
-        $request        = $this->mock('\serve\http\request\Request');
-        $env            = $this->mock('\serve\http\request\Environment');
-        $headers        = $this->mock('\serve\http\request\Headers');
-        $response       = $this->mock('\serve\http\response\Response');
-        $body           = $this->mock('\serve\http\response\Body');
-        $format         = $this->mock('\serve\http\response\Format');
-        $shell          = $this->mock('\serve\shell\Shell');
+        $request        = $this->mock(Request::class);
+        $env            = $this->mock(Environment::class);
+        $headers        = $this->mock(Headers::class);
+        $response       = $this->mock(Response::class);
+        $body           = $this->mock(Body::class);
+        $format         = $this->mock(Format::class);
+        $shell          = $this->mock(Shell::class);
         $github         = new Github($request, $response, $shell, $this->secret);
         $requestHeaders = $this->validHeaders();
 

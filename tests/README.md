@@ -12,5 +12,5 @@ Here you'll find all the Serve framework tests. They are divided in to groups so
 |----------------------|-----------------------------------------------------------------------|
 | unit                 | All unit tests                                                        |
 | integration          | All integration tests                                                 |
-| integration:database | All integration tests that touch the database (SQLite in memory)      |
+| integration:database | All integration tests that touch the database                         |
 | slow                 | All slow tests (both unit and integration)                            |

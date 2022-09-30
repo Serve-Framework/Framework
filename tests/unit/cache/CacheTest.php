@@ -8,6 +8,7 @@
 namespace serve\tests\unit\framework\cache;
 
 use serve\cache\Cache;
+use serve\cache\stores\FileStore;
 use serve\tests\TestCase;
 
 use function strtotime;
@@ -22,7 +23,7 @@ class CacheTest extends TestCase
 	 */
 	public function getStore()
 	{
-		return $this->mock('\serve\cache\stores\FileStore');
+		return $this->mock(FileStore::class);
 	}
 
 	/**

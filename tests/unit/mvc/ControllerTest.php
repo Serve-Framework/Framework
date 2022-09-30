@@ -7,6 +7,8 @@
 
 namespace serve\tests\unit\framework\mvc;
 
+use serve\http\request\Request;
+use serve\http\response\Response;
 use serve\mvc\controller\Controller;
 use serve\mvc\model\Model;
 use serve\tests\TestCase;
@@ -33,9 +35,9 @@ class ControllerTest extends TestCase
      */
     public function testInstantiate(): void
     {
-        $request = $this->mock('\serve\http\request\Request');
+        $request = $this->mock(Request::class);
 
-        $response = $this->mock('\serve\http\response\Response');
+        $response = $this->mock(Response::class);
 
         $next = function (): void
         {

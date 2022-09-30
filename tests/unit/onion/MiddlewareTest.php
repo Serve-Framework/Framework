@@ -46,9 +46,9 @@ class MiddlewareTest extends TestCase
 	{
 		ob_start();
 
-		$request = $this->mock('\serve\http\request\Request');
+		$request = $this->mock(Request::class);
 
-		$response = $this->mock('\serve\http\response\Response');
+		$response = $this->mock(Response::class);
 
 		$layer = new Middleware('\serve\tests\unit\framework\onion\MiddleWareCallbackTest@normalMethod', ['foo', 'bar']);
 
@@ -69,9 +69,9 @@ class MiddlewareTest extends TestCase
 	{
 		ob_start();
 
-		$request = $this->mock('\serve\http\request\Request');
+		$request = $this->mock(Request::class);
 
-		$response = $this->mock('\serve\http\response\Response');
+		$response = $this->mock(Response::class);
 
 		$layer = new Middleware('\serve\tests\unit\framework\onion\MiddleWareCallbackTest::staticFunc', ['foo', 'bar']);
 
@@ -97,9 +97,9 @@ class MiddlewareTest extends TestCase
 			echo $foo;
 		};
 
-		$request = $this->mock('\serve\http\request\Request');
+		$request = $this->mock(Request::class);
 
-		$response = $this->mock('\serve\http\response\Response');
+		$response = $this->mock(Response::class);
 
 		$layer = new Middleware($callback, ['foo', 'bar']);
 

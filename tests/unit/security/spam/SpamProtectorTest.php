@@ -7,6 +7,8 @@
 
 namespace serve\tests\unit\framework\security\spam;
 
+use serve\config\Config;
+use serve\security\spam\gibberish\Gibberish;
 use serve\security\spam\SpamProtector;
 use serve\tests\TestCase;
 
@@ -22,9 +24,9 @@ class SpamProtectorTest extends TestCase
 	{
 		$this->expectNotToPerformAssertions();
 
-		$gibberish = $this->mock('\serve\security\spam\gibberish\Gibberish');
+		$gibberish = $this->mock(Gibberish::class);
 
-		$config = $this->mock('\serve\config\Config');
+		$config = $this->mock(Config::class);
 
 		$spam = new SpamProtector($gibberish, $config);
 
@@ -42,9 +44,9 @@ class SpamProtectorTest extends TestCase
 	{
 		$this->expectNotToPerformAssertions();
 
-		$gibberish = $this->mock('\serve\security\spam\gibberish\Gibberish');
+		$gibberish = $this->mock(Gibberish::class);
 
-		$config = $this->mock('\serve\config\Config');
+		$config = $this->mock(Config::class);
 
 		$spam = new SpamProtector($gibberish, $config);
 
@@ -62,9 +64,9 @@ class SpamProtectorTest extends TestCase
 	{
 		$this->expectNotToPerformAssertions();
 
-		$gibberish = $this->mock('\serve\security\spam\gibberish\Gibberish');
+		$gibberish = $this->mock(Gibberish::class);
 
-		$config = $this->mock('\serve\config\Config');
+		$config = $this->mock(Config::class);
 
 		$spam = new SpamProtector($gibberish, $config);
 
@@ -82,9 +84,9 @@ class SpamProtectorTest extends TestCase
 	{
 		$this->expectNotToPerformAssertions();
 
-		$gibberish = $this->mock('\serve\security\spam\gibberish\Gibberish');
+		$gibberish = $this->mock(Gibberish::class);
 
-		$config = $this->mock('\serve\config\Config');
+		$config = $this->mock(Config::class);
 
 		$spam = new SpamProtector($gibberish, $config);
 
@@ -100,9 +102,9 @@ class SpamProtectorTest extends TestCase
 	 */
 	public function testIsIpBlacklisted(): void
 	{
-		$gibberish = $this->mock('\serve\security\spam\gibberish\Gibberish');
+		$gibberish = $this->mock(Gibberish::class);
 
-		$config = $this->mock('\serve\config\Config');
+		$config = $this->mock(Config::class);
 
 		$spam = new SpamProtector($gibberish, $config);
 
@@ -118,9 +120,9 @@ class SpamProtectorTest extends TestCase
 	 */
 	public function testIsIpWhitelisted(): void
 	{
-		$gibberish = $this->mock('\serve\security\spam\gibberish\Gibberish');
+		$gibberish = $this->mock(Gibberish::class);
 
-		$config = $this->mock('\serve\config\Config');
+		$config = $this->mock(Config::class);
 
 		$spam = new SpamProtector($gibberish, $config);
 
@@ -136,9 +138,9 @@ class SpamProtectorTest extends TestCase
 	 */
 	public function testIsSpam(): void
 	{
-		$gibberish = $this->mock('\serve\security\spam\gibberish\Gibberish');
+		$gibberish = $this->mock(Gibberish::class);
 
-		$config = $this->mock('\serve\config\Config');
+		$config = $this->mock(Config::class);
 
 		$spam = new SpamProtector($gibberish, $config);
 
@@ -172,9 +174,9 @@ class SpamProtectorTest extends TestCase
 	 */
 	public function testRating(): void
 	{
-		$gibberish = $this->mock('\serve\security\spam\gibberish\Gibberish');
+		$gibberish = $this->mock(Gibberish::class);
 
-		$config = $this->mock('\serve\config\Config');
+		$config = $this->mock(Config::class);
 
 		$spam = new SpamProtector($gibberish, $config);
 

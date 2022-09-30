@@ -7,9 +7,12 @@
 
 namespace serve\tests\unit\framework\http;
 
+use serve\http\request\Environment;
+use serve\http\request\Request;
 use serve\http\response\exceptions\MethodNotAllowedException;
 use serve\http\response\exceptions\NotFoundException;
 use serve\http\route\Router;
+use serve\onion\Onion;
 use serve\tests\TestCase;
 
 /**
@@ -22,8 +25,8 @@ class RouterTest extends TestCase
 	 */
 	public function testMethods(): void
 	{
-		$request = $this->mock('\serve\http\request\Request');
-		$onion   = $this->mock('\serve\onion\Onion');
+		$request = $this->mock(Request::class);
+		$onion   = $this->mock(Onion::class);
 		$router  = new Router($request, $onion);
 
 		$router->get('/foo', 'FooController::fooAction');
@@ -53,9 +56,9 @@ class RouterTest extends TestCase
 	{
 		$this->expectNotToPerformAssertions();
 
-		$request = $this->mock('\serve\http\request\Request');
-		$onion   = $this->mock('\serve\onion\Onion');
-		$env     = $this->mock('\serve\http\request\Environment');
+		$request = $this->mock(Request::class);
+		$onion   = $this->mock(Onion::class);
+		$env     = $this->mock(Environment::class);
 		$router  = new Router($request, $onion);
 
 		$env->REQUEST_PATH = 'foobar';
@@ -96,9 +99,9 @@ class RouterTest extends TestCase
 
 		foreach ($regex as $regex => $url)
 		{
-			$request = $this->mock('\serve\http\request\Request');
-			$onion   = $this->mock('\serve\onion\Onion');
-			$env     = $this->mock('\serve\http\request\Environment');
+			$request = $this->mock(Request::class);
+			$onion   = $this->mock(Onion::class);
+			$env     = $this->mock(Environment::class);
 			$router  = new Router($request, $onion);
 
 			$env->REQUEST_PATH = 'foobar/' . $url;
@@ -122,9 +125,9 @@ class RouterTest extends TestCase
 	{
 		$this->expectException(NotFoundException::class);
 
-		$request = $this->mock('\serve\http\request\Request');
-		$onion   = $this->mock('\serve\onion\Onion');
-		$env     = $this->mock('\serve\http\request\Environment');
+		$request = $this->mock(Request::class);
+		$onion   = $this->mock(Onion::class);
+		$env     = $this->mock(Environment::class);
 		$router  = new Router($request, $onion);
 
 		$env->REQUEST_PATH = 'foobaz/';
@@ -145,9 +148,9 @@ class RouterTest extends TestCase
 	{
 		$this->expectException(MethodNotAllowedException::class);
 
-		$request = $this->mock('\serve\http\request\Request');
-		$onion   = $this->mock('\serve\onion\Onion');
-		$env     = $this->mock('\serve\http\request\Environment');
+		$request = $this->mock(Request::class);
+		$onion   = $this->mock(Onion::class);
+		$env     = $this->mock(Environment::class);
 		$router  = new Router($request, $onion);
 
 		$env->REQUEST_PATH = 'foobar';

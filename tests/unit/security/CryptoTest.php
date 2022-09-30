@@ -8,6 +8,9 @@
 namespace serve\tests\unit\framework\security\crypto;
 
 use serve\security\Crypto;
+use serve\security\crypto\encrypters\OpenSSL;
+use serve\security\crypto\Signer;
+use serve\security\password\hashers\NativePHP;
 use serve\tests\TestCase;
 
 /**
@@ -24,11 +27,11 @@ class CryptoTest extends TestCase
 
 		$data = 'foobar!!$#$@#"$#@!$P:{';
 
-		$signer = $this->mock('\serve\security\crypto\Signer');
+		$signer = $this->mock(Signer::class);
 
-		$encrypter = $this->mock('\serve\security\crypto\encrypters\OpenSSL');
+		$encrypter = $this->mock(OpenSSL::class);
 
-		$password = $this->mock('\serve\security\password\hashers\NativePHP');
+		$password = $this->mock(NativePHP::class);
 
 		$crypto = new Crypto($signer, $encrypter, $password);
 
@@ -46,11 +49,11 @@ class CryptoTest extends TestCase
 	{
 		$this->expectNotToPerformAssertions();
 
-		$signer = $this->mock('\serve\security\crypto\Signer');
+		$signer = $this->mock(Signer::class);
 
-		$encrypter = $this->mock('\serve\security\crypto\encrypters\OpenSSL');
+		$encrypter = $this->mock(OpenSSL::class);
 
-		$password = $this->mock('\serve\security\password\hashers\NativePHP');
+		$password = $this->mock(NativePHP::class);
 
 		$crypto = new Crypto($signer, $encrypter, $password);
 

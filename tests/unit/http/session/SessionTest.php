@@ -7,7 +7,10 @@
 
 namespace serve\tests\unit\framework\http\session;
 
+use serve\http\session\Flash;
 use serve\http\session\Session;
+use serve\http\session\storage\NativeSessionStorage;
+use serve\http\session\Token;
 use serve\tests\TestCase;
 
 /**
@@ -33,11 +36,11 @@ class SessionTest extends TestCase
 	 */
 	private function mockSession()
 	{
-		$token = $this->mock('serve\http\session\Token');
+		$token = $this->mock(Token::class);
 
-		$flash = $this->mock('serve\http\session\Flash');
+		$flash = $this->mock(Flash::class);
 
-		$store = $this->mock('serve\http\session\storage\NativeSessionStorage');
+		$store = $this->mock(NativeSessionStorage::class);
 
 		$store->shouldReceive('session_name')->withArgs(['serve_session'])->andReturn('serve_session');
 
@@ -213,11 +216,11 @@ class SessionTest extends TestCase
 	{
 		$this->expectNotToPerformAssertions();
 
-		$token = $this->mock('serve\http\session\Token');
+		$token = $this->mock(Token::class);
 
-		$flash = $this->mock('serve\http\session\Flash');
+		$flash = $this->mock(Flash::class);
 
-		$store = $this->mock('serve\http\session\storage\NativeSessionStorage');
+		$store = $this->mock(NativeSessionStorage::class);
 
 		$store->shouldReceive('session_name')->withArgs(['serve_session'])->andReturn('serve_session');
 
@@ -255,11 +258,11 @@ class SessionTest extends TestCase
 	 */
 	public function testConfigure(): void
 	{
-		$token = $this->mock('serve\http\session\Token');
+		$token = $this->mock(Token::class);
 
-		$flash = $this->mock('serve\http\session\Flash');
+		$flash = $this->mock(Flash::class);
 
-		$store = $this->mock('serve\http\session\storage\NativeSessionStorage');
+		$store = $this->mock(NativeSessionStorage::class);
 
 		$store->shouldReceive('session_name')->once()->withArgs(['serve_session'])->andReturn('serve_session');
 
@@ -291,11 +294,11 @@ class SessionTest extends TestCase
 	 */
 	public function testDestroy(): void
 	{
-		$token = $this->mock('serve\http\session\Token');
+		$token = $this->mock(Token::class);
 
-		$flash = $this->mock('serve\http\session\Flash');
+		$flash = $this->mock(Flash::class);
 
-		$store = $this->mock('serve\http\session\storage\NativeSessionStorage');
+		$store = $this->mock(NativeSessionStorage::class);
 
 		$store->shouldReceive('session_name')->withArgs(['serve_session'])->andReturn('serve_session');
 

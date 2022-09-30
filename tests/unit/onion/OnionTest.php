@@ -10,6 +10,7 @@ namespace serve\tests\unit\framework\onion;
 use Closure;
 use serve\http\request\Request;
 use serve\http\response\Response;
+use serve\http\response\status;
 use serve\onion\Onion;
 use serve\tests\TestCase;
 
@@ -55,9 +56,9 @@ class OnionTest extends TestCase
 	{
 		$callback = '\directory\ClassName::method';
 
-		$request = $this->mock('\serve\http\request\Request');
+		$request = $this->mock(Request::class);
 
-		$response = $this->mock('\serve\http\response\Response');
+		$response = $this->mock(Response::class);
 
 		$onion = new Onion($request, $response);
 
@@ -77,9 +78,9 @@ class OnionTest extends TestCase
 
 		$callbackTwo = '\directory\ClassName::methodTwo';
 
-		$request = $this->mock('\serve\http\request\Request');
+		$request = $this->mock(Request::class);
 
-		$response = $this->mock('\serve\http\response\Response');
+		$response = $this->mock(Response::class);
 
 		$onion = new Onion($request, $response);
 
@@ -99,9 +100,9 @@ class OnionTest extends TestCase
 
 		$callback = '\serve\tests\unit\framework\onion\OnionCallbackTest@normalMethod';
 
-		$request = $this->mock('\serve\http\request\Request');
+		$request = $this->mock(Request::class);
 
-		$response = $this->mock('\serve\http\response\Response');
+		$response = $this->mock(Response::class);
 
 		$onion = new Onion($request, $response);
 
@@ -121,9 +122,9 @@ class OnionTest extends TestCase
 
 		$callback = '\serve\tests\unit\framework\onion\OnionCallbackTest::staticFunc';
 
-		$request = $this->mock('\serve\http\request\Request');
+		$request = $this->mock(Request::class);
 
-		$response = $this->mock('\serve\http\response\Response');
+		$response = $this->mock(Response::class);
 
 		$onion = new Onion($request, $response);
 
@@ -146,9 +147,9 @@ class OnionTest extends TestCase
 			echo $foo;
 		};
 
-		$request = $this->mock('\serve\http\request\Request');
+		$request = $this->mock(Request::class);
 
-		$response = $this->mock('\serve\http\response\Response');
+		$response = $this->mock(Response::class);
 
 		$onion = new Onion($request, $response);
 
@@ -178,9 +179,9 @@ class OnionTest extends TestCase
 			echo $bar;
 		};
 
-		$request = $this->mock('\serve\http\request\Request');
+		$request = $this->mock(Request::class);
 
-		$response = $this->mock('\serve\http\response\Response');
+		$response = $this->mock(Response::class);
 
 		$onion = new Onion($request, $response);
 
@@ -205,11 +206,11 @@ class OnionTest extends TestCase
 			$next();
 		};
 
-		$request = $this->mock('\serve\http\request\Request');
+		$request = $this->mock(Request::class);
 
-		$response = $this->mock('\serve\http\response\Response');
+		$response = $this->mock(Response::class);
 
-		$status = $this->mock('\serve\http\response\status');
+		$status = $this->mock(status::class);
 
 		$onion = new Onion($request, $response);
 

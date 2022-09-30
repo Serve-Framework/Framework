@@ -8,6 +8,7 @@
 namespace serve\tests\unit\framework\http\cookie;
 
 use serve\http\cookie\storage\NativeCookieStorage;
+use serve\security\Crypto;
 use serve\tests\TestCase;
 
 use function serialize;
@@ -40,7 +41,7 @@ class NativeStorageTest extends TestCase
 
 		$_COOKIE['foobar_cookie'] = 's:0{fdf[$@#$!sd23fs==}';
 
-		$crypto = $this->mock('serve\security\Crypto');
+		$crypto = $this->mock(Crypto::class);
 
 		$store = new NativeCookieStorage($crypto, $this->getCookieConfig());
 
@@ -56,7 +57,7 @@ class NativeStorageTest extends TestCase
 	{
 		$_COOKIE = [];
 
-		$crypto = $this->mock('serve\security\Crypto');
+		$crypto = $this->mock(Crypto::class);
 
 		$store = new NativeCookieStorage($crypto, $this->getCookieConfig());
 
@@ -72,7 +73,7 @@ class NativeStorageTest extends TestCase
 	{
 		$_COOKIE = [];
 
-		$crypto = $this->mock('serve\security\Crypto');
+		$crypto = $this->mock(Crypto::class);
 
 		$store = new NativeCookieStorage($crypto, $this->getCookieConfig());
 

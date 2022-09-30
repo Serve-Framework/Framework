@@ -8,6 +8,7 @@
 namespace serve\tests\unit\framework\deployment;
 
 use serve\deployment\Deployment;
+use serve\deployment\webhooks\Github;
 use serve\tests\TestCase;
 
 /**
@@ -22,7 +23,7 @@ class DeploymentTest extends TestCase
     {
         $this->expectNotToPerformAssertions();
 
-        $webhook = $this->mock('\serve\deployment\webhooks\Github');
+        $webhook = $this->mock(Github::class);
 
         $deployment = new Deployment($webhook);
 

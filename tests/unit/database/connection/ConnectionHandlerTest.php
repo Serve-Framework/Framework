@@ -7,6 +7,9 @@
 
 namespace serve\tests\unit\framework\database\connection;
 
+use PDO;
+use PDOStatement;
+use serve\database\connection\Connection;
 use serve\database\connection\Cache;
 use serve\database\connection\ConnectionHandler;
 use serve\tests\TestCase;
@@ -21,11 +24,11 @@ class ConnectionHandlerTest extends TestCase
      */
     public function testBind(): void
     {
-    	$connection = $this->mock('\serve\database\connection\Connection');
+    	$connection = $this->mock(Connection::class);
 
-    	$pdo = $this->mock('\PDO');
+    	$pdo = $this->mock(PDO::class);
 
-    	$pdoStatement = $this->mock('\PDOStatement');
+    	$pdoStatement = $this->mock(PDOStatement::class);
 
     	$handler = new ConnectionHandler($connection, new Cache);
 
@@ -53,11 +56,11 @@ class ConnectionHandlerTest extends TestCase
      */
     public function testBindAgain(): void
     {
-    	$connection = $this->mock('\serve\database\connection\Connection');
+    	$connection = $this->mock(Connection::class);
 
-    	$pdo = $this->mock('\PDO');
+    	$pdo = $this->mock(PDO::class);
 
-    	$pdoStatement = $this->mock('\PDOStatement');
+    	$pdoStatement = $this->mock(PDOStatement::class);
 
     	$handler = new ConnectionHandler($connection, new Cache);
 
@@ -89,11 +92,11 @@ class ConnectionHandlerTest extends TestCase
      */
     public function testBindMore(): void
     {
-    	$connection = $this->mock('\serve\database\connection\Connection');
+    	$connection = $this->mock(Connection::class);
 
-    	$pdo = $this->mock('\PDO');
+    	$pdo = $this->mock(PDO::class);
 
-    	$pdoStatement = $this->mock('\PDOStatement');
+    	$pdoStatement = $this->mock(PDOStatement::class);
 
     	$handler = new ConnectionHandler($connection, new Cache);
 
@@ -123,11 +126,11 @@ class ConnectionHandlerTest extends TestCase
      */
     public function testBindFromQueryArgs(): void
     {
-    	$connection = $this->mock('\serve\database\connection\Connection');
+    	$connection = $this->mock(Connection::class);
 
-    	$pdo = $this->mock('\PDO');
+    	$pdo = $this->mock(PDO::class);
 
-    	$pdoStatement = $this->mock('\PDOStatement');
+    	$pdoStatement = $this->mock(PDOStatement::class);
 
     	$handler = new ConnectionHandler($connection, new Cache);
 
@@ -155,11 +158,11 @@ class ConnectionHandlerTest extends TestCase
      */
     public function testAllBindings(): void
     {
-    	$connection = $this->mock('\serve\database\connection\Connection');
+    	$connection = $this->mock(Connection::class);
 
-    	$pdo = $this->mock('\PDO');
+    	$pdo = $this->mock(PDO::class);
 
-    	$pdoStatement = $this->mock('\PDOStatement');
+    	$pdoStatement = $this->mock(PDOStatement::class);
 
     	$handler = new ConnectionHandler($connection, new Cache);
 
@@ -189,11 +192,11 @@ class ConnectionHandlerTest extends TestCase
      */
     public function testWithCaching(): void
     {
-    	$connection = $this->mock('\serve\database\connection\Connection');
+    	$connection = $this->mock(Connection::class);
 
-    	$pdo = $this->mock('\PDO');
+    	$pdo = $this->mock(PDO::class);
 
-    	$pdoStatement = $this->mock('\PDOStatement');
+    	$pdoStatement = $this->mock(PDOStatement::class);
 
     	$handler = new ConnectionHandler($connection, new Cache);
 
@@ -219,11 +222,11 @@ class ConnectionHandlerTest extends TestCase
      */
     public function testClearCaching(): void
     {
-    	$connection = $this->mock('\serve\database\connection\Connection');
+    	$connection = $this->mock(Connection::class);
 
-    	$pdo = $this->mock('\PDO');
+    	$pdo = $this->mock(PDO::class);
 
-    	$pdoStatement = $this->mock('\PDOStatement');
+    	$pdoStatement = $this->mock(PDOStatement::class);
 
     	$handler = new ConnectionHandler($connection, new Cache);
 
@@ -257,11 +260,11 @@ class ConnectionHandlerTest extends TestCase
      */
     public function testClearCachingDifferentTable(): void
     {
-    	$connection = $this->mock('\serve\database\connection\Connection');
+    	$connection = $this->mock(Connection::class);
 
-    	$pdo = $this->mock('\PDO');
+    	$pdo = $this->mock(PDO::class);
 
-    	$pdoStatement = $this->mock('\PDOStatement');
+    	$pdoStatement = $this->mock(PDOStatement::class);
 
     	$handler = new ConnectionHandler($connection, new Cache);
 
@@ -295,9 +298,9 @@ class ConnectionHandlerTest extends TestCase
      */
     public function testLastInsertedId(): void
     {
-    	$connection = $this->mock('\serve\database\connection\Connection');
+    	$connection = $this->mock(Connection::class);
 
-    	$pdo = $this->mock('\PDO');
+    	$pdo = $this->mock(PDO::class);
 
     	$handler = new ConnectionHandler($connection, new Cache);
 

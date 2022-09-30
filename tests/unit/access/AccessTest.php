@@ -8,7 +8,11 @@
 namespace serve\tests\unit\access;
 
 use serve\access\Access;
+use serve\file\Filesystem;
+use serve\http\request\Environment;
+use serve\http\request\Request;
 use serve\http\response\exceptions\ForbiddenException;
+use serve\http\response\Response;
 use serve\tests\TestCase;
 
 /**
@@ -21,10 +25,10 @@ class AccessTest extends TestCase
 	 */
 	public function testEnabled(): void
 	{
-		$request    = $this->mock('\serve\http\request\Request');
-		$response   = $this->mock('\serve\http\response\Response');
-		$env        = $this->mock('\serve\http\request\Environment');
-		$filesystem = $this->mock('\serve\file\Filesystem');
+		$request    = $this->mock(Request::class);
+		$response   = $this->mock(Response::class);
+		$env        = $this->mock(Environment::class);
+		$filesystem = $this->mock(Filesystem::class);
 		$whiteList  = ['192.168.1.1'];
 
 		$env->DOCUMENT_ROOT = '/foo/bar';
@@ -41,10 +45,10 @@ class AccessTest extends TestCase
 	 */
 	public function testDisabled(): void
 	{
-		$request    = $this->mock('\serve\http\request\Request');
-		$response   = $this->mock('\serve\http\response\Response');
-		$env        = $this->mock('\serve\http\request\Environment');
-		$filesystem = $this->mock('\serve\file\Filesystem');
+		$request    = $this->mock(Request::class);
+		$response   = $this->mock(Response::class);
+		$env        = $this->mock(Environment::class);
+		$filesystem = $this->mock(Filesystem::class);
 		$whiteList  = ['192.168.1.1'];
 
 		$env->DOCUMENT_ROOT = '/foo/bar';
@@ -61,10 +65,10 @@ class AccessTest extends TestCase
 	 */
 	public function testIpAllowed(): void
 	{
-		$request    = $this->mock('\serve\http\request\Request');
-		$response   = $this->mock('\serve\http\response\Response');
-		$env        = $this->mock('\serve\http\request\Environment');
-		$filesystem = $this->mock('\serve\file\Filesystem');
+		$request    = $this->mock(Request::class);
+		$response   = $this->mock(Response::class);
+		$env        = $this->mock(Environment::class);
+		$filesystem = $this->mock(Filesystem::class);
 		$whiteList  = ['192.168.1.1'];
 
 		$env->DOCUMENT_ROOT = '/foo/bar';
@@ -83,10 +87,10 @@ class AccessTest extends TestCase
 	 */
 	public function testIpNotAllowed(): void
 	{
-		$request    = $this->mock('\serve\http\request\Request');
-		$response   = $this->mock('\serve\http\response\Response');
-		$env        = $this->mock('\serve\http\request\Environment');
-		$filesystem = $this->mock('\serve\file\Filesystem');
+		$request    = $this->mock(Request::class);
+		$response   = $this->mock(Response::class);
+		$env        = $this->mock(Environment::class);
+		$filesystem = $this->mock(Filesystem::class);
 		$whiteList  = ['192.168.1.2'];
 
 		$env->DOCUMENT_ROOT = '/foo/bar';
@@ -107,10 +111,10 @@ class AccessTest extends TestCase
 	{
 		$this->expectException(ForbiddenException::class);
 
-		$request    = $this->mock('\serve\http\request\Request');
-		$response   = $this->mock('\serve\http\response\Response');
-		$env        = $this->mock('\serve\http\request\Environment');
-		$filesystem = $this->mock('\serve\file\Filesystem');
+		$request    = $this->mock(Request::class);
+		$response   = $this->mock(Response::class);
+		$env        = $this->mock(Environment::class);
+		$filesystem = $this->mock(Filesystem::class);
 		$whiteList  = ['192.168.1.1'];
 
 		$env->DOCUMENT_ROOT = '/foo/bar';
@@ -131,10 +135,10 @@ class AccessTest extends TestCase
 	{
 		$this->expectNotToPerformAssertions();
 
-		$request    = $this->mock('\serve\http\request\Request');
-		$response   = $this->mock('\serve\http\response\Response');
-		$env        = $this->mock('\serve\http\request\Environment');
-		$filesystem = $this->mock('\serve\file\Filesystem');
+		$request    = $this->mock(Request::class);
+		$response   = $this->mock(Response::class);
+		$env        = $this->mock(Environment::class);
+		$filesystem = $this->mock(Filesystem::class);
 		$whiteList  = ['192.168.1.1'];
 
 		$env->DOCUMENT_ROOT = '/foo/bar';
@@ -157,10 +161,10 @@ class AccessTest extends TestCase
 	{
 		$this->expectNotToPerformAssertions();
 
-		$request    = $this->mock('\serve\http\request\Request');
-		$response   = $this->mock('\serve\http\response\Response');
-		$env        = $this->mock('\serve\http\request\Environment');
-		$filesystem = $this->mock('\serve\file\Filesystem');
+		$request    = $this->mock(Request::class);
+		$response   = $this->mock(Response::class);
+		$env        = $this->mock(Environment::class);
+		$filesystem = $this->mock(Filesystem::class);
 		$whiteList  = ['192.168.1.1'];
 
 		$env->DOCUMENT_ROOT = '/foo/bar';

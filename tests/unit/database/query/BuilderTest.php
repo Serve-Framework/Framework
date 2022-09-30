@@ -7,6 +7,7 @@
 
 namespace serve\tests\unit\framework\database\query;
 
+use serve\database\connection\ConnectionHandler;
 use serve\database\query\Builder;
 use serve\database\query\Query;
 use serve\tests\TestCase;
@@ -36,7 +37,7 @@ class BuilderTest extends TestCase
 
         $query = 'CREATE TABLE `prefixed_my_table_name` ( `id` INT UNSIGNED UNIQUE AUTO_INCREMENT, `description` VARCHAR(255), `thumbnail_id` INTEGER UNSIGNED, `notifications` BOOLEAN DEFAULT TRUE, PRIMARY KEY (id) ) ENGINE=InnoDB AUTO_INCREMENT=0 DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;';
 
-        $connectionHandler = $this->mock('\serve\database\connection\ConnectionHandler');
+        $connectionHandler = $this->mock(ConnectionHandler::class);
 
         $connectionHandler->shouldReceive('tablePrefix')->andReturn('prefixed_');
 
@@ -59,7 +60,7 @@ class BuilderTest extends TestCase
     {
         $this->expectNotToPerformAssertions();
 
-        $connectionHandler = $this->mock('\serve\database\connection\ConnectionHandler');
+        $connectionHandler = $this->mock(ConnectionHandler::class);
 
         $connectionHandler->shouldReceive('tablePrefix')->andReturn('prefixed_');
 
@@ -82,7 +83,7 @@ class BuilderTest extends TestCase
     {
         $this->expectNotToPerformAssertions();
 
-        $connectionHandler = $this->mock('\serve\database\connection\ConnectionHandler');
+        $connectionHandler = $this->mock(ConnectionHandler::class);
 
         $connectionHandler->shouldReceive('tablePrefix')->andReturn('prefixed_');
 
@@ -109,7 +110,7 @@ class BuilderTest extends TestCase
 
         $bindings = ['prefixedmytablenameandfoobar' => 'bar'];
 
-        $connectionHandler = $this->mock('\serve\database\connection\ConnectionHandler');
+        $connectionHandler = $this->mock(ConnectionHandler::class);
 
         $connectionHandler->shouldReceive('tablePrefix')->andReturn('prefixed_');
 
@@ -136,7 +137,7 @@ class BuilderTest extends TestCase
 
         $bindings = ['prefixedmytablenameandfoobar' => 'bar', 'column' => 'value'];
 
-        $connectionHandler = $this->mock('\serve\database\connection\ConnectionHandler');
+        $connectionHandler = $this->mock(ConnectionHandler::class);
 
         $connectionHandler->shouldReceive('tablePrefix')->andReturn('prefixed_');
 
@@ -163,7 +164,7 @@ class BuilderTest extends TestCase
 
         $bindings = ['column1' => 'value1', 'column2' => 'value2'];
 
-        $connectionHandler = $this->mock('\serve\database\connection\ConnectionHandler');
+        $connectionHandler = $this->mock(ConnectionHandler::class);
 
         $connectionHandler->shouldReceive('tablePrefix')->andReturn('prefixed_');
 
@@ -188,7 +189,7 @@ class BuilderTest extends TestCase
 
         $query = 'SELECT * FROM prefixed_my_table_name';
 
-        $connectionHandler = $this->mock('\serve\database\connection\ConnectionHandler');
+        $connectionHandler = $this->mock(ConnectionHandler::class);
 
         $connectionHandler->shouldReceive('tablePrefix')->andReturn('prefixed_');
 
@@ -213,7 +214,7 @@ class BuilderTest extends TestCase
 
         $query = 'SELECT id, name FROM prefixed_my_table_name';
 
-        $connectionHandler = $this->mock('\serve\database\connection\ConnectionHandler');
+        $connectionHandler = $this->mock(ConnectionHandler::class);
 
         $connectionHandler->shouldReceive('tablePrefix')->andReturn('prefixed_');
 
@@ -238,7 +239,7 @@ class BuilderTest extends TestCase
 
         $query = 'SELECT * FROM prefixed_my_table_name LIMIT 1';
 
-        $connectionHandler = $this->mock('\serve\database\connection\ConnectionHandler');
+        $connectionHandler = $this->mock(ConnectionHandler::class);
 
         $connectionHandler->shouldReceive('tablePrefix')->andReturn('prefixed_');
 
@@ -263,7 +264,7 @@ class BuilderTest extends TestCase
 
         $query = 'SELECT * FROM prefixed_my_table_name LIMIT 1';
 
-        $connectionHandler = $this->mock('\serve\database\connection\ConnectionHandler');
+        $connectionHandler = $this->mock(ConnectionHandler::class);
 
         $connectionHandler->shouldReceive('tablePrefix')->andReturn('prefixed_');
 
@@ -290,7 +291,7 @@ class BuilderTest extends TestCase
 
         $bindings = ['prefixedmytablenameandfoobar' => 'bar'];
 
-        $connectionHandler = $this->mock('\serve\database\connection\ConnectionHandler');
+        $connectionHandler = $this->mock(ConnectionHandler::class);
 
         $connectionHandler->shouldReceive('tablePrefix')->andReturn('prefixed_');
 
@@ -317,7 +318,7 @@ class BuilderTest extends TestCase
 
         $bindings = ['prefixedmytablenameandfoobar' => 'bar', 'prefixedmytablenameorbarfoo' => 'foo'];
 
-        $connectionHandler = $this->mock('\serve\database\connection\ConnectionHandler');
+        $connectionHandler = $this->mock(ConnectionHandler::class);
 
         $connectionHandler->shouldReceive('tablePrefix')->andReturn('prefixed_');
 
@@ -344,7 +345,7 @@ class BuilderTest extends TestCase
 
         $bindings = ['prefixedmytablenameandfoobar' => 'bar', 'prefixedmytablenameandbarfoo' => 'foo'];
 
-        $connectionHandler = $this->mock('\serve\database\connection\ConnectionHandler');
+        $connectionHandler = $this->mock(ConnectionHandler::class);
 
         $connectionHandler->shouldReceive('tablePrefix')->andReturn('prefixed_');
 
@@ -371,7 +372,7 @@ class BuilderTest extends TestCase
 
         $bindings = ['prefixedmytablenameandfoofoo' => 'foo', 'prefixedmytablenameandfoobar' => 'bar', 'prefixedmytablenameandfoofoobaz' => 'foobaz'];
 
-        $connectionHandler = $this->mock('\serve\database\connection\ConnectionHandler');
+        $connectionHandler = $this->mock(ConnectionHandler::class);
 
         $connectionHandler->shouldReceive('tablePrefix')->andReturn('prefixed_');
 
@@ -396,7 +397,7 @@ class BuilderTest extends TestCase
 
         $query = 'SELECT * FROM prefixed_my_table_name INNER JOIN prefixed_foo_table ON prefixed_table1.column_name = prefixed_table2.column_name';
 
-        $connectionHandler = $this->mock('\serve\database\connection\ConnectionHandler');
+        $connectionHandler = $this->mock(ConnectionHandler::class);
 
         $connectionHandler->shouldReceive('tablePrefix')->andReturn('prefixed_');
 
@@ -421,7 +422,7 @@ class BuilderTest extends TestCase
 
         $query = 'SELECT * FROM prefixed_my_table_name INNER JOIN prefixed_foo_table ON prefixed_table1.column_name = prefixed_table2.column_name';
 
-        $connectionHandler = $this->mock('\serve\database\connection\ConnectionHandler');
+        $connectionHandler = $this->mock(ConnectionHandler::class);
 
         $connectionHandler->shouldReceive('tablePrefix')->andReturn('prefixed_');
 
@@ -446,7 +447,7 @@ class BuilderTest extends TestCase
 
         $query = 'SELECT * FROM prefixed_my_table_name LEFT JOIN prefixed_foo_table ON prefixed_table1.column_name = prefixed_table2.column_name';
 
-        $connectionHandler = $this->mock('\serve\database\connection\ConnectionHandler');
+        $connectionHandler = $this->mock(ConnectionHandler::class);
 
         $connectionHandler->shouldReceive('tablePrefix')->andReturn('prefixed_');
 
@@ -471,7 +472,7 @@ class BuilderTest extends TestCase
 
         $query = 'SELECT * FROM prefixed_my_table_name RIGHT JOIN prefixed_foo_table ON prefixed_table1.column_name = prefixed_table2.column_name';
 
-        $connectionHandler = $this->mock('\serve\database\connection\ConnectionHandler');
+        $connectionHandler = $this->mock(ConnectionHandler::class);
 
         $connectionHandler->shouldReceive('tablePrefix')->andReturn('prefixed_');
 
@@ -496,7 +497,7 @@ class BuilderTest extends TestCase
 
         $query = 'SELECT * FROM prefixed_my_table_name FULL OUTER JOIN prefixed_foo_table ON prefixed_table1.column_name = prefixed_table2.column_name';
 
-        $connectionHandler = $this->mock('\serve\database\connection\ConnectionHandler');
+        $connectionHandler = $this->mock(ConnectionHandler::class);
 
         $connectionHandler->shouldReceive('tablePrefix')->andReturn('prefixed_');
 
@@ -521,7 +522,7 @@ class BuilderTest extends TestCase
 
         $query = 'SELECT * FROM prefixed_my_table_name ORDER BY foo DESC';
 
-        $connectionHandler = $this->mock('\serve\database\connection\ConnectionHandler');
+        $connectionHandler = $this->mock(ConnectionHandler::class);
 
         $connectionHandler->shouldReceive('tablePrefix')->andReturn('prefixed_');
 
@@ -546,7 +547,7 @@ class BuilderTest extends TestCase
 
         $query = 'SELECT * FROM prefixed_my_table_name ORDER BY foo ASC';
 
-        $connectionHandler = $this->mock('\serve\database\connection\ConnectionHandler');
+        $connectionHandler = $this->mock(ConnectionHandler::class);
 
         $connectionHandler->shouldReceive('tablePrefix')->andReturn('prefixed_');
 
@@ -571,7 +572,7 @@ class BuilderTest extends TestCase
 
         $query = 'SELECT * FROM prefixed_my_table_name GROUP BY foo';
 
-        $connectionHandler = $this->mock('\serve\database\connection\ConnectionHandler');
+        $connectionHandler = $this->mock(ConnectionHandler::class);
 
         $connectionHandler->shouldReceive('tablePrefix')->andReturn('prefixed_');
 
@@ -596,7 +597,7 @@ class BuilderTest extends TestCase
 
         $query = 'SELECT *, GROUP_CONCAT(foo) AS bar FROM prefixed_my_table_name';
 
-        $connectionHandler = $this->mock('\serve\database\connection\ConnectionHandler');
+        $connectionHandler = $this->mock(ConnectionHandler::class);
 
         $connectionHandler->shouldReceive('tablePrefix')->andReturn('prefixed_');
 
@@ -621,7 +622,7 @@ class BuilderTest extends TestCase
 
         $query = 'SELECT * FROM prefixed_my_table_name LIMIT 1';
 
-        $connectionHandler = $this->mock('\serve\database\connection\ConnectionHandler');
+        $connectionHandler = $this->mock(ConnectionHandler::class);
 
         $connectionHandler->shouldReceive('tablePrefix')->andReturn('prefixed_');
 
@@ -646,7 +647,7 @@ class BuilderTest extends TestCase
 
         $query = 'SELECT * FROM prefixed_my_table_name LIMIT 0, 3';
 
-        $connectionHandler = $this->mock('\serve\database\connection\ConnectionHandler');
+        $connectionHandler = $this->mock(ConnectionHandler::class);
 
         $connectionHandler->shouldReceive('tablePrefix')->andReturn('prefixed_');
 

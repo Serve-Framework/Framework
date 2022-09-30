@@ -7,7 +7,18 @@
 
 namespace serve\tests\unit\framework\http\response;
 
+use serve\http\cookie\Cookie;
+use serve\http\request\Headers as RequestHeaders;
+use serve\http\request\Request;
+use serve\http\response\Body;
+use serve\http\response\CDN;
+use serve\http\response\Format;
+use serve\http\response\Headers as ResponseHeaders;
+use serve\http\response\Protocol;
 use serve\http\response\Response;
+use serve\http\response\Status;
+use serve\http\session\Session;
+use serve\mvc\view\View;
 use serve\tests\TestCase;
 
 use function extract;
@@ -25,17 +36,17 @@ class ResponseTest extends TestCase
 	 */
 	private function mockResponse()
 	{
-		$protocol = $this->mock('\serve\http\response\Protocol');
-		$format   = $this->mock('\serve\http\response\Format');
-		$body     = $this->mock('\serve\http\response\Body');
-		$status   = $this->mock('\serve\http\response\Status');
-		$headers  = $this->mock('\serve\http\response\Headers');
-		$cookie   = $this->mock('\serve\http\cookie\Cookie');
-		$session  = $this->mock('\serve\http\session\Session');
-		$cdn      = $this->mock('\serve\http\response\CDN');
-		$view     = $this->mock('\serve\mvc\view\View');
-		$request  = $this->mock('\serve\http\request\Request');
-		$rHeaders = $this->mock('\serve\http\request\Headers');
+		$protocol = $this->mock(Protocol::class);
+		$format   = $this->mock(Format::class);
+		$body     = $this->mock(Body::class);
+		$status   = $this->mock(Status::class);
+		$headers  = $this->mock(ResponseHeaders::class);
+		$cookie   = $this->mock(Cookie::class);
+		$session  = $this->mock(Session::class);
+		$cdn      = $this->mock(CDN::class);
+		$view     = $this->mock(View::class);
+		$request  = $this->mock(Request::class);
+		$rHeaders = $this->mock(RequestHeaders::class);
 
 		$format->shouldReceive('set')->withArgs(['text/html']);
 		$format->shouldReceive('setEncoding')->withArgs(['utf-8']);

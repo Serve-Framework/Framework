@@ -55,7 +55,7 @@ class RequestTest extends TestCase
 	{
 		$server  = $this->getServerData();
 
-		$request = new Request(new Environment($server), new Headers($server), $this->mock('\serve\http\request\Files'));
+		$request = new Request(new Environment($server), new Headers($server), $this->mock(Files::class));
 
 		$this->assertEquals('GET', $request->getMethod());
 
@@ -73,7 +73,7 @@ class RequestTest extends TestCase
 	{
 		$server  = $this->getServerData();
 
-		$request = new Request(new Environment($server), new Headers($server), $this->mock('\serve\http\request\Files'));
+		$request = new Request(new Environment($server), new Headers($server), $this->mock(Files::class));
 
 		$this->assertFalse($request->isSecure());
 
@@ -93,7 +93,7 @@ class RequestTest extends TestCase
 	{
 		$server  = $this->getServerData();
 
-		$request = new Request(new Environment($server), new Headers($server), $this->mock('\serve\http\request\Files'));
+		$request = new Request(new Environment($server), new Headers($server), $this->mock(Files::class));
 
 		$this->assertTrue($request->isGet());
 
@@ -111,7 +111,7 @@ class RequestTest extends TestCase
 	{
 		$server  = $this->getServerData();
 
-		$request = new Request(new Environment($server), new Headers($server), $this->mock('\serve\http\request\Files'));
+		$request = new Request(new Environment($server), new Headers($server), $this->mock(Files::class));
 
 		$this->assertFalse($request->isPost());
 
@@ -129,7 +129,7 @@ class RequestTest extends TestCase
 	{
 		$server  = $this->getServerData();
 
-		$request = new Request(new Environment($server), new Headers($server), $this->mock('\serve\http\request\Files'));
+		$request = new Request(new Environment($server), new Headers($server), $this->mock(Files::class));
 
 		$this->assertFalse($request->isPut());
 
@@ -147,7 +147,7 @@ class RequestTest extends TestCase
 	{
 		$server  = $this->getServerData();
 
-		$request = new Request(new Environment($server), new Headers($server), $this->mock('\serve\http\request\Files'));
+		$request = new Request(new Environment($server), new Headers($server), $this->mock(Files::class));
 
 		$this->assertFalse($request->isPatch());
 
@@ -165,7 +165,7 @@ class RequestTest extends TestCase
 	{
 		$server  = $this->getServerData();
 
-		$request = new Request(new Environment($server), new Headers($server), $this->mock('\serve\http\request\Files'));
+		$request = new Request(new Environment($server), new Headers($server), $this->mock(Files::class));
 
 		$this->assertFalse($request->isDelete());
 
@@ -183,7 +183,7 @@ class RequestTest extends TestCase
 	{
 		$server  = $this->getServerData();
 
-		$request = new Request(new Environment($server), new Headers($server), $this->mock('\serve\http\request\Files'));
+		$request = new Request(new Environment($server), new Headers($server), $this->mock(Files::class));
 
 		$this->assertFalse($request->isHead());
 
@@ -201,7 +201,7 @@ class RequestTest extends TestCase
 	{
 		$server  = $this->getServerData();
 
-		$request = new Request(new Environment($server), new Headers($server), $this->mock('\serve\http\request\Files'));
+		$request = new Request(new Environment($server), new Headers($server), $this->mock(Files::class));
 
 		$this->assertFalse($request->isOptions());
 
@@ -221,7 +221,7 @@ class RequestTest extends TestCase
 
 		$server['REQUEST_URI']  = '/foobar.jpg';
 
-		$request = new Request(new Environment($server), new Headers($server), $this->mock('\serve\http\request\Files'));
+		$request = new Request(new Environment($server), new Headers($server), $this->mock(Files::class));
 
 		$this->assertTrue($request->isFileGet());
 	}
@@ -235,7 +235,7 @@ class RequestTest extends TestCase
 
 		$server['REQUEST_METHOD'] = 'POST';
 
-		$request = new Request(new Environment($server), new Headers($server), $this->mock('\serve\http\request\Files'));
+		$request = new Request(new Environment($server), new Headers($server), $this->mock(Files::class));
 
 		$this->assertFalse($request->isAjax());
 
@@ -259,7 +259,7 @@ class RequestTest extends TestCase
 
 		$server['REQUEST_URI']    = '/foobar.html?foo=bar&bar=foo';
 
-		$request = new Request(new Environment($server), new Headers($server), $this->mock('\serve\http\request\Files'));
+		$request = new Request(new Environment($server), new Headers($server), $this->mock(Files::class));
 
 		$this->assertEquals('http', $request->fetch('scheme'));
 
@@ -283,7 +283,7 @@ class RequestTest extends TestCase
 
 		$server['REQUEST_URI']    = '/foobar.html?foo=bar&bar=foo';
 
-		$request = new Request(new Environment($server), new Headers($server), $this->mock('\serve\http\request\Files'));
+		$request = new Request(new Environment($server), new Headers($server), $this->mock(Files::class));
 
 		$this->assertEquals('bar', $request->fetch('foo'));
 
@@ -385,7 +385,7 @@ class RequestTest extends TestCase
 	{
 		$server  = $this->getServerData();
 
-		$request = new Request(new Environment($server), new Headers($server), $this->mock('\serve\http\request\Files'));
+		$request = new Request(new Environment($server), new Headers($server), $this->mock(Files::class));
 
 		$this->assertFalse($request->mimeType());
 
@@ -403,7 +403,7 @@ class RequestTest extends TestCase
 	{
 		$server  = $this->getServerData();
 
-		$request = new Request(new Environment($server), new Headers($server), $this->mock('\serve\http\request\Files'));
+		$request = new Request(new Environment($server), new Headers($server), $this->mock(Files::class));
 
 		$this->assertFalse($request->isBot());
 

@@ -8,6 +8,9 @@
 namespace serve\tests\unit\framework\cli;
 
 use serve\cli\Cli;
+use serve\cli\Environment;
+use serve\cli\input\Input;
+use serve\cli\output\Output;
 use serve\tests\TestCase;
 
 /**
@@ -20,9 +23,9 @@ class CliTest extends TestCase
 	 */
 	public function testCli(): void
 	{
-		$input  = $this->mock('\serve\cli\input\Input');
-		$output = $this->mock('\serve\cli\output\Output');
-		$env    = $this->mock('\serve\cli\Environment');
+		$input  = $this->mock(Input::class);
+		$output = $this->mock(Output::class);
+		$env    = $this->mock(Environment::class);
 		$cli    = new Cli($input, $output, $env);
 
 		$this->assertEquals($input, $cli->input());
