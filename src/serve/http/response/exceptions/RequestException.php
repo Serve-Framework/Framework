@@ -20,11 +20,11 @@ class RequestException extends RuntimeException
 	/**
 	 * Constructor.
 	 *
-	 * @param int            $code     Exception code
+	 * @param int|null       $code     Exception code
 	 * @param string|null    $message  Exception message
 	 * @param Throwable|null $previous Previous exception
 	 */
-	public function __construct(int $code, ?string $message = null, ?Throwable $previous = null)
+	public function __construct(?int $code = 500, ?string $message = 'Aw, snap! An error has occurred while processing your request.', ?Throwable $previous = null)
 	{
 		parent::__construct($message, $code, $previous);
 	}

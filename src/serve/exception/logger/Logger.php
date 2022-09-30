@@ -9,7 +9,6 @@ namespace serve\exception\logger;
 
 use PDOException;
 use serve\exception\ExceptionParserTrait;
-use serve\exception\logger\LoggerInterface;
 use serve\file\Filesystem;
 use serve\http\request\Environment;
 use Throwable;
@@ -70,13 +69,13 @@ class Logger implements LoggerInterface
     /**
      * {@inheritDoc}
      */
-    public function write(Throwable $exception): void
+    public function writeException(Throwable $exception): void
     {
         $msg = $this->logMsg($exception);
 
-        $this->fileSystem->appendContents($this->genericPath(), $msg);
+        $this->fileSystem->appendContents($this->genericPath($exception), $msg);
 
-        $this->fileSystem->appendContents($this->errnoPath(), $msg);
+        $this->fileSystem->appendContents($this->errnoPath($exception), $msg);
     }
 
     /**
@@ -123,11 +122,12 @@ class Logger implements LoggerInterface
     /**
      * Get the path to the specific error log file for current error.
      *
+     * @param  Throwable $exception Exception
      * @return string
      */
-    private function errnoPath(): string
+    private function errnoPath(Throwable $exception): string
     {
-        return $this->path . DIRECTORY_SEPARATOR . date('d_m_y') . '_' . $this->errnoToFile() . '.log';
+        return $this->path . DIRECTORY_SEPARATOR . date('d_m_y') . '_' . $this->errnoToFile($exception) . '.log';
     }
 
     /**

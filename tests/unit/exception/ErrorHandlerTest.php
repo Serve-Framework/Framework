@@ -10,6 +10,7 @@ namespace serve\tests\unit\framework\exception;
 use ErrorException;
 use InvalidArgumentException;
 use serve\exception\ErrorHandler;
+use serve\exception\logger\Logger;
 use serve\tests\TestCase;
 use Throwable;
 
@@ -21,28 +22,130 @@ class ErrorHandlerTest extends TestCase
     /**
      *
      */
-    public function testWebHandler(): void
+    public function testdefaults(): void
     {
-        $this->expectNotToPerformAssertions();
+        $logger        = $this->mock(Logger::class);
+        $handler       = new ErrorHandler($logger, true, true);
+        $error         = new ErrorException('Unit testing error message');
+        $madeCallback  = false;
 
-        $handler    = new ErrorHandler(true, E_ALL | E_STRICT, 0);
-        $logger     = $this->mock('\serve\exception\ErrorLogger');
-        $webHandler = $this->mock('\serve\exception\handlers\WebHandler');
-
-        $handler->handle(ErrorException::class, function ($exception) use ($handler, $logger, $webHandler)
+        $handler->handle(Throwable::class, function ($exception) use (&$madeCallback)
         {
-            // Logger
-            $handler->setLogger($logger);
+            $madeCallback = true;
 
-            // Handle
-            return $webHandler->handle($handler->display_errors());
+            return true;
         });
 
-        $logger->shouldReceive('write');
+        $logger->shouldReceive('writeException');
+        $handler->handler($error);
 
-        $webHandler->shouldReceive('handle')->withArgs([true])->andReturn(false);
+        $this->assertTrue($handler->displayErrors());
+        $this->assertTrue($handler->logErrors());
+        $this->assertTrue($madeCallback);
+    }
 
-        $handler->handler(new ErrorException);
+    /**
+     *
+     */
+    public function testNoLogging(): void
+    {
+        $logger        = $this->mock(Logger::class);
+        $handler       = new ErrorHandler($logger, true, false);
+        $error         = new ErrorException('Unit testing error message');
+        $madeCallback  = false;
+
+        $handler->handle(Throwable::class, function ($exception) use (&$madeCallback)
+        {
+            $madeCallback = true;
+
+            return true;
+        });
+
+        $handler->handler($error);
+
+        $this->assertTrue($handler->displayErrors());
+        $this->assertFalse($handler->logErrors());
+        $this->assertTrue($madeCallback);
+    }
+
+    /**
+     *
+     */
+    public function testNoDisplay(): void
+    {
+        $logger        = $this->mock(Logger::class);
+        $handler       = new ErrorHandler($logger, false, false);
+        $error         = new ErrorException('Unit testing error message');
+        $madeCallback  = false;
+
+        $handler->handle(Throwable::class, function ($exception) use (&$madeCallback)
+        {
+            $madeCallback = true;
+
+            return true;
+        });
+
+        $handler->handler($error);
+
+        $this->assertFalse($handler->displayErrors());
+        $this->assertFalse($handler->logErrors());
+        $this->assertTrue($madeCallback);
+    }
+
+    /**
+     * @runInSeparateProcess
+     */
+    public function testFallbackHandler(): void
+    {
+        $this->expectOutputRegex('/\[ErrorException\] Unit testing error message on line/');
+
+        $logger        = $this->mock(Logger::class);
+        $handler       = new ErrorHandler($logger, true, true);
+        $error         = new ErrorException('Unit testing error message');
+
+        $logger->shouldReceive('writeException');
+        $handler->handler($error);
+
+        $this->assertTrue($handler->logErrors());
+    }
+
+    /**
+     *
+     */
+    public function testFallbackHandlerNoOutput(): void
+    {
+        $logger        = $this->mock(Logger::class);
+        $handler       = new ErrorHandler($logger, false, true);
+        $error         = new ErrorException('Unit testing error message');
+
+        $logger->shouldReceive('writeException');
+        $handler->handler($error);
+
+        $this->assertFalse($handler->displayErrors());
+        $this->assertTrue($handler->logErrors());
+    }
+
+    /**
+     *
+     */
+    public function testDisableLoggingFor(): void
+    {
+        $logger        = $this->mock(Logger::class);
+        $handler       = new ErrorHandler($logger, true, true);
+        $error         = new ErrorException('Unit testing error message');
+        $madeCallback  = false;
+
+        $handler->handle(ErrorException::class, function ($exception) use (&$madeCallback)
+        {
+            $madeCallback = true;
+
+            return true;
+        });
+
+        $handler->disableLoggingFor(ErrorException::class);
+        $handler->handler($error);
+
+        $this->assertTrue($madeCallback);
     }
 
     /**
@@ -50,75 +153,87 @@ class ErrorHandlerTest extends TestCase
      */
     public function testDifferentError(): void
     {
-        $this->expectNotToPerformAssertions();
+        $this->expectOutputRegex('/\[ErrorException\] Unit testing error message on line/');
 
-        $handler    = new ErrorHandler(true, E_ALL | E_STRICT, 0);
-        $logger     = $this->mock('\serve\exception\ErrorLogger');
-        $webHandler = $this->mock('\serve\exception\handlers\WebHandler');
+        $logger        = $this->mock(Logger::class);
+        $handler       = new ErrorHandler($logger, true, true);
+        $error         = new ErrorException('Unit testing error message');
+        $madeCallback  = false;
 
-        $handler->handle(Throwable::class, function ($exception) use ($handler, $logger, $webHandler)
+        $handler->handle(InvalidArgumentException::class, function ($exception) use (&$madeCallback)
         {
-            // Logger
-            $handler->setLogger($logger);
+            $madeCallback = true;
 
-            // Handle
-            return $webHandler->handle($handler->display_errors());
+            return true;
         });
 
-        $logger->shouldReceive('write');
+        $logger->shouldReceive('writeException');
+        $handler->handler($error);
 
-        $webHandler->shouldReceive('handle')->withArgs([true])->andReturn(false);
-
-        $handler->handler(new InvalidArgumentException);
+        $this->assertFalse($madeCallback);
     }
 
     /**
      *
      */
-    public function testDisableLogging(): void
+    public function testSameError(): void
     {
-        $this->expectNotToPerformAssertions();
+        $logger        = $this->mock(Logger::class);
+        $handler       = new ErrorHandler($logger, true, true);
+        $error         = new InvalidArgumentException('Unit testing error message');
+        $madeCallback  = false;
 
-        $handler    = new ErrorHandler(true, E_ALL | E_STRICT, 0);
-        $logger     = $this->mock('\serve\exception\ErrorLogger');
-        $webHandler = $this->mock('\serve\exception\handlers\WebHandler');
-
-        $handler->handle(Throwable::class, function ($exception) use ($handler, $logger, $webHandler)
+        $handler->handle(InvalidArgumentException::class, function ($exception) use (&$madeCallback)
         {
-            return $webHandler->handle($handler->display_errors());
+            $madeCallback = true;
+
+            return true;
         });
 
-        $handler->setLogger($logger);
+        $logger->shouldReceive('writeException');
+        $handler->handler($error);
 
-        $handler->disableLoggingFor(ErrorException::class);
-
-        $webHandler->shouldReceive('handle')->withArgs([true])->andReturn(false);
-
-        $handler->handler(new ErrorException);
+        $this->assertTrue($madeCallback);
     }
 
     /**
      *
      */
-    public function testDisplayErrors(): void
+    public function testClearHandlers(): void
     {
-        $this->expectNotToPerformAssertions();
+        $this->expectOutputRegex('/\[InvalidArgumentException\] Unit testing error message on line/');
 
-        $handler    = new ErrorHandler(false, E_ALL | E_STRICT);
-        $logger     = $this->mock('\serve\exception\ErrorLogger');
-        $webHandler = $this->mock('\serve\exception\handlers\WebHandler');
+        $logger        = $this->mock(Logger::class);
+        $handler       = new ErrorHandler($logger, true, true);
+        $error         = new InvalidArgumentException('Unit testing error message');
 
-        $handler->handle(Throwable::class, function ($exception) use ($handler, $logger, $webHandler)
+        $logger->shouldReceive('writeException');
+        $handler->clearHandlers(InvalidArgumentException::class);
+        $handler->handler($error);
+
+        $this->assertTrue($handler->logErrors());
+    }
+
+    /**
+     *
+     */
+    public function testReplaceHandlers(): void
+    {
+        $logger        = $this->mock(Logger::class);
+        $handler       = new ErrorHandler($logger, true, true);
+        $error         = new ErrorException('Unit testing error message');
+        $madeCallback  = false;
+
+        $handler->replaceHandlers(Throwable::class, function ($exception) use (&$madeCallback)
         {
-            return $webHandler->handle($handler->display_errors());
+            $madeCallback = true;
+
+            return true;
         });
 
-        $handler->setLogger($logger);
+        $logger->shouldReceive('writeException');
+        $handler->handler($error);
 
-        $handler->disableLoggingFor(ErrorException::class);
-
-        $webHandler->shouldReceive('handle')->withArgs([false])->andReturn(false);
-
-        $handler->handler(new ErrorException);
+        $this->assertTrue($madeCallback);
     }
 }

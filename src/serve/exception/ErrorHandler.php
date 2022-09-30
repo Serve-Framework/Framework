@@ -17,7 +17,7 @@ use function array_merge;
 use function array_unique;
 use function array_unshift;
 use function error_get_last;
-use function ini_get;
+use function fwrite;
 use function is_null;
 use function ob_end_clean;
 use function ob_get_level;
@@ -38,7 +38,7 @@ class ErrorHandler
 	 *
 	 * @var \serve\exception\logger\Logger
 	 */
-	private $logger;
+	protected $logger;
 
 	/**
 	 * Is the shutdown handler disabled?
@@ -66,14 +66,21 @@ class ErrorHandler
 	 *
 	 * @var bool
 	 */
-	private $logErrors;
+	protected $logErrors;
 
 	/**
 	 * Are we displaying errors?
 	 *
 	 * @var bool
 	 */
-	private $displayErrors;
+	protected $displayErrors;
+
+	/**
+	 * Are we running a phpunit test?
+	 *
+	 * @var bool
+	 */
+	protected $isPhpUnit;
 
     /**
      * Constructor.
@@ -84,9 +91,13 @@ class ErrorHandler
      */
     public function __construct(Logger $logger, bool $displayErrors, bool $logErrors)
     {
-        $this->logErrors = $displayErrors;
+    	$this->logger = $logger;
 
-        $this->displayErrors = $displayErrors;
+    	$this->displayErrors = $displayErrors;
+
+        $this->logErrors = $logErrors;
+
+        $this->isPhpUnit = PHP_SAPI == 'cli' && isset($_SERVER['argv']) && is_array($_SERVER['argv']) && str_contains($_SERVER['argv'][0], 'phpunit');
 
         $this->handle(Throwable::class, $this->getFallbackHandler());
 
@@ -102,9 +113,9 @@ class ErrorHandler
 	{
 		return function (Throwable $e): void
 		{
-			if($this->displayErrors())
+			if($this->displayErrors)
 			{
-				$this->write('[ ' . $e::class . "]  {$e->getMessage()} on line [ {$e->getLine()} ] in [ {$e->getFile()} ]" . PHP_EOL);
+				$this->write('[' . $e::class . "] {$e->getMessage()} on line [ {$e->getLine()} ] in [ {$e->getFile()} ]" . PHP_EOL);
 
 				$this->write($e->getTraceAsString() . PHP_EOL);
 			}
@@ -121,7 +132,7 @@ class ErrorHandler
 		{
 			$e = error_get_last();
 
-			if($e !== null && ($this->log_errors() & $e['type']) !== 0 && !$this->disableShutdownHandler)
+			if($e !== null && ($this->logErrors & $e['type']) !== 0 && !$this->disableShutdownHandler)
 			{
 				$this->handler(new ErrorException($e['message'], $e['type'], 0, $e['file'], $e['line']));
 
@@ -206,9 +217,7 @@ class ErrorHandler
 	 */
 	protected function clearOutputBuffers(): void
 	{
-		$phpunit = PHP_SAPI == 'cli' && isset($_SERVER['argv']) && is_array($_SERVER['argv']) && str_contains($_SERVER['argv'][0], 'phpunit');
-
-		if (!$phpunit)
+		if (!$this->isPhpUnit)
 		{
 			while(ob_get_level() > 0) ob_end_clean();
 		}
@@ -314,7 +323,10 @@ class ErrorHandler
 			}
 			finally
 			{
-				exit(1);
+				if (!$this->isPhpUnit)
+				{
+					exit(1);
+				}
 			}
 		}
 	}
@@ -326,9 +338,9 @@ class ErrorHandler
 	 */
 	protected function write(string $output): void
 	{
-		if(PHP_SAPI === 'cli' && ini_get('display_errors') === 'stderr')
+		if(PHP_SAPI === 'cli' && $this->displayErrors && !$this->isPhpUnit)
 		{
-			fwrite(STDERR, $output);
+			fwrite(STDOUT, $output);
 
 			return;
 		}

@@ -16,7 +16,6 @@ use serve\http\response\Response;
 use serve\mvc\view\View;
 use Throwable;
 use function dirname;
-use function file_exists;
 use function implode;
 use function in_array;
 use function intval;
@@ -123,11 +122,9 @@ class WebHandler
 		{
 			return json_encode($vars);
 		}
-		else
-		{
-			// Return detailed error view
-			return $this->view->display(dirname(__FILE__) . '/views/debug.php', $vars);
-		}
+
+		// Return detailed error view
+		return $this->view->display(dirname(__FILE__) . '/views/debug.php', $vars);
 	}
 
 	/**
@@ -135,67 +132,24 @@ class WebHandler
 	 *
 	 * @param  Throwable $exception    Exception
 	 * @param  bool      $returnAsJson Should we return JSON?
-	 * @param  bool      $isBot        Is the user-agent a bot?
 	 * @return string
 	 */
-	protected function getGenericError(Throwable $exception, bool $returnAsJson, bool $isBot): string
+	protected function getGenericError(Throwable $exception, bool $returnAsJson): string
 	{
-		$code = $exception->getCode();
-
-		if ($isBot)
+		if ($returnAsJson)
 		{
-			switch($code)
-			{
-				case 403:
-					$message = 'You don\'t have permission to access the requested resource.';
-					break;
-				case 404:
-					$message = 'The resource you requested could not be found. It may have been moved or deleted.';
-					break;
-				case 405:
-					$message = 'The request method that was used is not supported by this resource.';
-					break;
-				default:
-					$message = 'An error has occurred while processing your request.';
-			}
-
-			return $message;
+			return json_encode(['message' => $exception instanceof RequestException ? $exception->getMessage() : 'Aw, snap! An error has occurred while processing your request.']);
 		}
-		elseif ($returnAsJson)
-		{
-			switch($code)
-			{
-				case 403:
-					$message = 'You don\'t have permission to access the requested resource.';
-					break;
-				case 404:
-					$message = 'The resource you requested could not be found. It may have been moved or deleted.';
-					break;
-				case 405:
-					$message = 'The request method that was used is not supported by this resource.';
-					break;
-				default:
-					$message = 'An error has occurred while processing your request.';
-			}
 
-			return json_encode(['message' => $message]);
-		}
-		else
-		{
-			$dir = dirname(__FILE__) . '/views';
+		// Get details from status object
+		$vars =
+		[
+			'code'    => $this->response->status()->get(),
+			'title'   => $this->response->status()->message(),
+			'body'    => $exception instanceof RequestException ? $exception->getMessage() : 'Aw, snap! An error has occurred while processing your request.',
+		];
 
-			$view = $dir . '/500.php';
-
-			if($exception instanceof RequestException)
-			{
-				if (file_exists($dir . '/' . $code . '.php'))
-				{
-					$view = $dir . '/' . $code . '.php';
-				}
-			}
-
-			return $this->view->display($view);
-		}
+		return $this->view->display(dirname(__FILE__) . '/views/generic.php', $vars);
 	}
 
 	/**
@@ -207,6 +161,24 @@ class WebHandler
 	 */
 	public function handle(Throwable $exception, bool $showDetails = true): bool
 	{
+		// Set the status
+		if ($exception instanceof RequestException)
+		{
+			$status = $exception->getCode();
+
+			if ($exception instanceof MethodNotAllowedException)
+			{
+				$this->response->headers()->set('allows', implode(',', $exception->getAllowedMethods()));
+			}
+		}
+		else
+		{
+			$status = 500;
+		}
+
+		// Set the
+		$this->response->status()->set($status);
+
 		// Set appropriate content type header
 		if (($returnAsJson = $this->returnAsJson()) === true)
 		{
@@ -224,25 +196,8 @@ class WebHandler
 		}
 		else
 		{
-			$this->response->body()->set($this->getGenericError($exception, $returnAsJson, $this->request->isBot()));
+			$this->response->body()->set($this->getGenericError($exception, $returnAsJson));
 		}
-
-		// Send the response along with appropriate headers
-		if ($exception instanceof RequestException)
-		{
-			$status = $exception->getCode();
-
-			if ($exception instanceof MethodNotAllowedException)
-			{
-				$this->response->headers()->set('allows', implode(',', $exception->getAllowedMethods()));
-			}
-		}
-		else
-		{
-			$status = 500;
-		}
-
-		$this->response->status()->set($status);
 
 		$this->response->send();
 

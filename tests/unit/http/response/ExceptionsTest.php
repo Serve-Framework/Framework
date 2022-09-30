@@ -38,7 +38,7 @@ class ExceptionTest extends TestCase
 	{
 		$this->expectException(InvalidTokenException::class);
 
-		throw new InvalidTokenException('foobar message');
+		throw new InvalidTokenException;
 	}
 
 	/**
@@ -48,7 +48,7 @@ class ExceptionTest extends TestCase
 	{
 		$this->expectException(NotFoundException::class);
 
-		throw new NotFoundException('foobar message');
+		throw new NotFoundException;
 	}
 
 	/**
@@ -68,7 +68,7 @@ class ExceptionTest extends TestCase
 	{
 		$this->expectException(RuntimeException::class);
 
-		throw new ForbiddenException('foobar message');
+		throw new ForbiddenException;
 	}
 
 	/**

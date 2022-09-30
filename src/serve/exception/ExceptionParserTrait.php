@@ -229,11 +229,11 @@ trait ExceptionParserTrait
 
 		foreach ($tokens as $i => $token)
 	    {
-	        if ($token[0] === T_NAMESPACE)
+	        if ($token[0] === 'T_NAMESPACE')
 	        {
 	            foreach ($tokens as $j => $_token)
 	            {
-	                if ($_token[0] === T_STRING)
+	                if ($_token[0] === 'T_STRING')
 	                {
 	                    $namespace .= '\\' . $_token[1];
 	                }
@@ -243,7 +243,7 @@ trait ExceptionParserTrait
 	                }
 	            }
 	        }
-	        elseif ($token[0] === T_CLASS)
+	        elseif ($token[0] === 'T_CLASS')
 	        {
 	            foreach ($tokens as $j => $_token)
 	            {

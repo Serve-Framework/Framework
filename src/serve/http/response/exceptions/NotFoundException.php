@@ -22,10 +22,8 @@ class NotFoundException extends RequestException
 	 * @param string|null    $message  Exception message
 	 * @param Throwable|null $previous Previous exception
 	 */
-	public function __construct(?string $message = null, ?Throwable $previous = null)
+	public function __construct(?string $message = 'The resource you requested could not be found. It may have been moved or deleted.', ?Throwable $previous = null)
 	{
-		$message = empty($message) ? 'The requested URL was not found on this server.' : $message;
-
 		parent::__construct(404, $message, $previous);
 	}
 }

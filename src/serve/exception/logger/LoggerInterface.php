@@ -17,11 +17,11 @@ use Throwable;
 interface LoggerInterface
 {
     /**
-     * Write a message to log.
+     * Write an exception to log.
      *
      * @param Throwable $exception Exception
      */
-    public function write(Throwable $exception): void;
+    public function writeException(Throwable $exception): void;
 
     /**
      * Set the error logs directory.
