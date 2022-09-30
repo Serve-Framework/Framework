@@ -21,8 +21,11 @@ use function get_class;
 use function get_parent_class;
 use function in_array;
 use function is_readable;
+use function preg_match;
+use function str_replace;
 use function strpos;
 use function substr;
+use function trim;
 
 /**
  * Exception helper functions.

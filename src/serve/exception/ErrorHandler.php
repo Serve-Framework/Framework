@@ -18,6 +18,9 @@ use function array_unique;
 use function array_unshift;
 use function error_get_last;
 use function fwrite;
+use function headers_sent;
+use function http_response_code;
+use function is_array;
 use function is_null;
 use function ob_end_clean;
 use function ob_get_level;
@@ -25,6 +28,7 @@ use function register_shutdown_function;
 use function restore_error_handler;
 use function restore_exception_handler;
 use function set_exception_handler;
+use function str_contains;
 
 /**
  * Error handler.
