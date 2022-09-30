@@ -38,7 +38,7 @@ class ErrorHandlerService extends Service
 		$handler = new ErrorHandler($logger, $display_errors, $log_errors);
 
 		// Cli handler
-		$handler->handle(Throwable::class, function ($exception) use ($handler, $display_errors)
+		$handler->handle(Throwable::class, function ($exception) use ($display_errors)
 		{
 			// Cli handler
 			$cliHandler = new CliHandler($this->container->Input, $this->container->Output);

@@ -250,8 +250,7 @@ class ErrorHandler
 	/**
 	 * Log an error.
 	 *
-	 * @param  Throwable $exception An exception object
-	 * @return bool
+	 * @param Throwable $exception An exception object
 	 */
 	protected function logException(Throwable $exception): void
 	{
@@ -351,7 +350,7 @@ class ErrorHandler
     /**
      * Set or get the Serve "log_errors" value.
      *
-     * @param  bool|null $errorReporting (optional) (default NULL)
+     * @param  bool|null $logErrors (optional) (default NULL)
      * @return bool
      */
     public function logErrors(?bool $logErrors = null): bool

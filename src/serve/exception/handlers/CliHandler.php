@@ -72,7 +72,7 @@ class CliHandler
 		}
 		else
 		{
-			$this->output->write('An error has occurred while running the command.');
+			$this->output->writeLn('<red>An error has occurred while running the command.</red>');
 		}
 
 		// Return false to stop further error handling
@@ -130,11 +130,11 @@ class CliHandler
 			'TYPE    : ' . $this->determineExceptionType($exception),
 			'MESSAGE : ' . $exception->getMessage(),
 			'CLASS   : ' . $this->errClass($exception),
-			'FILE    : ' . $exception->getFile($exception),
-			'LINE    : ' . intval($exception->getLine($exception)),
+			'FILE    : ' . $exception->getFile(),
+			'LINE    : ' . intval($exception->getLine()),
 			'TRACE   : ',
 		];
 
-		return '<bg_red><white>' . $ul->render($error) . $ol->render($this->errTrace($exception)) . '</white></bg_red>';
+		return '<bg_red><white>' . $ul->render($error) . $ol->render($this->errTrace($exception), '	') . '</white></bg_red>';
 	}
 }

@@ -38,7 +38,7 @@ class ErrorHandlerService extends Service
 		$handler = new ErrorHandler($logger, $display_errors, $log_errors);
 
 		// Web handler
-		$handler->handle(Throwable::class, function ($exception) use ($handler, $display_errors)
+		$handler->handle(Throwable::class, function ($exception) use ($display_errors)
 		{
 			// Web handler
 			$webHandler = new WebHandler($this->container->Request, $this->container->Response, $this->container->View);

@@ -23,7 +23,6 @@ use function in_array;
 use function is_readable;
 use function strpos;
 use function substr;
-use function token_get_all;
 
 /**
  * Exception helper functions.
@@ -222,43 +221,41 @@ trait ExceptionParserTrait
 			return '';
 		}
 
-		$handle      = fopen($exception->getFile(), 'r');
-		$class      = '';
-		$namespace  = '';
-		$tokens     = token_get_all(file_get_contents($exception->getFile()));
+		$content   = file_get_contents($exception->getFile());
+		$lines     = explode('/\r\n/', $content);
+		$namespace = '';
+		$class     = '';
 
-		foreach ($tokens as $i => $token)
-	    {
-	        if ($token[0] === 'T_NAMESPACE')
-	        {
-	            foreach ($tokens as $j => $_token)
-	            {
-	                if ($_token[0] === 'T_STRING')
-	                {
-	                    $namespace .= '\\' . $_token[1];
-	                }
-	                elseif ($_token === '{' || $_token === ';')
-	                {
-	                    break;
-	                }
-	            }
-	        }
-	        elseif ($token[0] === 'T_CLASS')
-	        {
-	            foreach ($tokens as $j => $_token)
-	            {
-	                if ($_token === '{')
-	                {
-	                    $class = $tokens[$i+2][1];
-	                }
-	            }
-	        }
-	    }
+		// Find namespace;
+		foreach($lines as $line)
+		{
+			preg_match('/namespace [^;]+/', $content, $matches);
 
-	    if (empty($class))
-	    {
-	    	return '';
-	    }
+			if ($matches)
+			{
+				$namespace = trim(str_replace('namespace ', '', $matches[0]));
+
+				break;
+			}
+		}
+
+		// Find class or object;
+		foreach($lines as $line)
+		{
+			preg_match('/(class|interface|trait) [A-z1-9_]+/', $content, $matches);
+
+			if ($matches)
+			{
+				$class = trim(str_replace(['class', 'interface', 'trait'], ['', '', ''], $matches[0]));
+
+				break;
+			}
+		}
+
+		if ($class === '')
+		{
+			return '';
+		}
 
 		return $namespace . '\\' . $class;
 	}
