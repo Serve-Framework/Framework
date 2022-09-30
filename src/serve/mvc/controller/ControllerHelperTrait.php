@@ -8,6 +8,7 @@
 namespace serve\mvc\controller;
 
 use serve\ioc\ContainerAwareTrait;
+
 use function json_encode;
 use function ltrim;
 

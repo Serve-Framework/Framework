@@ -8,6 +8,7 @@
 namespace serve\utility;
 
 use InvalidArgumentException;
+
 use function bin2hex;
 use function chr;
 use function hexdec;

@@ -9,6 +9,7 @@ namespace serve\crawler;
 
 use serve\crawler\fixtures\Inclusions;
 use serve\http\request\Headers;
+
 use function is_string;
 use function preg_match;
 use function strlen;

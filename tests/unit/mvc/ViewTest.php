@@ -9,6 +9,7 @@ namespace serve\tests\unit\framework\mvc;
 
 use serve\mvc\view\View;
 use serve\tests\TestCase;
+
 use function fclose;
 use function file_put_contents;
 use function rename;

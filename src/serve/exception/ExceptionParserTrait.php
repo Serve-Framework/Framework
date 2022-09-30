@@ -6,6 +6,7 @@ use ErrorException;
 use serve\http\response\exceptions\RequestException;
 use serve\utility\Str;
 use Throwable;
+
 use function array_keys;
 use function array_pop;
 use function array_reverse;

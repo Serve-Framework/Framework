@@ -13,6 +13,7 @@ use serve\exception\logger\Logger;
 use serve\http\response\exceptions\RequestException;
 use serve\http\response\exceptions\Stop;
 use Throwable;
+
 use function array_merge;
 use function array_unique;
 use function array_unshift;

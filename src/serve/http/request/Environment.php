@@ -8,6 +8,7 @@
 namespace serve\http\request;
 
 use serve\common\MagicObjectArray;
+
 use function array_pop;
 use function dirname;
 use function explode;

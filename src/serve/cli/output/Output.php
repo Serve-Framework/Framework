@@ -8,6 +8,7 @@
 namespace serve\cli\output;
 
 use serve\cli\Environment;
+
 use function fwrite;
 use function var_export;
 

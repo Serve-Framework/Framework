@@ -10,6 +10,7 @@ namespace serve\database\wrappers;
 use InvalidArgumentException;
 use serve\utility\Str;
 use serve\utility\UUID;
+
 use function intval;
 use function vsprintf;
 

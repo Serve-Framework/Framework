@@ -8,6 +8,7 @@
 namespace serve\http\response;
 
 use function preg_replace_callback;
+
 use function rtrim;
 use function str_replace;
 use function strpos;

@@ -9,6 +9,7 @@ namespace serve\cli\output\helpers;
 
 use RuntimeException;
 use serve\cli\output\Output;
+
 use function array_sum;
 use function array_values;
 use function count;

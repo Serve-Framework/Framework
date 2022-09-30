@@ -8,6 +8,7 @@
 namespace serve\database\connection;
 
 use Exception;
+
 use function array_key_exists;
 use function explode;
 use function implode;

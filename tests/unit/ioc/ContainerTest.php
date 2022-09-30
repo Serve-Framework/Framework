@@ -9,6 +9,7 @@ namespace serve\tests\unit\framework\ioc;
 
 use serve\ioc\Container;
 use serve\tests\TestCase;
+
 use function count;
 
 class ContainerCallbackTest

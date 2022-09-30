@@ -8,6 +8,7 @@
 namespace serve\pixl\processor;
 
 use RuntimeException;
+
 use function chmod;
 use function getimagesize;
 use function imagealphablending;

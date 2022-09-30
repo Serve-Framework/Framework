@@ -8,6 +8,7 @@
 namespace serve\security\crypto;
 
 use function bin2hex;
+
 use function hex2bin;
 use function mb_substr;
 use function random_bytes;

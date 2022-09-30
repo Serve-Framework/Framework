@@ -8,6 +8,7 @@
 namespace serve\utility;
 
 use function array_pop;
+
 use function array_slice;
 use function boolval;
 use function count;

@@ -11,6 +11,7 @@ use serve\database\wrappers\providers\UserProvider;
 use serve\security\Crypto;
 use serve\utility\Str;
 use serve\utility\UUID;
+
 use function filter_var;
 use function is_int;
 use function utf8_encode;

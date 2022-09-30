@@ -9,6 +9,7 @@ namespace serve\tests\unit\framework\utility;
 
 use serve\shell\Shell;
 use serve\tests\TestCase;
+
 use function dirname;
 use function file_get_contents;
 use function file_put_contents;

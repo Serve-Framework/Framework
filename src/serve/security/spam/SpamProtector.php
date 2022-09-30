@@ -10,6 +10,7 @@ namespace serve\security\spam;
 use serve\config\Config;
 use serve\security\spam\gibberish\Gibberish;
 use serve\utility\Str;
+
 use function array_unique;
 use function array_values;
 use function count;

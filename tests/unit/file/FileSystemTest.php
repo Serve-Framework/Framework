@@ -10,6 +10,7 @@ namespace serve\tests\unit\framework\file;
 use serve\file\Filesystem;
 use serve\tests\TestCase;
 use SplFileObject;
+
 use function dirname;
 use function glob;
 use function is_array;

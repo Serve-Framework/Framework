@@ -3,6 +3,7 @@
 namespace serve\security\spam\gibberish;
 
 use function array_flip;
+
 use function array_push;
 use function array_sum;
 use function count;

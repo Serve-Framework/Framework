@@ -8,6 +8,7 @@
 namespace serve\cli\output;
 
 use Exception;
+
 use function array_merge;
 use function array_pop;
 use function end;

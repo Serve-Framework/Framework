@@ -9,6 +9,7 @@ namespace serve\tests\unit\framework\cli\output;
 
 use serve\cli\output\Output;
 use serve\tests\TestCase;
+
 use function fclose;
 use function file_get_contents;
 use function fopen;

@@ -9,6 +9,7 @@ namespace serve\http\response;
 
 use serve\common\MagicObjectArray;
 use serve\utility\Str;
+
 use function header;
 use function is_array;
 use function reset;

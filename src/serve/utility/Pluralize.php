@@ -8,6 +8,7 @@
 namespace serve\utility;
 
 use function array_reverse;
+
 use function implode;
 use function in_array;
 use function str_split;
