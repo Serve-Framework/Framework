@@ -21,6 +21,7 @@ use function is_numeric;
 use function putenv;
 use function rtrim;
 use function strlen;
+use function htmlspecialchars;
 
 /**
  * Shell interface utility class.
@@ -167,7 +168,7 @@ class Shell
      */
     public function cmd(string $cmd, ?string $subCmd = null): Shell
     {
-        $this->cmd = escapeshellcmd($cmd);
+        $this->cmd = escapeshellcmd($this->resolveBins($cmd));
 
         if ($subCmd)
         {
@@ -193,12 +194,12 @@ class Shell
         }
         elseif ($value === null)
         {
-            $this->options[$flag] = \htmlspecialchars($flag, ENT_QUOTES);
+            $this->options[$flag] = htmlspecialchars($flag, ENT_QUOTES);
         }
         // Value is true we use the flat key
         elseif ($value === true)
         {
-            $this->options[$flag] = \htmlspecialchars($flag, ENT_QUOTES);
+            $this->options[$flag] = htmlspecialchars($flag, ENT_QUOTES);
         }
         // Flag is a key/value
         else
@@ -376,9 +377,14 @@ class Shell
         // Do a soft reset - keeps the dir, result and output
         $this->reset();
 
-        if (!$this->result && !$showErrors)
+        if (!$this->result)
         {
-            return $errors;
+            if ($showErrors)
+            {
+                return $errors;
+            }
+
+            return false;
         }
 
         // Return the result
@@ -425,7 +431,7 @@ class Shell
      * @return string
      */
     private function resolveBins(string $cmd): string
-    {
+    {        
         // If this is a built in command we can skip
         if (in_array($cmd, $this->built_ins))
         {
@@ -433,7 +439,8 @@ class Shell
         }
 
         // Get the env paths
-        $paths = array_map('trim', explode(':', getenv('PATH')));
+        $paths   = array_map('trim', explode(':', getenv('PATH')));
+        $paths[] = '/usr/local/bin/';
 
         // Loop the current env paths for the binary
         foreach ($paths as $path)

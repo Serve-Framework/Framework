@@ -262,6 +262,25 @@ class Filesystem
 	}
 
 	/**
+	 * Returns an array of pathnames matching the provided pattern.
+	 *
+	 * @param  string      $pattern Patern
+	 * @param  int         $flags   Flags
+	 * @return array|false
+	 */
+	public static function rglob(string $pattern, int $flags = 0)
+	{
+    	$files = glob($pattern, $flags);
+
+    	foreach (glob(dirname($pattern) . '/*', GLOB_ONLYDIR|GLOB_NOSORT) as $dir)
+    	{
+    		$files = array_merge([], ...[$files, self::rglob($dir . '/' . basename($pattern), $flags)]);
+    	}
+
+    	return $files;
+	}
+
+	/**
 	 * Returns an array of pathnames from a directory.
 	 *
 	 * @param  string $dir      Directory to list

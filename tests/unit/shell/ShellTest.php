@@ -29,7 +29,7 @@ class ShellTest extends TestCase
 	{
 		$cli = new Shell;
 
-		$cli->cmd('cd "' . dirname(__FILE__) . '"')->run();
+		$cli->cmd('cd', '\'' . dirname(__FILE__) . '\'')->run();
 
 		$this->assertTrue($cli->is_successful());
 	}
@@ -41,7 +41,7 @@ class ShellTest extends TestCase
 	{
 		$cli = new Shell;
 
-		$cli->cmd('cd "' . dirname(__FILE__) . '"')->run();
+		$cli->cmd('cd', '\'' . dirname(__FILE__) . '\'')->run();
 
 		$this->assertTrue($cli->is_successful());
 	}
@@ -65,9 +65,21 @@ class ShellTest extends TestCase
 	{
 		$cli = new Shell;
 
-		$output = $cli->cmd('cfddfdsf ' . dirname(__FILE__))->run();
+		$output = $cli->cmd('cfddfdsf ' . dirname(__FILE__))->run(true);
 
 		$this->assertTrue(str_contains($output, 'not found'));
+	}
+
+	/**
+	 *
+	 */
+	public function testFalseError(): void
+	{
+		$cli = new Shell;
+
+		$output = $cli->cmd('cfddfdsf ' . dirname(__FILE__))->run();
+
+		$this->assertFalse($output);
 	}
 
 	/**
@@ -107,7 +119,7 @@ class ShellTest extends TestCase
 
 		$this->assertTrue($cli->is_successful());
 
-		$this->assertTrue(str_contains($output, 'Usage: ruby'));
+		$this->assertTrue(str_contains($output, 'Usage: '));
 	}
 
 	/**
@@ -121,7 +133,7 @@ class ShellTest extends TestCase
 
 		$this->assertTrue($cli->is_successful());
 
-		$this->assertTrue(str_contains($output, 'Usage: ruby'));
+		$this->assertTrue(str_contains($output, 'Usage: '));
 	}
 
 	/**
