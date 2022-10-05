@@ -168,16 +168,18 @@ class ConnectionHandler
 	 * If the SQL statement is a DELETE, INSERT, or UPDATE statement
 	 * it returns the number of affected rows.
 	 *
-	 * @param  string $query     The query to execute
-	 * @param  array  $params    Assoc array of parameters to bind (optional) (default [])
-	 * @param  int    $fetchmode PHP PDO::ATTR_DEFAULT_FETCH_MODE constant or integer
+	 * @param  string      $query     The query to execute
+	 * @param  array|null  $params    Assoc array of parameters to bind (optional) (default [])
+	 * @param  int         $fetchmode PHP PDO::ATTR_DEFAULT_FETCH_MODE constant or integer
 	 * @return mixed
 	 */
-	public function query(string $query, array $params = [], int $fetchmode = PDO::FETCH_ASSOC)
+	public function query(string $query, ?array $params = null, int $fetchmode = PDO::FETCH_ASSOC)
 	{
 		$start = microtime(true);
 
 		$fromCache = false;
+
+		$params = !$params ? [] : $params;
 
 		// Query is either SELECT or SHOW
 		if ($this->queryIsCachable($query))

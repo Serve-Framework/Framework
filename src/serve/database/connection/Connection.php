@@ -10,8 +10,7 @@ namespace serve\database\connection;
 use PDO;
 use PDOException;
 use RuntimeException;
-use serve\database\query\Builder;
-use serve\database\query\Query;
+use serve\database\builder\Builder;
 
 use function is_null;
 use function vsprintf;
@@ -101,6 +100,11 @@ class Connection
 		elseif ($type === 'mysql')
 		{
 			$this->dsn = "mysql:dbname=$config[name];host=$config[host]";
+
+			if (isset($config['port']))
+			{
+				$this->dsn .= ';port=' . $config['port'];
+			}
 		}
 		elseif ($type === 'sqlite')
 		{
@@ -222,7 +226,7 @@ class Connection
 	 */
 	public function builder(): Builder
 	{
-		return new Builder($this->handler(), new Query($this->handler()));
+		return new Builder($this->handler());
 	}
 
 	/**
@@ -252,7 +256,6 @@ class Connection
 			PDO::ATTR_PERSISTENT         => $this->options['ATTR_PERSISTENT'] ?? false,
 			PDO::ATTR_ERRMODE            => $this->options['ATTR_ERRMODE'] ?? PDO::ERRMODE_EXCEPTION,
 			PDO::ATTR_DEFAULT_FETCH_MODE => $this->options['ATTR_DEFAULT_FETCH_MODE'] ?? PDO::FETCH_ASSOC,
-			PDO::MYSQL_ATTR_INIT_COMMAND => $this->options['MYSQL_ATTR_INIT_COMMAND'] ?? 'SET NAMES utf8',
 			PDO::ATTR_STRINGIFY_FETCHES  => $this->options['ATTR_STRINGIFY_FETCHES'] ?? false,
 			PDO::ATTR_EMULATE_PREPARES   => $this->options['ATTR_EMULATE_PREPARES'] ?? false,
 		];

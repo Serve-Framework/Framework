@@ -328,7 +328,7 @@ class Router
         {
             if ($this->throwNotFound === true)
             {
-                throw new NotFoundException($requestMethod . ': ' . $requestPath);
+                //throw new NotFoundException($requestMethod . ': ' . $requestPath);
             }
         }
 

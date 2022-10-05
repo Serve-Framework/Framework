@@ -5,7 +5,7 @@
  * @license   https://github.com/Serve-Framework/Framework/blob/master/LICENSE
  */
 
-namespace serve\database\query;
+namespace serve\database\builder\query;
 
 use PDOException;
 use serve\database\connection\ConnectionHandler;
@@ -35,26 +35,26 @@ class Alter
      *
      * @var string
      */
-    private $tableName;
+    protected $tableName;
 
     /**
      * The current column name to operate on.
      *
      * @var string
      */
-    private $column;
+    protected $column;
 
     /**
      * Array of columns and column parameters of current table.
      *
      * @var array
      */
-    private $columns;
+    protected $columns;
 
     /**
      * @var \serve\database\connection\ConnectionHandler
      */
-    private $connectionHandler;
+    protected $connectionHandler;
 
     /**
      * Constructor.
@@ -567,13 +567,13 @@ class Alter
     }
 
     /********************************************************************************
-    * PRIVATE HELPER METHODS
+    * protected HELPER METHODS
     *******************************************************************************/
 
     /**
      * Load the current table's columns and column parameters.
      */
-    private function loadColumns(): void
+    protected function loadColumns(): void
     {
         $columns = [];
 
@@ -593,7 +593,7 @@ class Alter
      * @param  string $column The column name
      * @return bool
      */
-    private function columnExists(string $column): bool
+    protected function columnExists(string $column): bool
     {
         return isset($this->columns[$column]);
     }
@@ -603,7 +603,7 @@ class Alter
      *
      * @return false|string
      */
-    private function getPrimaryKey()
+    protected function getPrimaryKey()
     {
         $key = $this->connectionHandler->query("SHOW KEYS FROM `$this->tableName` WHERE Key_name = 'PRIMARY'");
 
@@ -621,7 +621,7 @@ class Alter
      * @param  string|null $column (optional) (default null)
      * @return string
      */
-    private function getColumnConfig(?string $column = null): string
+    protected function getColumnConfig(?string $column = null): string
     {
         $strConfig = '';
 
@@ -650,7 +650,7 @@ class Alter
      * @param  string|null $column The column name (optional) (default null)
      * @return string
      */
-    private function setColumnConfig(string $key, string $value, ?string $column = null): string
+    protected function setColumnConfig(string $key, string $value, ?string $column = null): string
     {
         $key = ucfirst(strtolower($key));
 
@@ -681,7 +681,7 @@ class Alter
      * @param  string $str
      * @return string
      */
-    private function indexFilter(string $str): string
+    protected function indexFilter(string $str): string
     {
         return strtolower(str_replace(' ', '_', $str));
     }
@@ -692,7 +692,7 @@ class Alter
      * @param  string $sql SQL query statement
      * @return string
      */
-    private function cleanQuery(string $sql): string
+    protected function cleanQuery(string $sql): string
     {
        return trim(preg_replace('/\s+/', ' ', $sql));
     }

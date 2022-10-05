@@ -8,8 +8,8 @@
 namespace serve\tests\unit\framework\database\query;
 
 use serve\database\connection\ConnectionHandler;
-use serve\database\query\Builder;
-use serve\database\query\Query;
+use serve\database\builder\Builder;
+use serve\database\builder\query\Query;
 use serve\tests\TestCase;
 
 use function preg_replace;
@@ -35,7 +35,7 @@ class DatabaseBuilderTest extends TestCase
             'notifications' => 'BOOLEAN | DEFAULT TRUE',
         ];
 
-        $query = 'CREATE TABLE `prefixed_my_table_name` ( `id` INT UNSIGNED UNIQUE AUTO_INCREMENT, `description` VARCHAR(255), `thumbnail_id` INTEGER UNSIGNED, `notifications` BOOLEAN DEFAULT TRUE, PRIMARY KEY (id) ) ENGINE=InnoDB AUTO_INCREMENT=0 DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;';
+        $expectedSQL = 'CREATE TABLE `prefixed_my_table_name` ( `id` INT UNSIGNED UNIQUE AUTO_INCREMENT, `description` VARCHAR(255), `thumbnail_id` INTEGER UNSIGNED, `notifications` BOOLEAN DEFAULT TRUE, PRIMARY KEY (id) ) ENGINE=InnoDB AUTO_INCREMENT=0 DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;';
 
         $connectionHandler = $this->mock(ConnectionHandler::class);
 
@@ -46,7 +46,7 @@ class DatabaseBuilderTest extends TestCase
             return trim(preg_replace('/\s+/', ' ', $sql));
         });
 
-        $connectionHandler->shouldReceive('query')->withArgs([$query]);
+        $connectionHandler->shouldReceive('query')->with($expectedSQL);
 
         $sql = new Builder($connectionHandler, new Query($connectionHandler));
 
@@ -69,7 +69,7 @@ class DatabaseBuilderTest extends TestCase
             return trim(preg_replace('/\s+/', ' ', $sql));
         });
 
-        $connectionHandler->shouldReceive('query')->withArgs(['DROP TABLE `prefixed_my_table_name`']);
+        $connectionHandler->shouldReceive('query')->with('DROP TABLE `prefixed_my_table_name`');
 
         $sql = new Builder($connectionHandler, new Query($connectionHandler));
 
@@ -106,7 +106,7 @@ class DatabaseBuilderTest extends TestCase
     {
         $this->expectNotToPerformAssertions();
 
-        $query = 'DELETE FROM prefixed_my_table_name WHERE foo = :prefixedmytablenameandfoobar';
+        $expectedSQL = 'DELETE FROM prefixed_my_table_name WHERE foo = :';
 
         $bindings = ['prefixedmytablenameandfoobar' => 'bar'];
 
@@ -119,11 +119,14 @@ class DatabaseBuilderTest extends TestCase
             return trim(preg_replace('/\s+/', ' ', $sql));
         });
 
-        $connectionHandler->shouldReceive('query')->withArgs([$query, $bindings]);
+        $connectionHandler->shouldReceive('query')->withArgs(function ($sql, $bindings) use ($expectedSQL)
+        {
+            return str_contains($sql, $expectedSQL) && count($bindings) === 1 && reset($bindings) === 'bar'; 
+        });
 
         $sql = new Builder($connectionHandler, new Query($connectionHandler));
 
-        $sql->DELETE_FROM('my_table_name')->WHERE('foo', '=', 'bar')->QUERY();
+        $sql->DELETE_FROM('my_table_name')->WHERE('foo', '=', 'bar')->EXEC();
     }
 
     /**
@@ -133,7 +136,7 @@ class DatabaseBuilderTest extends TestCase
     {
         $this->expectNotToPerformAssertions();
 
-        $query = 'UPDATE prefixed_my_table_name SET column = :column WHERE foo = :prefixedmytablenameandfoobar';
+        $expectedSQL = 'UPDATE prefixed_my_table_name SET column = :';
 
         $bindings = ['prefixedmytablenameandfoobar' => 'bar', 'column' => 'value'];
 
@@ -146,11 +149,16 @@ class DatabaseBuilderTest extends TestCase
             return trim(preg_replace('/\s+/', ' ', $sql));
         });
 
-        $connectionHandler->shouldReceive('query')->withArgs([$query, $bindings]);
+        $connectionHandler->shouldReceive('query')->withArgs(function ($sql, $bindings) use ($expectedSQL)
+        {
+            $bindings = array_values($bindings);
+
+            return str_contains($sql, $expectedSQL) && count($bindings) === 2 && $bindings[0] === 'value' && $bindings[1] === 'bar'; 
+        });
 
         $sql = new Builder($connectionHandler, new Query($connectionHandler));
 
-        $sql->UPDATE('my_table_name')->SET(['column' => 'value'])->WHERE('foo', '=', 'bar')->QUERY();
+        $sql->UPDATE('my_table_name')->SET(['column' => 'value'])->WHERE('foo', '=', 'bar')->EXEC();
     }
 
     /**
@@ -160,7 +168,7 @@ class DatabaseBuilderTest extends TestCase
     {
         $this->expectNotToPerformAssertions();
 
-        $query = 'INSERT INTO prefixed_my_table_name (column1, column2) VALUES(:column1, :column2)';
+        $expectedSQL = 'INSERT INTO prefixed_my_table_name';
 
         $bindings = ['column1' => 'value1', 'column2' => 'value2'];
 
@@ -173,11 +181,16 @@ class DatabaseBuilderTest extends TestCase
             return trim(preg_replace('/\s+/', ' ', $sql));
         });
 
-        $connectionHandler->shouldReceive('query')->withArgs([$query, $bindings]);
+        $connectionHandler->shouldReceive('query')->withArgs(function ($sql, $bindings) use ($expectedSQL)
+        {
+            $bindings = array_values($bindings);
+
+            return str_contains($sql, $expectedSQL) && count($bindings) === 2 && $bindings[0] === 'value1' && $bindings[1] === 'value2'; 
+        });
 
         $sql = new Builder($connectionHandler, new Query($connectionHandler));
 
-        $sql->INSERT_INTO('my_table_name')->values(['column1' => 'value1', 'column2' => 'value2'])->QUERY();
+        $sql->INSERT_INTO('my_table_name')->values(['column1' => 'value1', 'column2' => 'value2'])->EXEC();
     }
 
     /**
@@ -198,7 +211,7 @@ class DatabaseBuilderTest extends TestCase
             return trim(preg_replace('/\s+/', ' ', $sql));
         });
 
-        $connectionHandler->shouldReceive('query')->withArgs([$query, []]);
+        $connectionHandler->shouldReceive('query')->with($query, [])->andReturn([]);
 
         $sql = new Builder($connectionHandler, new Query($connectionHandler));
 
@@ -223,11 +236,36 @@ class DatabaseBuilderTest extends TestCase
             return trim(preg_replace('/\s+/', ' ', $sql));
         });
 
-        $connectionHandler->shouldReceive('query')->withArgs([$query, []]);
+        $connectionHandler->shouldReceive('query')->with($query, null)->andReturn([]);
 
         $sql = new Builder($connectionHandler, new Query($connectionHandler));
 
-        $sql->SELECT('id,name')->FROM('my_table_name')->FIND_ALL();
+        $sql->SELECT('id, name')->FROM('my_table_name')->FIND_ALL();
+    }
+
+    /**
+     *
+     */
+    public function testSelectColumnsArray(): void
+    {
+        $this->expectNotToPerformAssertions();
+
+        $query = 'SELECT id, name FROM prefixed_my_table_name';
+
+        $connectionHandler = $this->mock(ConnectionHandler::class);
+
+        $connectionHandler->shouldReceive('tablePrefix')->andReturn('prefixed_');
+
+        $connectionHandler->shouldReceive('cleanQuery')->andReturnUsing(function ($sql)
+        {
+            return trim(preg_replace('/\s+/', ' ', $sql));
+        });
+
+        $connectionHandler->shouldReceive('query')->with($query, null)->andReturn([]);
+
+        $sql = new Builder($connectionHandler, new Query($connectionHandler));
+
+        $sql->SELECT(['id', 'name'])->FROM('my_table_name')->FIND_ALL();
     }
 
     /**
@@ -248,7 +286,7 @@ class DatabaseBuilderTest extends TestCase
             return trim(preg_replace('/\s+/', ' ', $sql));
         });
 
-        $connectionHandler->shouldReceive('query')->withArgs([$query, []]);
+        $connectionHandler->shouldReceive('query')->withArgs([$query, []])->andReturn([]);
 
         $sql = new Builder($connectionHandler, new Query($connectionHandler));
 
@@ -273,7 +311,7 @@ class DatabaseBuilderTest extends TestCase
             return trim(preg_replace('/\s+/', ' ', $sql));
         });
 
-        $connectionHandler->shouldReceive('query')->withArgs([$query, []]);
+        $connectionHandler->shouldReceive('query')->withArgs([$query, []])->andReturn([]);
 
         $sql = new Builder($connectionHandler, new Query($connectionHandler));
 
@@ -287,9 +325,7 @@ class DatabaseBuilderTest extends TestCase
     {
         $this->expectNotToPerformAssertions();
 
-        $query = 'SELECT * FROM prefixed_my_table_name WHERE foo = :prefixedmytablenameandfoobar';
-
-        $bindings = ['prefixedmytablenameandfoobar' => 'bar'];
+        $expectedSQL = 'SELECT * FROM prefixed_my_table_name WHERE foo = :';
 
         $connectionHandler = $this->mock(ConnectionHandler::class);
 
@@ -300,7 +336,12 @@ class DatabaseBuilderTest extends TestCase
             return trim(preg_replace('/\s+/', ' ', $sql));
         });
 
-        $connectionHandler->shouldReceive('query')->withArgs([$query, $bindings]);
+        $connectionHandler->shouldReceive('query')->withArgs(function ($sql, $bindings) use ($expectedSQL)
+        {
+            $bindings = array_values($bindings);
+
+            return str_contains($sql, $expectedSQL) && count($bindings) === 1 && $bindings[0] === 'bar'; 
+        })->andReturn([]);
 
         $sql = new Builder($connectionHandler, new Query($connectionHandler));
 
@@ -314,9 +355,7 @@ class DatabaseBuilderTest extends TestCase
     {
         $this->expectNotToPerformAssertions();
 
-        $query = 'SELECT * FROM prefixed_my_table_name WHERE foo = :prefixedmytablenameandfoobar OR bar = :prefixedmytablenameorbarfoo';
-
-        $bindings = ['prefixedmytablenameandfoobar' => 'bar', 'prefixedmytablenameorbarfoo' => 'foo'];
+        $expectedSQL = 'SELECT * FROM prefixed_my_table_name WHERE foo = :';
 
         $connectionHandler = $this->mock(ConnectionHandler::class);
 
@@ -327,7 +366,12 @@ class DatabaseBuilderTest extends TestCase
             return trim(preg_replace('/\s+/', ' ', $sql));
         });
 
-        $connectionHandler->shouldReceive('query')->withArgs([$query, $bindings]);
+        $connectionHandler->shouldReceive('query')->withArgs(function ($sql, $bindings) use ($expectedSQL)
+        {
+            $bindings = array_values($bindings);
+
+            return str_contains($sql, $expectedSQL) && count($bindings) === 2 && $bindings[0] === 'bar' && $bindings[1] === 'foo'; 
+        })->andReturn([]);
 
         $sql = new Builder($connectionHandler, new Query($connectionHandler));
 
@@ -341,9 +385,7 @@ class DatabaseBuilderTest extends TestCase
     {
         $this->expectNotToPerformAssertions();
 
-        $query = 'SELECT * FROM prefixed_my_table_name WHERE foo = :prefixedmytablenameandfoobar AND bar = :prefixedmytablenameandbarfoo';
-
-        $bindings = ['prefixedmytablenameandfoobar' => 'bar', 'prefixedmytablenameandbarfoo' => 'foo'];
+        $expectedSQL = 'SELECT * FROM prefixed_my_table_name WHERE foo = :';
 
         $connectionHandler = $this->mock(ConnectionHandler::class);
 
@@ -354,7 +396,13 @@ class DatabaseBuilderTest extends TestCase
             return trim(preg_replace('/\s+/', ' ', $sql));
         });
 
-        $connectionHandler->shouldReceive('query')->withArgs([$query, $bindings]);
+        $connectionHandler->shouldReceive('query')->withArgs(function ($sql, $bindings) use ($expectedSQL)
+        {
+            $bindings = array_values($bindings);
+
+            return str_contains($sql, $expectedSQL) && count($bindings) === 2 && $bindings[0] === 'bar' && $bindings[1] === 'foo';
+
+        })->andReturn([]);
 
         $sql = new Builder($connectionHandler, new Query($connectionHandler));
 
@@ -368,9 +416,7 @@ class DatabaseBuilderTest extends TestCase
     {
         $this->expectNotToPerformAssertions();
 
-        $query = 'SELECT * FROM prefixed_my_table_name WHERE (foo = :prefixedmytablenameandfoofoo OR foo = :prefixedmytablenameandfoobar OR foo = :prefixedmytablenameandfoofoobaz)';
-
-        $bindings = ['prefixedmytablenameandfoofoo' => 'foo', 'prefixedmytablenameandfoobar' => 'bar', 'prefixedmytablenameandfoofoobaz' => 'foobaz'];
+        $expectedSQL = 'SELECT * FROM prefixed_my_table_name WHERE (foo = :';
 
         $connectionHandler = $this->mock(ConnectionHandler::class);
 
@@ -381,7 +427,13 @@ class DatabaseBuilderTest extends TestCase
             return trim(preg_replace('/\s+/', ' ', $sql));
         });
 
-        $connectionHandler->shouldReceive('query')->withArgs([$query, $bindings]);
+        $connectionHandler->shouldReceive('query')->withArgs(function ($sql, $bindings) use ($expectedSQL)
+        {
+            $bindings = array_values($bindings);
+
+            return str_contains($sql, $expectedSQL) && count($bindings) === 3 && $bindings[0] === 'foo' && $bindings[1] === 'bar' && $bindings[2] === 'foobaz';
+
+        })->andReturn([]);
 
         $sql = new Builder($connectionHandler, new Query($connectionHandler));
 
@@ -395,7 +447,7 @@ class DatabaseBuilderTest extends TestCase
     {
         $this->expectNotToPerformAssertions();
 
-        $query = 'SELECT * FROM prefixed_my_table_name INNER JOIN prefixed_foo_table ON prefixed_table1.column_name = prefixed_table2.column_name';
+        $expectedSQL = 'SELECT prefixed_my_table_name.* FROM prefixed_my_table_name INNER JOIN prefixed_foo_table ON prefixed_table1.column_name = prefixed_table2.column_name';
 
         $connectionHandler = $this->mock(ConnectionHandler::class);
 
@@ -406,7 +458,11 @@ class DatabaseBuilderTest extends TestCase
             return trim(preg_replace('/\s+/', ' ', $sql));
         });
 
-        $connectionHandler->shouldReceive('query')->withArgs([$query, []]);
+        $connectionHandler->shouldReceive('query')->withArgs(function ($sql, $bindings) use ($expectedSQL)
+        {
+            return str_contains($sql, $expectedSQL);
+
+        })->andReturn([]);
 
         $sql = new Builder($connectionHandler, new Query($connectionHandler));
 
@@ -420,7 +476,7 @@ class DatabaseBuilderTest extends TestCase
     {
         $this->expectNotToPerformAssertions();
 
-        $query = 'SELECT * FROM prefixed_my_table_name INNER JOIN prefixed_foo_table ON prefixed_table1.column_name = prefixed_table2.column_name';
+        $expectedSQL = 'SELECT prefixed_my_table_name.* FROM prefixed_my_table_name INNER JOIN prefixed_foo_table ON prefixed_table1.column_name = prefixed_table2.column_name';
 
         $connectionHandler = $this->mock(ConnectionHandler::class);
 
@@ -431,7 +487,11 @@ class DatabaseBuilderTest extends TestCase
             return trim(preg_replace('/\s+/', ' ', $sql));
         });
 
-        $connectionHandler->shouldReceive('query')->withArgs([$query, []]);
+        $connectionHandler->shouldReceive('query')->withArgs(function ($sql, $bindings) use ($expectedSQL)
+        {
+            return str_contains($sql, $expectedSQL);
+
+        })->andReturn([]);
 
         $sql = new Builder($connectionHandler, new Query($connectionHandler));
 
@@ -445,7 +505,7 @@ class DatabaseBuilderTest extends TestCase
     {
         $this->expectNotToPerformAssertions();
 
-        $query = 'SELECT * FROM prefixed_my_table_name LEFT JOIN prefixed_foo_table ON prefixed_table1.column_name = prefixed_table2.column_name';
+        $expectedSQL = 'SELECT prefixed_my_table_name.* FROM prefixed_my_table_name LEFT JOIN prefixed_foo_table ON prefixed_table1.column_name = prefixed_table2.column_name';
 
         $connectionHandler = $this->mock(ConnectionHandler::class);
 
@@ -456,7 +516,11 @@ class DatabaseBuilderTest extends TestCase
             return trim(preg_replace('/\s+/', ' ', $sql));
         });
 
-        $connectionHandler->shouldReceive('query')->withArgs([$query, []]);
+        $connectionHandler->shouldReceive('query')->withArgs(function ($sql, $bindings) use ($expectedSQL)
+        {
+            return str_contains($sql, $expectedSQL);
+
+        })->andReturn([]);
 
         $sql = new Builder($connectionHandler, new Query($connectionHandler));
 
@@ -470,7 +534,7 @@ class DatabaseBuilderTest extends TestCase
     {
         $this->expectNotToPerformAssertions();
 
-        $query = 'SELECT * FROM prefixed_my_table_name RIGHT JOIN prefixed_foo_table ON prefixed_table1.column_name = prefixed_table2.column_name';
+        $expectedSQL = 'SELECT prefixed_my_table_name.* FROM prefixed_my_table_name RIGHT JOIN prefixed_foo_table ON prefixed_table1.column_name = prefixed_table2.column_name';
 
         $connectionHandler = $this->mock(ConnectionHandler::class);
 
@@ -481,7 +545,11 @@ class DatabaseBuilderTest extends TestCase
             return trim(preg_replace('/\s+/', ' ', $sql));
         });
 
-        $connectionHandler->shouldReceive('query')->withArgs([$query, []]);
+        $connectionHandler->shouldReceive('query')->withArgs(function ($sql, $bindings) use ($expectedSQL)
+        {
+            return str_contains($sql, $expectedSQL);
+
+        })->andReturn([]);
 
         $sql = new Builder($connectionHandler, new Query($connectionHandler));
 
@@ -491,11 +559,11 @@ class DatabaseBuilderTest extends TestCase
     /**
      *
      */
-    public function testOutJoinOn(): void
+    public function testLeftOutJoinOn(): void
     {
         $this->expectNotToPerformAssertions();
 
-        $query = 'SELECT * FROM prefixed_my_table_name FULL OUTER JOIN prefixed_foo_table ON prefixed_table1.column_name = prefixed_table2.column_name';
+        $expectedSQL = 'SELECT prefixed_my_table_name.* FROM prefixed_my_table_name LEFT OUTER JOIN prefixed_foo_table ON prefixed_table1.column_name = prefixed_table2.column_name';
 
         $connectionHandler = $this->mock(ConnectionHandler::class);
 
@@ -506,12 +574,75 @@ class DatabaseBuilderTest extends TestCase
             return trim(preg_replace('/\s+/', ' ', $sql));
         });
 
-        $connectionHandler->shouldReceive('query')->withArgs([$query, []]);
+        $connectionHandler->shouldReceive('query')->withArgs(function ($sql, $bindings) use ($expectedSQL)
+        {
+            return str_contains($sql, $expectedSQL);
+
+        })->andReturn([]);
 
         $sql = new Builder($connectionHandler, new Query($connectionHandler));
 
-        $sql->SELECT('*')->FROM('my_table_name')->OUTER_JOIN_ON('foo_table', 'table1.column_name = table2.column_name')->FIND_ALL();
+        $sql->SELECT('*')->FROM('my_table_name')->LEFT_OUTER_JOIN_ON('foo_table', 'table1.column_name = table2.column_name')->FIND_ALL();
     }
+
+    /**
+     *
+     */
+    public function testRightOutJoinOn(): void
+    {
+        $this->expectNotToPerformAssertions();
+
+        $expectedSQL = 'SELECT prefixed_my_table_name.* FROM prefixed_my_table_name RIGHT OUTER JOIN prefixed_foo_table ON prefixed_table1.column_name = prefixed_table2.column_name';
+
+        $connectionHandler = $this->mock(ConnectionHandler::class);
+
+        $connectionHandler->shouldReceive('tablePrefix')->andReturn('prefixed_');
+
+        $connectionHandler->shouldReceive('cleanQuery')->andReturnUsing(function ($sql)
+        {
+            return trim(preg_replace('/\s+/', ' ', $sql));
+        });
+
+        $connectionHandler->shouldReceive('query')->withArgs(function ($sql, $bindings) use ($expectedSQL)
+        {
+            return str_contains($sql, $expectedSQL);
+
+        })->andReturn([]);
+
+        $sql = new Builder($connectionHandler, new Query($connectionHandler));
+
+        $sql->SELECT('*')->FROM('my_table_name')->RIGHT_OUTER_JOIN_ON('foo_table', 'table1.column_name = table2.column_name')->FIND_ALL();
+    }
+
+     /**
+     *
+     */
+    public function testFullOutJoinOn(): void
+    {
+        $this->expectNotToPerformAssertions();
+
+        $expectedSQL = 'SELECT prefixed_my_table_name.* FROM prefixed_my_table_name FULL OUTER JOIN prefixed_foo_table ON prefixed_table1.column_name = prefixed_table2.column_name';
+
+        $connectionHandler = $this->mock(ConnectionHandler::class);
+
+        $connectionHandler->shouldReceive('tablePrefix')->andReturn('prefixed_');
+
+        $connectionHandler->shouldReceive('cleanQuery')->andReturnUsing(function ($sql)
+        {
+            return trim(preg_replace('/\s+/', ' ', $sql));
+        });
+
+        $connectionHandler->shouldReceive('query')->withArgs(function ($sql, $bindings) use ($expectedSQL)
+        {
+            return str_contains($sql, $expectedSQL);
+
+        })->andReturn([]);
+
+        $sql = new Builder($connectionHandler, new Query($connectionHandler));
+
+        $sql->SELECT('*')->FROM('my_table_name')->FULL_OUTER_JOIN_ON('foo_table', 'table1.column_name = table2.column_name')->FIND_ALL();
+    }
+
 
     /**
      *
@@ -520,7 +651,7 @@ class DatabaseBuilderTest extends TestCase
     {
         $this->expectNotToPerformAssertions();
 
-        $query = 'SELECT * FROM prefixed_my_table_name ORDER BY foo DESC';
+        $expectedSQL = 'SELECT * FROM prefixed_my_table_name ORDER BY foo DESC';
 
         $connectionHandler = $this->mock(ConnectionHandler::class);
 
@@ -531,7 +662,11 @@ class DatabaseBuilderTest extends TestCase
             return trim(preg_replace('/\s+/', ' ', $sql));
         });
 
-        $connectionHandler->shouldReceive('query')->withArgs([$query, []]);
+        $connectionHandler->shouldReceive('query')->withArgs(function ($sql, $bindings) use ($expectedSQL)
+        {
+            return str_contains($sql, $expectedSQL);
+
+        })->andReturn([]);
 
         $sql = new Builder($connectionHandler, new Query($connectionHandler));
 
@@ -545,7 +680,7 @@ class DatabaseBuilderTest extends TestCase
     {
         $this->expectNotToPerformAssertions();
 
-        $query = 'SELECT * FROM prefixed_my_table_name ORDER BY foo ASC';
+        $expectedSQL = 'SELECT * FROM prefixed_my_table_name ORDER BY foo ASC';
 
         $connectionHandler = $this->mock(ConnectionHandler::class);
 
@@ -556,7 +691,11 @@ class DatabaseBuilderTest extends TestCase
             return trim(preg_replace('/\s+/', ' ', $sql));
         });
 
-        $connectionHandler->shouldReceive('query')->withArgs([$query, []]);
+        $connectionHandler->shouldReceive('query')->withArgs(function ($sql, $bindings) use ($expectedSQL)
+        {
+            return str_contains($sql, $expectedSQL);
+
+        })->andReturn([]);
 
         $sql = new Builder($connectionHandler, new Query($connectionHandler));
 
@@ -570,7 +709,7 @@ class DatabaseBuilderTest extends TestCase
     {
         $this->expectNotToPerformAssertions();
 
-        $query = 'SELECT * FROM prefixed_my_table_name GROUP BY foo';
+        $expectedSQL = 'SELECT * FROM prefixed_my_table_name GROUP BY foo';
 
         $connectionHandler = $this->mock(ConnectionHandler::class);
 
@@ -581,7 +720,11 @@ class DatabaseBuilderTest extends TestCase
             return trim(preg_replace('/\s+/', ' ', $sql));
         });
 
-        $connectionHandler->shouldReceive('query')->withArgs([$query, []]);
+        $connectionHandler->shouldReceive('query')->withArgs(function ($sql, $bindings) use ($expectedSQL)
+        {
+            return str_contains($sql, $expectedSQL);
+
+        })->andReturn([]);
 
         $sql = new Builder($connectionHandler, new Query($connectionHandler));
 
@@ -591,22 +734,26 @@ class DatabaseBuilderTest extends TestCase
     /**
      *
      */
-    public function testGroupConcat(): void
+    public function testGroupConcatBasic(): void
     {
         $this->expectNotToPerformAssertions();
 
-        $query = 'SELECT *, GROUP_CONCAT(foo) AS bar FROM prefixed_my_table_name';
+        $expectedSQL = 'SELECT * FROM prefixed_my_table_name , GROUP_CONCAT( foo )  AS "bar"';
 
         $connectionHandler = $this->mock(ConnectionHandler::class);
 
         $connectionHandler->shouldReceive('tablePrefix')->andReturn('prefixed_');
 
-        $connectionHandler->shouldReceive('query')->withArgs([$query, []]);
-
         $connectionHandler->shouldReceive('cleanQuery')->andReturnUsing(function ($sql)
         {
             return trim(preg_replace('/\s+/', ' ', $sql));
         });
+
+        $connectionHandler->shouldReceive('query')->withArgs(function ($sql, $bindings) use ($expectedSQL)
+        {
+            return str_contains($sql, $expectedSQL);
+
+        })->andReturn([]);
 
         $sql = new Builder($connectionHandler, new Query($connectionHandler));
 
@@ -616,22 +763,50 @@ class DatabaseBuilderTest extends TestCase
     /**
      *
      */
-    public function testLimit(): void
+    public function testGroupConcatAll(): void
     {
         $this->expectNotToPerformAssertions();
 
-        $query = 'SELECT * FROM prefixed_my_table_name LIMIT 1';
+        $expectedSQL = 'SELECT * FROM prefixed_my_table_name , GROUP_CONCAT( DISTINCT ORDER BY order_col SEPARATOR\', \' foo )  AS "bar"';
 
         $connectionHandler = $this->mock(ConnectionHandler::class);
 
         $connectionHandler->shouldReceive('tablePrefix')->andReturn('prefixed_');
 
-        $connectionHandler->shouldReceive('query')->withArgs([$query, []]);
-
         $connectionHandler->shouldReceive('cleanQuery')->andReturnUsing(function ($sql)
         {
             return trim(preg_replace('/\s+/', ' ', $sql));
         });
+
+        $connectionHandler->shouldReceive('query')->withArgs(function ($sql, $bindings) use ($expectedSQL)
+        {
+            return str_contains($sql, $expectedSQL);
+
+        })->andReturn([]);
+
+        $sql = new Builder($connectionHandler, new Query($connectionHandler));
+
+        $sql->SELECT('*')->FROM('my_table_name')->GROUP_CONCAT('foo', 'bar', true, ', ', 'order_col')->FIND_ALL();
+    }
+
+    /**
+     *
+     */
+    public function testLimit(): void
+    {
+        $this->expectNotToPerformAssertions();
+
+        $expectedSQL = 'SELECT * FROM prefixed_my_table_name LIMIT 1';
+
+        $connectionHandler = $this->mock(ConnectionHandler::class);
+
+        $connectionHandler->shouldReceive('tablePrefix')->andReturn('prefixed_');
+
+        $connectionHandler->shouldReceive('query')->withArgs(function ($sql, $bindings) use ($expectedSQL)
+        {
+            return str_contains($sql, $expectedSQL);
+
+        })->andReturn([]);
 
         $sql = new Builder($connectionHandler, new Query($connectionHandler));
 
@@ -645,7 +820,7 @@ class DatabaseBuilderTest extends TestCase
     {
         $this->expectNotToPerformAssertions();
 
-        $query = 'SELECT * FROM prefixed_my_table_name LIMIT 0, 3';
+        $expectedSQL = 'SELECT * FROM prefixed_my_table_name LIMIT 0, 3';
 
         $connectionHandler = $this->mock(ConnectionHandler::class);
 
@@ -656,7 +831,11 @@ class DatabaseBuilderTest extends TestCase
             return trim(preg_replace('/\s+/', ' ', $sql));
         });
 
-        $connectionHandler->shouldReceive('query')->withArgs([$query, []]);
+        $connectionHandler->shouldReceive('query')->withArgs(function ($sql, $bindings) use ($expectedSQL)
+        {
+            return str_contains($sql, $expectedSQL);
+
+        })->andReturn([]);
 
         $sql = new Builder($connectionHandler, new Query($connectionHandler));
 

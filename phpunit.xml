@@ -2,6 +2,7 @@
 	<testsuites>
 		<testsuite name="Serve Framework Tests">
 			<directory>tests/unit</directory>
+			<directory>tests/integration</directory>
 		</testsuite>
 	</testsuites>
 </phpunit>
