@@ -7,8 +7,8 @@
 
 namespace serve\tests\unit\database\wrappers\providers;
 
-use serve\database\connection\ConnectionHandler;
 use serve\database\builder\Builder;
+use serve\database\connection\ConnectionHandler;
 use serve\database\wrappers\providers\UserProvider;
 use serve\tests\TestCase;
 
