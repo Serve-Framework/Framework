@@ -310,7 +310,7 @@ class ConnectionHandlerTest extends TestCase
 
         $connection->shouldReceive('pdo')->andReturn($pdo)->once();
 
-        $pdo->shouldReceive('lastInsertId')->once();
+        $pdo->shouldReceive('lastInsertId')->once()->andReturn(1);
 
         $handler->lastInsertId();
     }
