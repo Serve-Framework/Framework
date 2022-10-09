@@ -7,6 +7,8 @@
 
 namespace serve\database\builder\query;
 
+use InvalidArgumentException;
+
 use function implode;
 use function in_array;
 

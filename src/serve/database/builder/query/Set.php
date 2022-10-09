@@ -38,7 +38,7 @@ class Set
 	{
 		foreach($values as $column => $value)
 		{
-			$key = $this->uniqueKey($column, $value);
+			$key = $this->uniqueKey($column);
 
 			if (is_array($value))
 			{

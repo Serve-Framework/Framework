@@ -7,7 +7,7 @@
 
 namespace serve\database\wrappers\providers;
 
-use serve\database\query\Builder;
+use serve\database\builder\Builder;
 
 /**
  * Provider base class.
@@ -19,14 +19,14 @@ abstract class Provider
     /**
      * SQL query builder.
      *
-     * @var \serve\database\query\Builder
+     * @var \serve\database\builder\Builder
      */
     protected $SQL;
 
     /**
      * Constructor.
      *
-     * @param \serve\database\query\Builder $SQL SQL query builder
+     * @param \serve\database\builder\Builder $SQL SQL query builder
      */
     public function __construct(Builder $SQL)
     {

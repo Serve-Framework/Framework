@@ -16,7 +16,7 @@ use function str_contains;
 /**
  * @group unit
  */
-class CryptoOpenSSLTest extends TestCase
+class CryptoOpenSslTest extends TestCase
 {
 	/**
 	 *

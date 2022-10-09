@@ -28,7 +28,7 @@ class Builder
 	/**
 	 * Query.
 	 *
-	 * @var \serve\database\query\Query
+	 * @var \serve\database\builder\query\Query
 	 */
 	private $query;
 

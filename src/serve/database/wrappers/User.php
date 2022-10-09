@@ -64,7 +64,7 @@ class User extends Wrapper
 
         if (isset($this->data['id']))
         {
-            $saved = $this->SQL->UPDATE('users')->SET($this->data)->WHERE('id', '=', $this->data['id'])->QUERY();
+            $saved = $this->SQL->UPDATE('users')->SET($this->data)->WHERE('id', '=', $this->data['id'])->EXEC();
         }
         else
         {
@@ -73,7 +73,7 @@ class User extends Wrapper
                 $this->generateAccessToken();
             }
 
-            $saved = $this->SQL->INSERT_INTO('users')->VALUES($this->data)->QUERY();
+            $saved = $this->SQL->INSERT_INTO('users')->VALUES($this->data)->EXEC();
 
             if ($saved)
             {
@@ -96,9 +96,8 @@ class User extends Wrapper
                 throw new InvalidArgumentException(vsprintf("%s(): The primary user with id '1' is not deletable.", [__METHOD__]));
             }
 
-            if ($this->SQL->DELETE_FROM('users')->WHERE('id', '=', $this->data['id'])->QUERY())
+            if ($this->SQL->DELETE_FROM('users')->WHERE('id', '=', $this->data['id'])->EXEC())
             {
-
                 return true;
             }
         }

@@ -7,6 +7,8 @@
 
 namespace serve\database\builder\query;
 
+use InvalidArgumentException;
+
 use function array_keys;
 use function count;
 use function implode;
@@ -93,10 +95,10 @@ class Where
 	/**
 	 * SQL WHERE Clause.
 	 *
-	 * @param string $column Column name to use
-	 * @param string $op     Logical operator
-	 * @param mixed  $value  Comparison value
-	 * @param string $type   Where type
+	 * @param string $column   Column name to use
+	 * @param string $operator Logical operator
+	 * @param mixed  $value    Comparison value
+	 * @param string $type     Where type
 	 */
 	public function __construct(string $column, string $operator, mixed $value, string $type = 'WHERE')
 	{
@@ -222,7 +224,7 @@ class Where
 	/**
 	 * Returns array of bindings.
 	 *
-	 * @return array
+	 * @return string
 	 */
 	public function type(): string
 	{

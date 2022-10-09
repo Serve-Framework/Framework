@@ -7,6 +7,7 @@
 
 namespace serve\database\builder\query;
 
+use ErrorException;
 use InvalidArgumentException;
 use serve\database\connection\ConnectionHandler;
 use function array_filter;
@@ -46,65 +47,58 @@ class Query
 	/**
 	 * Select.
 	 *
-	 * @var \serve\database\query\Select|null
+	 * @var \serve\database\builder\query\Select|null
 	 */
 	protected $select;
 
 	/**
 	 * Limit.
 	 *
-	 * @var \serve\database\query\Limit|null
+	 * @var \serve\database\builder\query\Limit|null
 	 */
 	protected $limit;
 
 	/**
 	 * Order by.
 	 *
-	 * @var \serve\database\query\OrderBy|null
+	 * @var \serve\database\builder\query\OrderBy|null
 	 */
 	protected $orderBy;
 
 	/**
 	 * Group concat.
 	 *
-	 * @var \serve\database\query\GroupBy|null
+	 * @var \serve\database\builder\query\GroupBy|null
 	 */
 	protected $groupBy;
 
 	/**
 	 * Concat.
 	 *
-	 * @var \serve\database\query\Concat|null
+	 * @var \serve\database\builder\query\Concat|null
 	 */
 	protected $concat;
 
 	/**
 	 * Group concat.
 	 *
-	 * @var \serve\database\query\GroupConcat|null
+	 * @var \serve\database\builder\query\GroupConcat|null
 	 */
 	protected $groupConcat;
 
 	/**
 	 * Values to insert.
 	 *
-	 * @var \serve\database\query\Values|null
+	 * @var \serve\database\builder\query\Values|null
 	 */
 	protected $values;
 
 	/**
 	 * Values to update.
 	 *
-	 * @var \serve\database\query\Set|null
+	 * @var \serve\database\builder\query\Set|null
 	 */
 	protected $set;
-
-	/**
-	 * Values to update.
-	 *
-	 * @var \serve\database\query\Update|null
-	 */
-	protected $update;
 
 	/**
 	 * Current operation to run - SET | DELETE | SELECT FROM | INSERT | QUERY.
@@ -234,7 +228,7 @@ class Query
 	 * @param string       $table       Table name
 	 * @param array|string $comparisons Join columns by string or array of multiple
 	 */
-	public function join(string $table, string $comparisons): void
+	public function join(string $table, string|array $comparisons): void
 	{
 		$this->joinFactory($table, $comparisons, Join::TYPE_INNER);
 	}
@@ -245,7 +239,7 @@ class Query
 	 * @param string       $table       Table name
 	 * @param array|string $comparisons Join columns by string or array of multiple
 	 */
-	public function innerJoin(string $table, string $comparisons): void
+	public function innerJoin(string $table, string|array $comparisons): void
 	{
 		$this->joinFactory($table, $comparisons, Join::TYPE_INNER);
 	}
@@ -256,7 +250,7 @@ class Query
 	 * @param string       $table       Table name
 	 * @param array|string $comparisons Join columns by string or array of multiple
 	 */
-	public function leftJoin(string $table, string $comparisons): void
+	public function leftJoin(string $table, string|array $comparisons): void
 	{
 		$this->joinFactory($table, $comparisons, Join::TYPE_LEFT);
 	}
@@ -267,7 +261,7 @@ class Query
 	 * @param string       $table       Table name
 	 * @param array|string $comparisons Join columns by string or array of multiple
 	 */
-	public function rightJoin(string $table, string $comparisons): void
+	public function rightJoin(string $table, string|array $comparisons): void
 	{
 		$this->joinFactory($table, $comparisons, Join::TYPE_RIGHT);
 	}
@@ -278,7 +272,7 @@ class Query
 	 * @param string       $table       Table name
 	 * @param array|string $comparisons Join columns by string or array of multiple
 	 */
-	public function leftOuterJoin(string $table, string $comparisons): void
+	public function leftOuterJoin(string $table, string|array $comparisons): void
 	{
 		$this->joinFactory($table, $comparisons, Join::TYPE_LEFT_OUTER);
 	}
@@ -289,7 +283,7 @@ class Query
 	 * @param string       $table       Table name
 	 * @param array|string $comparisons Join columns by string or array of multiple
 	 */
-	public function rightOuterJoin(string $table, string $comparisons): void
+	public function rightOuterJoin(string $table, string|array $comparisons): void
 	{
 		$this->joinFactory($table, $comparisons, Join::TYPE_RIGHT_OUTER);
 	}
@@ -300,7 +294,7 @@ class Query
 	 * @param string       $table       Table name
 	 * @param array|string $comparisons Join columns by string or array of multiple
 	 */
-	public function fullOuterJoin(string $table, string $comparisons): void
+	public function fullOuterJoin(string $table, string|array $comparisons): void
 	{
 		$this->joinFactory($table, $comparisons, Join::TYPE_FULL_OUTER);
 	}
@@ -308,7 +302,7 @@ class Query
 	/**
 	 * Creates "Join" class.
 	 *
-	 * @param string       $table       Table name
+	 * @param string       $tableName   Table name
 	 * @param array|string $comparisons Join columns by string or array of multiple
 	 * @param string       $type        Join type
 	 */
@@ -402,15 +396,13 @@ class Query
 	/**
 	 * Set a "GROUP_CONCAT" clause.
 	 *
-	 * @param string            $column    Column to group
-	 * @param string|null       $as        as (optional) (default null)
-	 * @param bool|null         $distinct  Distinct
-	 * @param string|null       $separator Separator (optional) (default null)
-	 * @param array|string|null $orderby   Order (optional) (default null)
+	 * @param string      $column   Column to group
+	 * @param string|null $as       as (optional) (default null)
+	 * @param bool|null   $distinct Distinct
 	 */
-	public function groupConcat(string $column, ?string $as = null, ?bool $distinct = null, ?string $separator = null, string|array|null $orderby = null): void
+	public function groupConcat(string $column, ?string $as = null, ?bool $distinct = null): void
 	{
-		$this->groupConcat = new GroupConcat($column, $as, $distinct, $separator, $orderby);
+		$this->groupConcat = new GroupConcat($column, $as, $distinct);
 	}
 
 	/**
@@ -842,6 +834,8 @@ class Query
 	protected function procesWhereClauses(): string
 	{
 		$wheresSql = [];
+
+		$prevType = null;
 
 		foreach($this->wheres as $i => $where)
 		{

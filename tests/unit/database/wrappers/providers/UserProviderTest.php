@@ -8,7 +8,7 @@
 namespace serve\tests\unit\database\wrappers\providers;
 
 use serve\database\connection\ConnectionHandler;
-use serve\database\query\Builder;
+use serve\database\builder\Builder;
 use serve\database\wrappers\providers\UserProvider;
 use serve\tests\TestCase;
 
@@ -30,7 +30,7 @@ class UserProviderTest extends TestCase
 
         $sql->shouldReceive('VALUES')->with(['email' => 'foo@bar.com', 'access_token' => 'foobar'])->once()->andReturn($sql);
 
-        $sql->shouldReceive('QUERY')->once()->andReturn(true);
+        $sql->shouldReceive('EXEC')->once()->andReturn(true);
 
         $sql->shouldReceive('connectionHandler')->once()->andReturn($cHandler);
 

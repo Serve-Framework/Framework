@@ -8,7 +8,7 @@
 namespace serve\tests\unit\database\wrappers;
 
 use serve\database\connection\ConnectionHandler;
-use serve\database\query\Builder;
+use serve\database\builder\Builder;
 use serve\database\wrappers\User;
 use serve\tests\TestCase;
 
@@ -126,7 +126,7 @@ class UserTest extends TestCase
 
 		$sql->shouldReceive('WHERE')->with('id', '=', 2)->once()->andReturn($sql);
 
-		$sql->shouldReceive('QUERY')->times(1)->andReturn(true);
+		$sql->shouldReceive('EXEC')->times(1)->andReturn(true);
 
         $this->assertTrue($user->delete());
     }
@@ -146,7 +146,7 @@ class UserTest extends TestCase
 
 		$sql->shouldReceive('VALUES')->with(['email' => 'foo@bar.com', 'access_token' => 'foobar'])->once()->andReturn($sql);
 
-		$sql->shouldReceive('QUERY')->once()->andReturn(true);
+		$sql->shouldReceive('EXEC')->once()->andReturn(true);
 
 		$sql->shouldReceive('connectionHandler')->once()->andReturn($cHandler);
 
@@ -174,7 +174,7 @@ class UserTest extends TestCase
 
 		$sql->shouldReceive('WHERE')->with('id', '=', 3)->once()->andReturn($sql);
 
-		$sql->shouldReceive('QUERY')->once()->andReturn(true);
+		$sql->shouldReceive('EXEC')->once()->andReturn(true);
 
         $this->assertTrue($user->save());
     }
@@ -190,7 +190,7 @@ class UserTest extends TestCase
 
         $sql->shouldReceive('WHERE')->with('id', '=', 2)->once()->andReturn($sql);
 
-        $sql->shouldReceive('QUERY')->once()->andReturn(true);
+        $sql->shouldReceive('EXEC')->once()->andReturn(true);
 
 		$user = new User($sql, ['id' => 2, 'name' => 'foo']);
 

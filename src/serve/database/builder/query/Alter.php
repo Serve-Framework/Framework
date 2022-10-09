@@ -7,7 +7,7 @@
 
 namespace serve\database\builder\query;
 
-use PDOException;
+use Exception;
 use serve\database\connection\ConnectionHandler;
 
 use function preg_replace;
@@ -81,10 +81,10 @@ class Alter
     /**
      * Add a new column to the current table.
      *
-     * @param  string                      $column
-     * @param  string                      $dataType The column parameters
-     * @throws PDOException                If the column already exists
-     * @return \serve\database\query\Alter
+     * @param  string                              $column
+     * @param  string                              $dataType The column parameters
+     * @throws Exception                           If the column already exists
+     * @return \serve\database\builder\query\Alter
      */
     public function ADD_COLUMN(string $column, string $dataType): Alter
     {
@@ -94,7 +94,7 @@ class Alter
         // Validate the column does NOT already exist
         if ($this->columnExists($column))
         {
-            throw new PDOException("Error adding column $column. The column already exists.");
+            throw new Exception("Error adding column $column. The column already exists.");
         }
 
         // Execute the SQL
@@ -110,9 +110,9 @@ class Alter
     /**
      * Drop an existing column from the current table.
      *
-     * @param  string                      $column The column name to drop
-     * @throws PDOException                If the column does not exist
-     * @return \serve\database\query\Alter
+     * @param  string                              $column The column name to drop
+     * @throws Exception                           If the column does not exist
+     * @return \serve\database\builder\query\Alter
      */
     public function DROP_COLUMN(string $column): Alter
     {
@@ -122,7 +122,7 @@ class Alter
         // Validate the column already exists
         if (!$this->columnExists($column))
         {
-            throw new PDOException("Error dropping column $column. The column does NOT exist.");
+            throw new Exception("Error dropping column $column. The column does NOT exist.");
         }
 
         // Execute the SQL
@@ -142,10 +142,10 @@ class Alter
      * Note this function must be called before using
      * any of the configuration/constraint methods below
      *
-     * @param  string                      $column
-     * @param  string|null                 $dataType (optional) (default null)
-     * @throws PDOException                If the column does not exist
-     * @return \serve\database\query\Alter
+     * @param  string                              $column
+     * @param  string|null                         $dataType (optional) (default null)
+     * @throws Exception                           If the column does not exist
+     * @return \serve\database\builder\query\Alter
      */
     public function MODIFY_COLUMN(string $column, ?string $dataType = null): Alter
     {
@@ -155,7 +155,7 @@ class Alter
         // Validate the column already exists
         if (!$this->columnExists($column))
         {
-            throw new PDOException("Error modifying column $column. The column does NOT exist.");
+            throw new Exception("Error modifying column $column. The column does NOT exist.");
         }
 
         // Set the column
@@ -180,7 +180,7 @@ class Alter
     /**
      * Add a primary key to the current column.
      *
-     * @return \serve\database\query\Alter
+     * @return \serve\database\builder\query\Alter
      */
     public function ADD_PRIMARY_KEY(): Alter
     {
@@ -214,7 +214,7 @@ class Alter
     /**
      * Drop the table's current primary key.
      *
-     * @return \serve\database\query\Alter
+     * @return \serve\database\builder\query\Alter
      */
     public function DROP_PRIMARY_KEY(): Alter
     {
@@ -237,8 +237,8 @@ class Alter
     /**
      * Add not null to a column.
      *
-     * @param                              $notNull mixed Value to set null values to (optional) (default 0)
-     * @return \serve\database\query\Alter
+     * @param                                      $notNull mixed Value to set null values to (optional) (default 0)
+     * @return \serve\database\builder\query\Alter
      */
     public function ADD_NOT_NULL($notNull = 0): Alter
     {
@@ -275,7 +275,7 @@ class Alter
     /**
      * Drop "not null" on a column.
      *
-     * @return \serve\database\query\Alter
+     * @return \serve\database\builder\query\Alter
      */
     public function DROP_NOT_NULL(): Alter
     {
@@ -302,7 +302,7 @@ class Alter
     /**
      * Add unsinged to an integer or number based column.
      *
-     * @return \serve\database\query\Alter
+     * @return \serve\database\builder\query\Alter
      */
     public function ADD_UNSIGNED(): Alter
     {
@@ -332,7 +332,7 @@ class Alter
     /**
      * Drop unsigned on an integer or number based column.
      *
-     * @return \serve\database\query\Alter
+     * @return \serve\database\builder\query\Alter
      */
     public function DROP_UNSIGNED(): Alter
     {
@@ -360,7 +360,7 @@ class Alter
     /**
      * Add auto increment to an integer primary key column.
      *
-     * @return \serve\database\query\Alter
+     * @return \serve\database\builder\query\Alter
      */
     public function SET_AUTO_INCREMENT(): Alter
     {
@@ -401,7 +401,7 @@ class Alter
     /**
      * DROP auto increment on an integer primary key column.
      *
-     * @return \serve\database\query\Alter
+     * @return \serve\database\builder\query\Alter
      */
     public function DROP_AUTO_INCREMENT(): Alter
     {
@@ -424,7 +424,7 @@ class Alter
     /**
      * Set default value for column.
      *
-     * @return \serve\database\query\Alter
+     * @return \serve\database\builder\query\Alter
      */
     public function SET_DEFAULT($value = 'NULL'): Alter
     {
@@ -441,7 +441,7 @@ class Alter
     /**
      * Drop default value for column.
      *
-     * @return \serve\database\query\Alter
+     * @return \serve\database\builder\query\Alter
      */
     public function DROP_DEFAULT(): Alter
     {
@@ -461,7 +461,7 @@ class Alter
     /**
      * Add unique contraint on column.
      *
-     * @return \serve\database\query\Alter
+     * @return \serve\database\builder\query\Alter
      */
     public function ADD_UNIQUE(): Alter
     {
@@ -487,7 +487,7 @@ class Alter
     /**
      * Drop unique contraint on column.
      *
-     * @return \serve\database\query\Alter
+     * @return \serve\database\builder\query\Alter
      */
     public function DROP_UNIQUE(): Alter
     {
@@ -511,10 +511,10 @@ class Alter
     /**
      * Add a foreign key constraint to a column.
      *
-     * @param  string                      $referenceTable The name of the reference table
-     * @param  string                      $referenceKey   The name of the column on the reference table
-     * @param  string|null                 $constraint     The constraint name to add (optional) (default null)
-     * @return \serve\database\query\Alter
+     * @param  string                              $referenceTable The name of the reference table
+     * @param  string                              $referenceKey   The name of the column on the reference table
+     * @param  string|null                         $constraint     The constraint name to add (optional) (default null)
+     * @return \serve\database\builder\query\Alter
      */
     public function ADD_FOREIGN_KEY(string $referenceTable, string $referenceKey, ?string $constraint = null): Alter
     {
@@ -540,10 +540,10 @@ class Alter
     /**
      * Drop a foreign key constraint to a column.
      *
-     * @param  string                      $referenceTable The name of the reference table
-     * @param  string                      $referenceKey   The name of the column on the reference table
-     * @param  string                      $constraint     The constraint name to remove (optional) (default null)
-     * @return \serve\database\query\Alter
+     * @param  string                              $referenceTable The name of the reference table
+     * @param  string                              $referenceKey   The name of the column on the reference table
+     * @param  string                              $constraint     The constraint name to remove (optional) (default null)
+     * @return \serve\database\builder\query\Alter
      */
     public function DROP_FOREIGN_KEY($referenceTable, $referenceKey, $constraint = null): Alter
     {

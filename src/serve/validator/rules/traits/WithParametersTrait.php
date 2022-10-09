@@ -10,7 +10,6 @@ namespace serve\validator\rules\traits;
 use RuntimeException;
 
 use function property_exists;
-
 use function vsprintf;
 
 /**

@@ -30,16 +30,15 @@ class Values
 	protected $bindings;
 
 	/**
-	 * Limit/ offset results.
+	 * Constructor.
 	 *
-	 * @param int      $offset Offset to start at or limit if single argument provided
-	 * @param int|null $value  Limit results (optional) (default null)
+	 * @param array $values Assoc array of column => value
 	 */
 	public function __construct(array $values)
 	{
 		foreach($values as $column => $value)
 		{
-			$key = $this->uniqueKey($column, $value);
+			$key = $this->uniqueKey($column);
 
 			if (is_array($value))
 			{

@@ -253,7 +253,7 @@ class Connection
 	/**
 	 * Return a new Query builder instance.
 	 *
-	 * @return \serve\database\query\Builder
+	 * @return \serve\database\builder\Builder
 	 */
 	public function builder(): Builder
 	{

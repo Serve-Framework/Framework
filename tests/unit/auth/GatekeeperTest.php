@@ -8,7 +8,7 @@
 namespace serve\tests\unit\auth;
 
 use serve\auth\Gatekeeper;
-use serve\database\query\Builder;
+use serve\database\builder\Builder;
 use serve\database\wrappers\providers\UserProvider;
 use serve\database\wrappers\User;
 use serve\http\cookie\Cookie;
@@ -272,7 +272,7 @@ class GatekeeperTest extends TestCase
 
 		$sql->shouldReceive('WHERE')->with('id', '=', 1)->andReturn($sql);
 
-		$sql->shouldReceive('QUERY');
+		$sql->shouldReceive('EXEC');
 
 		$cookie->shouldReceive('login');
 
@@ -548,7 +548,7 @@ class GatekeeperTest extends TestCase
 
 		$sql->shouldReceive('WHERE')->with('id', '=', 1)->andReturn($sql);
 
-		$sql->shouldReceive('QUERY');
+		$sql->shouldReceive('EXEC');
 
 		$cookie->shouldReceive('login');
 

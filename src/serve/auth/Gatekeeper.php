@@ -7,7 +7,7 @@
 
 namespace serve\auth;
 
-use serve\database\query\Builder;
+use serve\database\builder\Builder;
 use serve\database\wrappers\providers\UserProvider;
 use serve\http\cookie\Cookie;
 use serve\http\session\Session;
@@ -57,7 +57,7 @@ class Gatekeeper
     /**
      * SQL Query Builder.
      *
-     * @var \serve\database\query\Builder
+     * @var \serve\database\builder\Builder
      */
     private $SQL;
 
@@ -99,7 +99,7 @@ class Gatekeeper
     /**
      * Constructor.
      *
-     * @param \serve\database\query\Builder                   $SQL      Query builder instance
+     * @param \serve\database\builder\Builder                 $SQL      Query builder instance
      * @param \serve\database\wrappers\providers\UserProvider $provider User provider instance
      * @param \serve\security\Crypto                          $crypto   Encryption manager
      * @param \serve\http\cookie\Cookie                       $cookie   Cookie manager
@@ -454,7 +454,7 @@ class Gatekeeper
         $this->SQL
             ->UPDATE('users')->SET(['access_token' => $token])
             ->WHERE('id', '=', $_user['id'])
-            ->QUERY();
+            ->EXEC();
 
         // Log the client in
         $this->cookie->login();

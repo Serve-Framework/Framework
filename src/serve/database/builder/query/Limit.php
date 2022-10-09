@@ -27,7 +27,7 @@ class Limit
 	protected $value;
 
 	/**
-	 * Limit/ offset results.
+	 * Constructor.
 	 *
 	 * @param int      $offset Offset to start at or limit if single argument provided
 	 * @param int|null $value  Limit results (optional) (default null)

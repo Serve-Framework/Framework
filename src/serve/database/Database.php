@@ -132,8 +132,8 @@ class Database
 	/**
 	 * Get a database builder by connection name.
 	 *
-	 * @param  string                        $connectionName Name of the connection
-	 * @return \serve\database\query\Builder
+	 * @param  string                          $connectionName Name of the connection
+	 * @return \serve\database\builder\Builder
 	 */
 	public function builder(?string $connectionName = null): Builder
 	{

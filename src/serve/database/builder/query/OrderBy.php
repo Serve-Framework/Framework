@@ -7,6 +7,8 @@
 
 namespace serve\database\builder\query;
 
+use InvalidArgumentException;
+
 use function in_array;
 use function trim;
 

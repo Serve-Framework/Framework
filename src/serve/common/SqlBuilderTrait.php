@@ -7,7 +7,7 @@
 
 namespace serve\common;
 
-use serve\database\query\Builder;
+use serve\database\builder\Builder;
 use serve\ioc\Container;
 
 use function is_null;
@@ -22,14 +22,14 @@ trait SqlBuilderTrait
     /**
      * SQL query builder instance.
      *
-     * @var \serve\database\query\Builder|null
+     * @var \serve\database\builder\Builder|null
      */
     protected $sql = null;
 
     /**
      * Instantiate and/or return a query builder instance.
      *
-     * @return \serve\database\query\Builder
+     * @return \serve\database\builder\Builder
      */
     protected function sql(): Builder
     {

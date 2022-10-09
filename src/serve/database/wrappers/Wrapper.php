@@ -8,7 +8,7 @@
 namespace serve\database\wrappers;
 
 use serve\common\MagicObjectArray;
-use serve\database\query\Builder;
+use serve\database\builder\Builder;
 
 /**
  * Database wrapper base class.
@@ -20,15 +20,15 @@ abstract class Wrapper extends MagicObjectArray
     /**
      * SQL query builder.
      *
-     * @var \serve\database\query\Builder
+     * @var \serve\database\builder\Builder
      */
     protected $SQL;
 
     /**
      * Constructor.
      *
-     * @param \serve\database\query\Builder $SQL  SQL query builder
-     * @param array                         $data Array row from Database
+     * @param \serve\database\builder\Builder $SQL  SQL query builder
+     * @param array                           $data Array row from Database
      */
     public function __construct(Builder $SQL, array $data = [])
     {
