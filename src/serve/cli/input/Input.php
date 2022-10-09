@@ -16,13 +16,13 @@ use function array_merge;
 use function array_shift;
 use function array_unique;
 use function array_values;
-use function trim;
 use function explode;
 use function in_array;
 use function is_null;
 use function preg_replace;
 use function str_split;
 use function substr;
+use function trim;
 
 /**
  * CLI input parser.
