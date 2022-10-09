@@ -86,7 +86,7 @@ class DatabaseBuilderTest extends TestCase
 
         $connection->shouldReceive('type')->andReturn('mysql');
 
-        $connectionHandler->shouldReceive('query')->with('DROP TABLE prefixed_my_table_name');
+        $connectionHandler->shouldReceive('query')->with('DROP TABLE IF EXISTS prefixed_my_table_name');
 
         $sql = new Builder($connectionHandler, new Query($connectionHandler));
 

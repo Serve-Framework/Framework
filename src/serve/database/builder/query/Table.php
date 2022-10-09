@@ -115,6 +115,6 @@ class Table
 	 */
 	public function drop(): string
 	{
-		return 'DROP TABLE ' . $this->name;
+		return 'DROP TABLE IF EXISTS ' . $this->name;
 	}
 }

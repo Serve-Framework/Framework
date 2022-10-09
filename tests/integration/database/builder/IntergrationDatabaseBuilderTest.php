@@ -568,7 +568,7 @@ class IntergrationDatabaseBuilderTest extends DatabaseTestCase
 
         //
 
-        $this->assertEquals('DROP TABLE serve_users', $this->connection->handler()->getLog()[0]['query']);
+        $this->assertEquals('DROP TABLE IF EXISTS serve_users', $this->connection->handler()->getLog()[0]['query']);
 
         $this->assertEquals('SELECT * FROM serve_users', $this->connection->handler()->getLog()[1]['query']);
     }
