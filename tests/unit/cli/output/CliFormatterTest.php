@@ -5,7 +5,7 @@
  * @license   https://github.com/Serve-Framework/Framework/blob/master/LICENSE
  */
 
-namespace serve\tests\unit\framework\cli\output;
+namespace serve\tests\unit\cli\output;
 
 use Exception;
 use serve\cli\output\Formatter;

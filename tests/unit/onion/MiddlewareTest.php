@@ -5,7 +5,7 @@
  * @license   https://github.com/Serve-Framework/Framework/blob/master/LICENSE
  */
 
-namespace serve\tests\unit\framework\onion;
+namespace serve\tests\unit\onion;
 
 use Closure;
 use serve\http\request\Request;
@@ -50,7 +50,7 @@ class MiddlewareTest extends TestCase
 
 		$response = $this->mock(Response::class);
 
-		$layer = new Middleware('\serve\tests\unit\framework\onion\MiddleWareCallbackTest@normalMethod', ['foo', 'bar']);
+		$layer = new Middleware('\serve\tests\unit\onion\MiddleWareCallbackTest@normalMethod', ['foo', 'bar']);
 
 		$next = function (): void
 		{
@@ -73,7 +73,7 @@ class MiddlewareTest extends TestCase
 
 		$response = $this->mock(Response::class);
 
-		$layer = new Middleware('\serve\tests\unit\framework\onion\MiddleWareCallbackTest::staticFunc', ['foo', 'bar']);
+		$layer = new Middleware('\serve\tests\unit\onion\MiddleWareCallbackTest::staticFunc', ['foo', 'bar']);
 
 		$next = function (): void
 		{
@@ -113,9 +113,9 @@ class MiddlewareTest extends TestCase
 	 */
 	public function testGetCallback(): void
 	{
-		$layer = new Middleware('\serve\tests\unit\framework\onion\MiddleWareCallbackTest::staticFunc', ['foo', 'bar']);
+		$layer = new Middleware('\serve\tests\unit\onion\MiddleWareCallbackTest::staticFunc', ['foo', 'bar']);
 
-		$this->assertEquals('\serve\tests\unit\framework\onion\MiddleWareCallbackTest::staticFunc', $layer->getCallback());
+		$this->assertEquals('\serve\tests\unit\onion\MiddleWareCallbackTest::staticFunc', $layer->getCallback());
 	}
 
 	/**
@@ -123,11 +123,11 @@ class MiddlewareTest extends TestCase
 	 */
 	public function testGetArgs(): void
 	{
-		$layer = new Middleware('\serve\tests\unit\framework\onion\MiddleWareCallbackTest::staticFunc', ['foo', 'bar']);
+		$layer = new Middleware('\serve\tests\unit\onion\MiddleWareCallbackTest::staticFunc', ['foo', 'bar']);
 
 		$this->assertEquals(['foo', 'bar'], $layer->getArgs());
 
-		$layer = new Middleware('\serve\tests\unit\framework\onion\MiddleWareCallbackTest::staticFunc', 'foo');
+		$layer = new Middleware('\serve\tests\unit\onion\MiddleWareCallbackTest::staticFunc', 'foo');
 
 		$this->assertEquals(['foo'], $layer->getArgs());
 	}

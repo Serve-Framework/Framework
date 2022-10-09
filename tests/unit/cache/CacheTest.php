@@ -5,7 +5,7 @@
  * @license   https://github.com/Serve-Framework/Framework/blob/master/LICENSE
  */
 
-namespace serve\tests\unit\framework\cache;
+namespace serve\tests\unit\cache;
 
 use serve\cache\Cache;
 use serve\cache\stores\FileStore;

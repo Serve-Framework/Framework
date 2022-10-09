@@ -5,7 +5,7 @@
  * @license   https://github.com/Serve-Framework/Framework/blob/master/LICENSE
  */
 
-namespace serve\tests\unit\framework\exception;
+namespace serve\tests\unit\exception;
 
 use ErrorException;
 use InvalidArgumentException;

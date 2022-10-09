@@ -7,9 +7,10 @@
 
 namespace serve\tests\integration;
 
+use serve\database\Database;
 use serve\database\connection\Connection;
 use serve\tests\TestCase;
-use PDO;
+
 
 /**
  * Builder test case.
@@ -17,61 +18,14 @@ use PDO;
 abstract class DatabaseTestCase extends TestCase
 {
 	/**
+	 * @var \serve\database\Database
+	 */
+	protected $database;
+
+	/**
 	 * @var \serve\database\connection\Connection
 	 */
 	protected $connection;
-
-	/**
-	 * @var array
-	 */
-	protected $configuration;
-
-	/**
-	 * @var array
-	 */
-	protected $exampleData =
-	[
-		[
-			'id'           => 1,
-			'username'     => 'foo',
-			'email'        => 'foo@example.org',
-			'hashed_pass'  => NULL,
-			'name'         => NULL,
-			'slug'         => 'foo',
-			'role'         => NULL,
-			'status'       => NULL,
-			'access_token' => NULL,
-			'register_key' => NULL,
-			'password_key' => NULL,
-		],
-		[
-			'id'           => 1,
-			'username'     => 'bar',
-			'email'        => 'bar@example.org',
-			'hashed_pass'  => NULL,
-			'name'         => NULL,
-			'slug'         => 'bar',
-			'role'         => NULL,
-			'status'       => NULL,
-			'access_token' => NULL,
-			'register_key' => NULL,
-			'password_key' => NULL,
-
-		],
-		[
-			'id'           => 1,
-			'username'     => 'baz',
-			'email'        => 'baz@example.org',
-			'hashed_pass'  => NULL,
-			'name'         => NULL,
-			'slug'         => 'baz',
-			'role'         => NULL,
-			'status'       => NULL,
-			'access_token' => NULL,
-			'register_key' => NULL,
-			'password_key' => NULL,
-		],
-	];
 
 	/**
 	 * {@inheritDoc}
@@ -85,17 +39,18 @@ abstract class DatabaseTestCase extends TestCase
 			[
 				'serve' =>
 				[
-					'dsn'          => 'sqlite::memory:',
+					'dsn'          => 'sqlite::memory:serve',
+					'name'         => 'serve',
 					'table_prefix' => 'serve_',
-					'options'      =>
-					[
-						'ATTR_STRINGIFY_FETCHES' => true,
-					],
+					'type'         => 'sqlite',
+					'options'      => [],
 				],
 			],
 		];
 
-		$this->connection = new Connection($config['configurations']['serve'], 'sqlite');
+		$this->database = new Database($config);
+
+		$this->connection = $this->database->connection('serve');
 
 		// Load test info
 

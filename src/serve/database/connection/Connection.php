@@ -79,11 +79,25 @@ class Connection
 	protected $pdo;
 
 	/**
-	 *  Connection handler.
+	 * Connection handler.
 	 *
 	 * @var \serve\database\connection\ConnectionHandler
 	 */
-	private $handler;
+	protected $handler;
+
+	/**
+	 * Connection type.
+	 *
+	 * @var string
+	 */
+	protected $type;
+
+	/**
+	 * Accepted connection types.
+	 *
+	 * @var array
+	 */
+	protected $acceptedTypes = ['mysql', 'sqlite'];
 
 	/**
 	 * Constructor.
@@ -91,8 +105,16 @@ class Connection
 	 * @param  array            $config Connection configuration
 	 * @throws RuntimeException If connection type is not supported
 	 */
-	public function __construct(array $config, string $type = 'mysql')
+	public function __construct(array $config, ?string $type = null)
 	{
+		$type = !$type ? 'mysql' : $type;
+
+		// Validate connection type
+		if (!in_array($type, $this->acceptedTypes))
+		{
+			throw new RuntimeException('The provided database connection [' . $type . '] is not supported. Supported connections are [' . implode(', ', $this->acceptedTypes) . ']');
+		}
+
 		if (isset($config['dsn']))
 		{
 			$this->dsn = $config['dsn'];
@@ -110,15 +132,7 @@ class Connection
 		{
 			$this->dsn = "sqlite:sqlite:$config[path]";
 		}
-		elseif ($type === 'oci' || 'oracle')
-		{
-			$this->dsn = "dbname=//$config[host]:$config[port]/$config[name]";
-		}
-		else
-		{
-			throw new RuntimeException('The provided database connection was either not provided or is not supported.');
-		}
-
+		
 		$this->host = $config['host'] ?? null;
 
 		$this->name = $config['name'] ?? null;
@@ -130,6 +144,8 @@ class Connection
 		$this->options = $config['options'] ?? null;
 
 		$this->tablePrefix = $config['table_prefix'] ?? '';
+
+		$this->type = $type;
 
 		$this->pdo = $this->connect();
 	}
@@ -155,16 +171,20 @@ class Connection
 
 	/**
 	 * Creates a new PDO instance.
+	 * 
+	 * @return bool
 	 */
-	public function isConnected()
+	public function isConnected(): bool
 	{
 		return !is_null($this->pdo);
 	}
 
 	/**
 	 * Creates a new PDO instance.
+	 * 
+	 * @return \PDO
 	 */
-	public function reconnect()
+	public function reconnect(): PDO
 	{
 		$this->pdo = $this->connect();
 
@@ -173,8 +193,10 @@ class Connection
 
 	/**
 	 * Creates a new PDO instance.
+	 * 
+	 * @return PDO
 	 */
-	public function pdo()
+	public function pdo(): PDO
 	{
 		if (!$this->isConnected())
 		{
@@ -186,8 +208,10 @@ class Connection
 
 	/**
 	 * Get the table prefix.
+	 * 
+	 * @return string
 	 */
-	public function tablePrefix()
+	public function tablePrefix(): string
 	{
 		return $this->tablePrefix;
 	}
@@ -199,6 +223,11 @@ class Connection
 	 */
 	public function isAlive(): bool
 	{
+		if (!$this->pdo)
+		{
+			return false;
+		}
+
 		try
 		{
 			$this->pdo->query('SELECT 1');
@@ -242,6 +271,16 @@ class Connection
 		}
 
 		return $this->handler;
+	}
+
+	/**
+	 * Returns the connection type
+	 * 
+	 * @return string
+	 */
+	public function type(): string
+	{
+		return $this->type;
 	}
 
 	/**

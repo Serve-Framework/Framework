@@ -5,7 +5,7 @@
  * @license   https://github.com/Serve-Framework/Framework/blob/master/LICENSE
  */
 
-namespace serve\tests\unit\framework\http\response;
+namespace serve\tests\unit\http\response;
 
 use serve\http\response\Format;
 use serve\tests\TestCase;

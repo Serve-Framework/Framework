@@ -5,7 +5,7 @@
  * @license   https://github.com/Serve-Framework/Framework/blob/master/LICENSE
  */
 
-namespace serve\tests\unit\framework\console;
+namespace serve\tests\unit\console;
 
 use serve\cli\input\Input;
 use serve\cli\output\Formatter;
@@ -37,7 +37,7 @@ class ConsoleCommandTest extends TestCase
 
 		$output->shouldReceive('writeLn')->once()->with('<green>Success: The command was executed.</green>');
 
-		$console->registerCommand('bar', '\serve\tests\unit\framework\console\Foobar');
+		$console->registerCommand('bar', '\serve\tests\unit\console\Foobar');
 
 		$console->run();
 	}

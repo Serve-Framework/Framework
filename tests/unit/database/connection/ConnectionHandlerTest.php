@@ -5,7 +5,7 @@
  * @license   https://github.com/Serve-Framework/Framework/blob/master/LICENSE
  */
 
-namespace serve\tests\unit\framework\database\connection;
+namespace serve\tests\unit\database\connection;
 
 use PDO;
 use PDOStatement;
@@ -90,7 +90,7 @@ class ConnectionHandlerTest extends TestCase
     /**
      *
      */
-    public function testBindMore(): void
+    public function testBindMultiple(): void
     {
     	$connection = $this->mock(Connection::class);
 
@@ -116,7 +116,7 @@ class ConnectionHandlerTest extends TestCase
 
         $pdoStatement->shouldReceive('fetchAll');
 
-        $handler->bindMore(['column1_key' => 'value1', 'column2_key' => 'value2']);
+        $handler->bindMultiple(['column1_key' => 'value1', 'column2_key' => 'value2']);
 
         $handler->query($query);
     }

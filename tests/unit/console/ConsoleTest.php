@@ -5,7 +5,7 @@
  * @license   https://github.com/Serve-Framework/Framework/blob/master/LICENSE
  */
 
-namespace serve\tests\unit\framework\console;
+namespace serve\tests\unit\console;
 
 use serve\cli\input\Input;
 use serve\cli\output\Formatter;
@@ -51,7 +51,7 @@ class ConsoleTest extends TestCase
 '
 		);
 
-		$console->registerCommand('foo', '\serve\tests\unit\framework\console\Foo');
+		$console->registerCommand('foo', '\serve\tests\unit\console\Foo');
 
 		$console->run();
 	}
@@ -86,7 +86,7 @@ class ConsoleTest extends TestCase
 '
 		);
 
-		$console->registerCommand('foo', '\serve\tests\unit\framework\console\Foo');
+		$console->registerCommand('foo', '\serve\tests\unit\console\Foo');
 
 		$console->run();
 	}
@@ -108,7 +108,7 @@ class ConsoleTest extends TestCase
 
 		$output->shouldReceive('writeLn')->once()->with('<green>Success: The command was executed.</green>');
 
-		$console->registerCommand('foo', '\serve\tests\unit\framework\console\Bar');
+		$console->registerCommand('foo', '\serve\tests\unit\console\Bar');
 
 		$console->run();
 	}

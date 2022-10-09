@@ -265,13 +265,11 @@ class Builder
      * @param  string            $column    Column to group
      * @param  string|null       $as        as (optional) (default null)
      * @param  bool|null         $distinct  Distinct
-     * @param  string|null       $separator Separator (optional) (default null)
-     * @param  string|array|null $orderby   Order (optional) (default null)
      * @return $this
      */
-    public function GROUP_CONCAT(string $column, ?string $as = null, ?bool $distinct = null, ?string $separator = null, string|array|null $orderby = null): Builder
+    public function GROUP_CONCAT(string $column, ?string $as = null, ?bool $distinct = null): Builder
     {
-        $this->query->groupConcat($column, $as, $distinct, $separator, $orderby);
+        $this->query->groupConcat($column, $as, $distinct);
 
         return $this;
     }
@@ -411,19 +409,23 @@ class Builder
      * and/or find a single row by id.
      *
      * @param  int|null $id Row id to find (optional) (default null)
-     * @return array
+     * @return array|null
      */
-    public function FIND(?int $id = null): array
+    public function FIND(?int $id = null): array|null
     {
-        return $this->query->find($id);
+        $result = $this->query->find($id);
+
+        $this->queryFactory();
+
+        return $result;
     }
 
     /**
      * Execute a query and limit to single row.
      *
-     * @return array
+     * @return array|null
      */
-    public function ROW(): array
+    public function ROW(): array|null
     {
         return $this->find();
     }
@@ -431,9 +433,9 @@ class Builder
     /**
      * Execute a query and find all rows.
      *
-     * @return array
+     * @return array|null
      */
-    public function FIND_ALL(): array
+    public function FIND_ALL(): array|null
     {
         return $this->exec();
     }
@@ -447,10 +449,19 @@ class Builder
     {
         $result = $this->query->exec();
 
+        $this->queryFactory();
+
+        return $result;
+    }
+
+    /**
+     * Creates a new Query instance once a query is executed.
+     *
+     */
+    protected function queryFactory(): Void
+    {
         $query = $this->query::class;
 
         $this->query = new $query($this->connectionHandler);
-
-        return $result;
     }
 }

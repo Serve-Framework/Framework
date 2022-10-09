@@ -5,7 +5,7 @@
  * @license   https://github.com/Serve-Framework/Framework/blob/master/LICENSE
  */
 
-namespace serve\tests\unit\framework\http\cookie;
+namespace serve\tests\unit\http\cookie;
 
 use serve\http\cookie\Cookie;
 use serve\http\cookie\storage\NativeCookieStorage;

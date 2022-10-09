@@ -5,7 +5,7 @@
  * @license   https://github.com/Serve-Framework/Framework/blob/master/LICENSE
  */
 
-namespace serve\tests\unit\framework\useragent;
+namespace serve\tests\unit\useragent;
 
 use serve\crawler\CrawlerDetect;
 use serve\crawler\fixtures\Inclusions;

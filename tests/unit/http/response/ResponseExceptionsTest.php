@@ -5,7 +5,7 @@
  * @license   https://github.com/Serve-Framework/Framework/blob/master/LICENSE
  */
 
-namespace serve\tests\unit\framework\http\response;
+namespace serve\tests\unit\http\response;
 
 use RuntimeException;
 use serve\http\response\exceptions\ForbiddenException;

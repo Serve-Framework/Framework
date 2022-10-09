@@ -5,7 +5,7 @@
  * @license   https://github.com/Serve-Framework/Framework/blob/master/LICENSE
  */
 
-namespace serve\tests\unit\framework\security\crypto\encrypters;
+namespace serve\tests\unit\security\crypto\encrypters;
 
 use serve\security\crypto\encrypters\OpenSSL;
 use serve\tests\TestCase;

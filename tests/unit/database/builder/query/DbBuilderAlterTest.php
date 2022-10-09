@@ -5,11 +5,11 @@
  * @license   https://github.com/Serve-Framework/Framework/blob/master/LICENSE
  */
 
-namespace serve\tests\unit\framework\database\query;
+namespace serve\tests\unit\database\builder\query;
 
 use serve\database\connection\ConnectionHandler;
-use serve\database\query\Builder;
-use serve\database\query\Query;
+use serve\database\builder\Builder;
+use serve\database\builder\query\Query;
 use serve\tests\TestCase;
 
 use function preg_replace;
@@ -18,7 +18,7 @@ use function trim;
 /**
  * @group unit
  */
-class DatabaseAlterTest extends TestCase
+class DbBuilderAlterTest extends TestCase
 {
     /**
      *

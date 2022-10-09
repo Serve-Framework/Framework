@@ -5,7 +5,7 @@
  * @license   https://github.com/Serve-Framework/Framework/blob/master/LICENSE
  */
 
-namespace serve\tests\unit\framework\utility;
+namespace serve\tests\unit\utility;
 
 use serve\tests\TestCase;
 use serve\utility\Callback;
@@ -72,13 +72,13 @@ class CallbackUtilityTest extends TestCase
 	 */
 	public function testCallbacks(): void
 	{
-		$this->assertEquals('foo', Callback::apply('\serve\tests\unit\framework\utility\CallbackTester@testMethod', 'foo'));
+		$this->assertEquals('foo', Callback::apply('\serve\tests\unit\utility\CallbackTester@testMethod', 'foo'));
 
-		$this->assertEquals('foo', Callback::apply('\serve\tests\unit\framework\utility\CallbackTester::testStaticMethod', 'foo'));
+		$this->assertEquals('foo', Callback::apply('\serve\tests\unit\utility\CallbackTester::testStaticMethod', 'foo'));
 
-		$this->assertEquals('foobar', Callback::apply('\serve\tests\unit\framework\utility\CallbackTester::testStaticMethods', ['foo', 'bar']));
+		$this->assertEquals('foobar', Callback::apply('\serve\tests\unit\utility\CallbackTester::testStaticMethods', ['foo', 'bar']));
 
-		$this->assertEquals('foobar', Callback::apply('\serve\tests\unit\framework\utility\CallbackTesters@testMethods', ['foo', 'bar']));
+		$this->assertEquals('foobar', Callback::apply('\serve\tests\unit\utility\CallbackTesters@testMethods', ['foo', 'bar']));
 
 		$this->assertEquals('foobar', Callback::apply(function ($foo, $bar)
 		{

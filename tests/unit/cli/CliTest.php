@@ -5,7 +5,7 @@
  * @license   https://github.com/Serve-Framework/Framework/blob/master/LICENSE
  */
 
-namespace serve\tests\unit\framework\cli;
+namespace serve\tests\unit\cli;
 
 use serve\cli\Cli;
 use serve\cli\Environment;

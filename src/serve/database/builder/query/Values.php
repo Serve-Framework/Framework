@@ -63,7 +63,7 @@ class Values
 		$values = rtrim($values, ', ');
 		$columns = rtrim($columns, ', ');
 
-		return   '(' . $columns . ') ' . '(' . $values . ')';
+		return   '(' . $columns . ') ' . 'VALUES(' . $values . ')';
 	}
 
 	/**

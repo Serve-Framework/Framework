@@ -5,7 +5,7 @@
  * @license   https://github.com/Serve-Framework/Framework/blob/master/LICENSE
  */
 
-namespace serve\tests\unit\framework\validator;
+namespace serve\tests\unit\validator;
 
 use serve\ioc\Container;
 use serve\tests\TestCase;

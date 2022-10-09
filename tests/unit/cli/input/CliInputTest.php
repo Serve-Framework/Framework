@@ -5,7 +5,7 @@
  * @license   https://github.com/Serve-Framework/Framework/blob/master/LICENSE
  */
 
-namespace serve\tests\unit\framework\cli\input;
+namespace serve\tests\unit\cli\input;
 
 use serve\cli\input\Input;
 use serve\tests\TestCase;

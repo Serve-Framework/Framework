@@ -7,6 +7,8 @@
 
 namespace serve\database\builder\query;
 
+use serve\utility\Str;
+
 /**
  * SQL "SELECT" statement wrapper.
  *
@@ -16,113 +18,182 @@ class Select
 	/**
 	 * Columns.
 	 *
-	 * @var array
+	 * @var string|array
 	 */
-	protected $columns = [];
+	protected $columns;
+
+	/**
+	 * Table prefix.
+	 *
+	 * @var string
+	 */
+	protected $prefix;
 
 	/**
 	 * Constructor.
 	 *
 	 * @param string|array  $columns  Column or columns to select by
 	 */
-	public function __construct(string|array $columns)
+	public function __construct(string|array $columns, string $prefix)
 	{
-		$this->columns = $columns;
+		$this->columns = $this->normalizeSatement($columns, $prefix);
+
+		$this->prefix = $prefix;
 	}
 
 	/**
 	 * Returns the SQL
 	 *
-	 * @param  string|null  $table Whether to output table name using "dot.notation" (optional) (default null)
+	 * @param  string|null  $baseTable  Whether the default table needs to use "dot.notation" (optional) (default null)
 	 * @return string
 	 */
-	public function sql(?string $table = null): string
+	public function sql(?string $baseTable = null): string
 	{
 		$sql = '';
 
-		if (is_array($this->columns))
+		if ($baseTable && !empty($this->prefix) && !str_contains($baseTable, $this->prefix))
 		{
-			$first = reset($this->columns);
+			$baseTable = $this->prefix . $baseTable;
+		}
 
-			// ['name', 'email', 'slug']
-			if (!$this->isMulti($this->columns))
+		foreach($this->columns as $table => $columns)
+		{
+			if ($table === 'default')
 			{
-				if (count($this->columns) > 1)
+				if ($baseTable)
 				{
-					// ['name', 'email', 'slug'] -> table(name, email, slug)
-					if ($table)
-					{
-						$sql = $table . '(' . implode(', ', $this->columns) . ')';
-					}
-
-					// ['name', 'email', 'slug'] -> name, email, slug
-					else
-					{
-						$sql = implode(', ', $this->columns);
-					}
+					$sql .= $baseTable . '.' . implode(', ' . $baseTable . '.', $columns) . ', ';
 				}
 				else
 				{
-					// ['name'] -> table.name
-					if ($table)
-					{
-						$sql = $table . '.' . $first;
-					}
+					$sql .= implode(', ', $columns); 
+				}
+			}
+			else
+			{
+				$sql .= $table . '.' . implode(', ' . $table . '.', $columns) . ', ';
+			}
+		}
 
-					// ['name'] -> name
+		$sql = rtrim($sql, ', ');
+
+		return 'SELECT ' . $sql;
+	}
+
+	/**
+	 * Normalizes statement into an array.
+	 * 
+	 * @param  string|array  $statement  "SELECT" statement
+	 * @param  string        $prefix     Database table prefix
+	 * @return array
+	 */
+    protected function normalizeSatement(string|array $statement, string $prefix): array
+    {
+    	$results = [];
+
+    	if (is_array($statement))
+    	{
+	    	// ['name', 'email', 'slug'] | ['table.bar']
+			if (!$this->isMulti($statement))
+			{
+				foreach($statement as $column)
+				{
+					// ['table.bar'] Not supported but check anyway
+					if (str_contains($column, '.'))
+					{
+						$table  = $prefix . trim(Str::getBeforeFirstChar($column, '.'));
+						$column = trim(Str::getAfterLastChar($column, '.'));
+						
+						if (!isset($results[$table]))
+						{
+							$results[$table] = [];
+						}
+
+						$results[$table][] = $column;
+					}
 					else
 					{
-						$sql = $first;
+						if (!isset($results['default']))
+						{
+							$results['default'] = [];
+						}
+
+						$results['default'][] = trim($column);
 					}
 				}
 			}
 			//  [ 'table1' => ['name', 'email', 'slug'] ] OR  ['table2' => 'name']
 			else
 			{
-				// $table is ignore here as if the syntax is used the correct table
-				// shoul be specified
-				foreach ($this->columns as $tname => $cols)
+				foreach($statement as $table => $columns)
 				{
-					// [ 'table1' => ['id', 'name', 'slug'] ] -> table1(name, 'id', 'slug')
-					if (is_array($cols))
-					{
-						$cols = array_values($cols);
+					$table = $prefix . $table;
 
-						if (count($cols) > 1)
-						{
-							$sql .= ', ' . $tname . '(' . implode(', ', $cols) . ')';
-						}
-						else
-						{
-							$sql .= ', ' . $tname . '.' .  $cols[0];
-						}
+					// [ 'table1' => ['id', 'name', 'slug'] ]
+					if (is_array($columns))
+					{
+						$results[$table] = array_map('trim', array_values($columns));
+						
 					}
 					// ['table2' => 'name'] -> table2.name
 					else
 					{
-						$sql .= ', ' . $tname . '.' . $cols;
+						$results[$table] = [trim($columns)];
 					}
-
-					$sql = ltrim($sql, ', ');
 				}
 			}
 		}
-		// 'email' or 'foo.email'
 		else
 		{
-			// Only apply the table name when it was not specified explicitly
-			if ($table && !str_contains($this->columns, '.'))
+			// table1_name(column1, column2), table2_name(column1)
+			if (str_contains($statement, ')'))
 			{
-				$sql = $table . '.' . $this->columns;
+				$statements = array_filter(array_map('trim', explode(')', $statement)));
+
+				foreach ($statements as $_statement)
+				{
+					$table   = $prefix . trim(ltrim(Str::getBeforeFirstChar($_statement, '('), ','));
+					$columns = array_filter(array_map('trim', explode(',', Str::getAfterFirstChar($_statement, '('))));
+					
+					$results[$table] = $columns;
+				}
 			}
+			// e.g column1, column2 | table.col1, table.col2 | column1, column2 | column
 			else
 			{
-				$sql = $this->columns;
+				$statements = array_filter(array_map('trim', explode(',', $statement)));
+
+				foreach ($statements as $_statement)
+				{
+					// table.col1
+					if (str_contains($_statement, '.'))
+					{
+						$table  = $prefix . trim(Str::getBeforeFirstChar($_statement, '.'));
+						$column = trim(Str::getAfterLastChar($_statement, '.'));
+
+						if (!isset($results[$table]))
+						{
+							$results[$table] = [];
+						}
+
+						$results[$table][] = $column;
+					}
+					else
+					{
+						if (!isset($results['default']))
+						{
+							$results['default'] = [];
+						}
+
+						$results['default'][] = $_statement;
+					}
+				}
+
 			}
 		}
-		
-		return 'SELECT ' . trim($sql);
-	}
+
+		return $results;
+    }
 
 	/**
 	 * Returns TRUE if the array is multi-dimensional and FALSE if not.

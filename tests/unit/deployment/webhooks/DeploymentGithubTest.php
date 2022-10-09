@@ -5,7 +5,7 @@
  * @license   https://github.com/Serve-Framework/Framework/blob/master/LICENSE
  */
 
-namespace serve\tests\unit\framework\deployment\Github;
+namespace serve\tests\unit\deployment\Github;
 
 use Exception;
 use serve\deployment\webhooks\Github;

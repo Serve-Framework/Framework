@@ -5,7 +5,7 @@
  * @license   https://github.com/Serve-Framework/Framework/blob/master/LICENSE
  */
 
-namespace serve\tests\unit\framework\mvc;
+namespace serve\tests\unit\mvc;
 
 use serve\mvc\view\View;
 use serve\tests\TestCase;

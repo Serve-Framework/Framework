@@ -5,7 +5,7 @@
  * @license   https://github.com/Serve-Framework/Framework/blob/master/LICENSE
  */
 
-namespace serve\tests\unit\framework\utility;
+namespace serve\tests\unit\utility;
 
 use serve\shell\Shell;
 use serve\tests\TestCase;

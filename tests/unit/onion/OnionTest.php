@@ -5,7 +5,7 @@
  * @license   https://github.com/Serve-Framework/Framework/blob/master/LICENSE
  */
 
-namespace serve\tests\unit\framework\onion;
+namespace serve\tests\unit\onion;
 
 use Closure;
 use serve\http\request\Request;
@@ -98,7 +98,7 @@ class OnionTest extends TestCase
 	{
 		ob_start();
 
-		$callback = '\serve\tests\unit\framework\onion\OnionCallbackTest@normalMethod';
+		$callback = '\serve\tests\unit\onion\OnionCallbackTest@normalMethod';
 
 		$request = $this->mock(Request::class);
 
@@ -120,7 +120,7 @@ class OnionTest extends TestCase
 	{
 		ob_start();
 
-		$callback = '\serve\tests\unit\framework\onion\OnionCallbackTest::staticFunc';
+		$callback = '\serve\tests\unit\onion\OnionCallbackTest::staticFunc';
 
 		$request = $this->mock(Request::class);
 

@@ -9,7 +9,6 @@ namespace serve\database\builder\query;
 
 use InvalidArgumentException;
 use serve\database\connection\ConnectionHandler;
-use serve\database\builder\query\Alter;
 use serve\database\builder\query\Concat;
 use serve\database\builder\query\GroupBy;
 use serve\database\builder\query\GroupConcat;
@@ -23,6 +22,7 @@ use serve\database\builder\query\Set;
 use serve\database\builder\query\Table;
 use serve\database\builder\query\Values;
 use serve\database\builder\query\Where;
+use serve\database\builder\query\Alter;
 
 /**
  * SQL Query builder manager.
@@ -167,7 +167,7 @@ class Query
 	{
 		$this->operation = 'SELECT';
 
-		$this->select = new Select($columns);
+		$this->select = new Select($columns, $this->connectionHandler->tablePrefix());
 	}
 
 	/**
@@ -438,7 +438,7 @@ class Query
     	$table = new Table($name, $schema);
 
         // Execute the query
-        $this->connectionHandler->query($this->connectionHandler->cleanQuery($table->create()));
+        $this->connectionHandler->query($this->connectionHandler->cleanQuery($table->create($this->connectionHandler->connection()->type())));
 
         // Reset internal operation and table
         $this->operationTable = $name;
@@ -476,27 +476,12 @@ class Query
         $table = new Table($name);
 
         // Execute the query
-        $this->connectionHandler->query($this->connectionHandler->cleanQuery($table->truncate()));
+        $this->connectionHandler->query($this->connectionHandler->cleanQuery($table->truncate($this->connectionHandler->connection()->type())));
 
         // Reset internal operation and table
         $this->operationTable = $table;
 
         $this->operation = null;
-    }
-
-   	/**
-     * Initialize an "ALTER TABLE" statement.
-     *
-     * @param  string $table Table name to use
-     * @return \serve\database\builder\query\Alter
-     */
-    public function alterTable(string $table): Alter
-    {
-        $this->operationTable = null;
-
-        $this->operation = null;
-
-        return new Alter($this->connectionHandler, $this->tableNamePrefix($table));
     }
 
 	/**
@@ -554,15 +539,32 @@ class Query
 
 		$this->operation = 'DELETE';
     }
+
+    /**
+     * Set the query to "DELETE FROM" a given table.
+     *
+     * @param  string $table The table name to use
+     * @return \serve\database\builder\query\Alter;
+     */
+    public function alterTable(string $table): Alter
+    {
+    	$table = $this->tableNamePrefix($table);
+
+        $this->operationTable = null;
+
+		$this->operation = null;
+
+		return new Alter($this->connectionHandler, $table);
+    }
 		
 	/**
      * Execute a query and limit to single row
      * and/or find a single row by id.
      *
      * @param  int|null $id Row id to find (optional) (default null)
-     * @return array
+     * @return array|null
      */
-    public function find(?int $id = null): array
+    public function find(?int $id = null): array|null
     { 
 		// If id filter by id
 		if ($id)
@@ -586,9 +588,9 @@ class Query
    	/**
      * Execute current query and return results
      *
-     * @return mixed
+     * @return array|null|bool
      */
-    public function exec(): mixed
+    public function exec(): array|null|bool
     {    	
        	// Validate a table was loaded
 		if (!$this->operationTable)
@@ -626,10 +628,10 @@ class Query
    	/**
      * Execute current query and return results
      *
-     * @return mixed
+     * @return array|null|bool|int
      */
-	private function execSQL(string $sql): mixed
-	{
+	private function execSQL(string $sql): array|null|bool|int
+	{		
 		// Save the SQL query
 		$this->queryStr = $sql;
 
@@ -648,6 +650,18 @@ class Query
 			return null;
 		}
 
+		// If operation was insert return bool
+		if ($this->operation === 'INSERT')
+		{
+			return $results > 0;
+		}
+
+		// If operation was update return row count
+		if ($this->operation === 'UPDATE')
+		{
+			return $results;
+		}
+
 		return $results;
 	}
 
@@ -661,13 +675,13 @@ class Query
 		// Start with "SELECT"
 		$sql = [$this->select->sql(!empty($this->joins) ? $this->operationTable : null)];
 
-		$sql[] = 'FROM ' . $this->operationTable;
-
 		// Add "GROUP_CONCAT"
 		if (!empty($this->groupConcat))
 		{
 			$sql[] = ', ' . $this->groupConcat->sql();
 		}
+
+		$sql[] = 'FROM ' . $this->operationTable;
 
 		// Add "CONCAT"
 		if (!empty($this->concat))
@@ -701,7 +715,7 @@ class Query
 			$sql[] = $this->limit->sql();
 		}
 
-		// Add limit
+		// Add group
 		if (!empty($this->groupBy))
 		{
 			$sql[] = $this->groupBy->sql();
@@ -854,7 +868,6 @@ class Query
 							$wheresSql[$x] = '(' . $wheresSql[$x];
 						}
 						
-
 						break;
 					}
 				}

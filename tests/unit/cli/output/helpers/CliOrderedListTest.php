@@ -5,7 +5,7 @@
  * @license   https://github.com/Serve-Framework/Framework/blob/master/LICENSE
  */
 
-namespace serve\tests\unit\framework\cli\output\helpers;
+namespace serve\tests\unit\cli\output\helpers;
 
 use serve\cli\output\Formatter;
 use serve\cli\output\helpers\OrderedList;

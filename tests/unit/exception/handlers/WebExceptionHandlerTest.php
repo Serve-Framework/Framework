@@ -5,7 +5,7 @@
  * @license   https://github.com/Serve-Framework/Framework/blob/master/LICENSE
  */
 
-namespace serve\tests\unit\framework\exception\handlers;
+namespace serve\tests\unit\exception\handlers;
 
 use ErrorException;
 use serve\exception\handlers\WebHandler;

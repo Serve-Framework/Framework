@@ -5,7 +5,7 @@
  * @license   https://github.com/Serve-Framework/Framework/blob/master/LICENSE
  */
 
-namespace serve\tests\unit\framework\config;
+namespace serve\tests\unit\config;
 
 use RuntimeException;
 use serve\config\Loader;

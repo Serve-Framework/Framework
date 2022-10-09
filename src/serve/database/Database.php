@@ -9,7 +9,7 @@ namespace serve\database;
 
 use RuntimeException;
 use serve\database\connection\Connection;
-use serve\database\query\Builder;
+use serve\database\builder\Builder;
 
 use function vsprintf;
 
@@ -25,21 +25,21 @@ class Database
 	 *
 	 * @var string
 	 */
-	private $default;
+	protected $default;
 
 	/**
 	 * Array of configurations settings.
 	 *
 	 * @var array
 	 */
-	private $configurations;
+	protected $configurations;
 
 	/**
 	 * Array of database connections.
 	 *
 	 * @var array
 	 */
-	private $connections = [];
+	protected $connections = [];
 
 	/**
 	 * Constructor.
@@ -70,6 +70,11 @@ class Database
 		}
 
 		$config = $this->configurations[$connectionName];
+
+		if ($config['type'] === 'sqlite')
+		{
+			return $this->connect($connectionName);
+		}
 
 		$databaseName = $config['name'];
 
@@ -107,7 +112,7 @@ class Database
 	 * @throws RuntimeException
 	 * @return \serve\database\connection\Connection
 	 */
-	private function connect(string $connectionName): Connection
+	protected function connect(string $connectionName): Connection
 	{
 		if(!isset($this->configurations[$connectionName]))
 		{
@@ -119,7 +124,7 @@ class Database
 			return $this->connections[$connectionName];
 		}
 
-		$this->connections[$connectionName] = new Connection($this->configurations[$connectionName]);
+		$this->connections[$connectionName] = new Connection($this->configurations[$connectionName], isset($this->configurations[$connectionName]['type']) ? $this->configurations[$connectionName]['type'] : null);
 
 		return $this->connections[$connectionName];
 	}
@@ -130,8 +135,10 @@ class Database
 	 * @param  string                        $connectionName Name of the connection
 	 * @return \serve\database\query\Builder
 	 */
-	public function builder(string $connectionName): Builder
+	public function builder(?string $connectionName = null): Builder
 	{
+		$connectionName = !$connectionName ? $this->default : $connectionName;
+
 		return $this->connect($connectionName)->builder();
 	}
 

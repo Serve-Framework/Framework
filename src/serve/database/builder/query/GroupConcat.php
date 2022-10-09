@@ -7,6 +7,11 @@
 
 namespace serve\database\builder\query;
 
+use function preg_replace;
+use function trim;
+use function str_replace;
+use function implode;
+
 /**
  * SQL "GROUP_CONCAT" statement wrapper.
  *
@@ -35,39 +40,19 @@ class GroupConcat
 	protected $distinct;
 
 	/**
-	 * "SEPARATOR"
-	 *
-	 * @var string|null
-	 */
-	protected $separator;
-
-	/**
-	 * "ORDER BY"
-	 *
-	 * @var string|array|null
-	 */
-	protected $orderby;
-
-	/**
 	 * Constructor.
 	 *
 	 * @param string             $column     Concat column
 	 * @param string|null        $as         As value
 	 * @param bool|null          $distinct   "DISTINCT" (optional) (default null)
-	 * @param string|null        $separator  "SEPARATOR" (optional) (default null)
-	 * @param string|array|null  $orderby    "ORDER BY" (optional) (default null)
 	 */
-	public function __construct(string $column, ?string $as = null, ?bool $distinct = null, ?string $separator = null, string|array|null $orderby = null)
+	public function __construct(string $column, ?string $as = null, ?bool $distinct = null)
 	{
 		$this->column = $column;
 
 		$this->as = $as;
 
 		$this->distinct = $distinct;
-
-		$this->separator = $separator;
-
-		$this->orderby = $orderby;
 	}
 
 	/**
@@ -81,33 +66,18 @@ class GroupConcat
 
 		if ($this->distinct)
 		{
-			$sql[] = 'DISTINCT';
+			$sql[] = 'DISTINCT ' . $this->column . ')';
 		}
-
-		if ($this->orderby)
+		else
 		{
-			if (is_array($this->orderby))
-			{
-				$sql[] = 'ORDER BY ' . implode(', ', $this->orderby);
-			}
-			else
-			{
-				$sql[] = 'ORDER BY ' . $this->orderby;
-			}			
+			$sql[] = $this->column .')';
 		}
-
-		if ($this->separator)
-		{
-			$sql[] = 'SEPARATOR\'' . $this->separator . '\'';
-		}
-
-		$sql[] = $this->column .' ) ';
 
 		if ($this->as)
 		{
 			$sql[] = 'AS "' . $this->as . '"';
 		}
 
-		return implode(' ', $sql);
+		return preg_replace('/\s+/', ' ', trim(str_replace(' )', ')', str_replace('( ', '(', implode(' ', $sql)))));
 	}
 }

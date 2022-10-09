@@ -5,7 +5,7 @@
  * @license   https://github.com/Serve-Framework/Framework/blob/master/LICENSE
  */
 
-namespace serve\tests\unit\framework\security\password;
+namespace serve\tests\unit\security\password;
 
 use serve\security\password\hashers\NativePHP;
 use serve\tests\TestCase;

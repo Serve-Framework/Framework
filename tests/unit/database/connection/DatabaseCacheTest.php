@@ -5,7 +5,7 @@
  * @license   https://github.com/Serve-Framework/Framework/blob/master/LICENSE
  */
 
-namespace serve\tests\unit\framework\database\connection;
+namespace serve\tests\unit\database\connection;
 
 use serve\database\connection\Cache;
 use serve\tests\TestCase;

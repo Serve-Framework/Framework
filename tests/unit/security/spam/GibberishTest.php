@@ -5,7 +5,7 @@
  * @license   https://github.com/Serve-Framework/Framework/blob/master/LICENSE
  */
 
-namespace serve\tests\unit\framework\security\spam;
+namespace serve\tests\unit\security\spam;
 
 use serve\security\spam\gibberish\Gibberish;
 use serve\tests\TestCase;

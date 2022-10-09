@@ -5,7 +5,7 @@
  * @license   https://github.com/Serve-Framework/Framework/blob/master/LICENSE
  */
 
-namespace serve\tests\unit\framework\mvc;
+namespace serve\tests\unit\mvc;
 
 use serve\http\request\Request;
 use serve\http\response\Response;
@@ -44,7 +44,7 @@ class ControllerTest extends TestCase
 
         };
 
-        $controller = new TestController($request, $response, $next, 'serve\tests\unit\framework\mvc\TestControllerModel');
+        $controller = new TestController($request, $response, $next, 'serve\tests\unit\mvc\TestControllerModel');
 
         $this->assertEquals('foobar', $controller->foobar());
     }

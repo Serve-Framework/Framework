@@ -5,7 +5,7 @@
  * @license   https://github.com/Serve-Framework/Framework/blob/master/LICENSE
  */
 
-namespace serve\tests\unit\framework\http\session;
+namespace serve\tests\unit\http\session;
 
 use serve\http\session\Token;
 use serve\tests\TestCase;

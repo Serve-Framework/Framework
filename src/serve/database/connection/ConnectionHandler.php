@@ -25,7 +25,6 @@ use function preg_replace;
 use function str_replace;
 use function strtolower;
 use function trim;
-use function utf8_encode;
 
 /**
  * Database connection handler.
@@ -39,35 +38,35 @@ class ConnectionHandler
 	 *
 	 * @var array
 	 */
-	private $log = [];
+	protected $log = [];
 
 	/**
-	 * Parameters for currently executing query statement.
+	 * Bindings for currently executing query statement.
 	 *
 	 * @var array
 	 */
-	private $parameters = [];
+	protected $bindings = [];
 
 	/**
 	 * PDO statement object returned from \PDO::prepare().
 	 *
 	 * @var PDO|PDOStatement
 	 */
-	private $pdoStatement;
+	protected $pdoStatement;
 
 	/**
 	 *  Database query cache.
 	 *
 	 * @var \serve\database\connection\Cache
 	 */
-	private $cache;
+	protected $cache;
 
 	/**
 	 *  Database connection.
 	 *
 	 * @var \serve\database\connection\Connection
 	 */
-	private $connection;
+	protected $connection;
 
 	/**
 	 * Constructor.
@@ -95,9 +94,9 @@ class ConnectionHandler
 	/**
 	 *  Returns the last inserted id.
 	 *
-	 * @return mixed
+	 * @return int|string|false
 	 */
-	public function lastInsertId()
+	public function lastInsertId(): int|string|false
 	{
 		return $this->connection->pdo()->lastInsertId();
 	}
@@ -110,6 +109,16 @@ class ConnectionHandler
 	public function tablePrefix(): string
 	{
 		return $this->connection->tablePrefix();
+	}
+
+	/**
+	 * Returns the cache.
+	 *
+	 * @return \serve\database\connection\Connection
+	 */
+	public function connection(): Connection
+	{
+		return $this->connection;
 	}
 
 	/**
@@ -141,23 +150,23 @@ class ConnectionHandler
 	 */
 	public function bind(string $column, $value): void
 	{
-		$this->parameters[] = [$column, $this->sanitizeValue($value)];
+		$this->bindings[] = [$column, $this->sanitizeValue($value)];
 	}
 
 	/**
-	 * Add more parameters to the parameter array.
+	 * Bind multiple parameters.
 	 *
-	 * @param array $parray Array of column => value
+	 * @param array $bindings Array of column => value
 	 */
-	public function bindMore(array $parray = []): void
+	public function bindMultiple(array $bindings = []): void
 	{
-		if (empty($this->parameters) && is_array($parray) && !empty($parray))
+		if (empty($this->bindings) && is_array($bindings) && !empty($bindings))
 		{
-			$columns = array_keys($parray);
+			$columns = array_keys($bindings);
 
 			foreach($columns as $i => &$column)
 			{
-				$this->bind($column, $parray[$column]);
+				$this->bind($column, $bindings[$column]);
 			}
 		}
 	}
@@ -169,22 +178,22 @@ class ConnectionHandler
 	 * it returns the number of affected rows.
 	 *
 	 * @param  string      $query     The query to execute
-	 * @param  array|null  $params    Assoc array of parameters to bind (optional) (default [])
+	 * @param  array|null  $bindings  Assoc array of parameters to bind (optional) (default [])
 	 * @param  int         $fetchmode PHP PDO::ATTR_DEFAULT_FETCH_MODE constant or integer
 	 * @return mixed
 	 */
-	public function query(string $query, ?array $params = null, int $fetchmode = PDO::FETCH_ASSOC)
+	public function query(string $query, ?array $bindings = null, int $fetchmode = PDO::FETCH_ASSOC)
 	{
 		$start = microtime(true);
 
 		$fromCache = false;
 
-		$params = !$params ? [] : $params;
+		$bindings = !$bindings ? [] : $bindings;
 
 		// Query is either SELECT or SHOW
 		if ($this->queryIsCachable($query))
 		{
-			$cacheParams = array_merge($this->parameters, $params);
+			$cacheParams = array_merge($this->bindings, $bindings);
 
 			// Load from cache
 			if ($this->cache->has($query, $cacheParams))
@@ -196,7 +205,7 @@ class ConnectionHandler
 			// Execute query and cache the result
 			else
 			{
-				$this->parseQuery($query, $params);
+				$this->parseQuery($query, $bindings);
 
 				$result = $this->pdoStatement->fetchAll($fetchmode);
 
@@ -206,11 +215,11 @@ class ConnectionHandler
 		// Other queries e.g UPDATE, DELETE FROM, CREATE TABLE etc..
 		else
 		{
-			$this->parseQuery($query, $params);
+			$this->parseQuery($query, $bindings);
 
 			$queryType = $this->getQueryType($query);
 
-			$result = $queryType === 'select' || $queryType === 'show' ? $this->pdoStatement->fetchAll($fetchmode) : $this->pdoStatement->rowCount();
+			$result = $queryType === 'select' || $queryType === 'show' || $queryType === 'pragma' ? $this->pdoStatement->fetchAll($fetchmode) : $this->pdoStatement->rowCount();
 
 			if ($queryType === 'delete' || $queryType === 'update')
 			{
@@ -219,10 +228,10 @@ class ConnectionHandler
 		}
 
 		// Log query
-		$this->log($query, array_merge($this->parameters, $params), $start, $fromCache);
+		$this->log($query, array_merge($this->bindings, $bindings), $start, $fromCache);
 
 		// Reset parameters incase "parseQuery" was not called
-		$this->parameters = [];
+		$this->bindings = [];
 
 		return $result;
 	}
@@ -231,20 +240,20 @@ class ConnectionHandler
 	 * All SQL queries pass through this method.
 	 *
 	 * @param string $query  SQL query statement
-	 * @param array  $params Array of parameters to bind (optional) (default [])
+	 * @param array  $bindings Array of parameters to bind (optional) (default [])
 	 */
-	private function parseQuery(string $query, array $params = []): void
+	protected function parseQuery(string $query, array $bindings = []): void
 	{
 		// Prepare query
 		$this->pdoStatement = $this->connection->pdo()->prepare($query);
 
 		// Add parameters to the parameter array
-		$this->bindMore($params);
+		$this->bindMultiple($bindings);
 
 		// Bind parameters
-		if (!empty($this->parameters))
+		if (!empty($this->bindings))
 		{
-			foreach($this->parameters as $_params)
+			foreach($this->bindings as $_params)
 			{
 				$this->pdoStatement->bindParam(':' . $_params[0], $_params[1]);
 			}
@@ -254,7 +263,7 @@ class ConnectionHandler
 		$this->pdoStatement->execute();
 
 		// Reset the parameters
-		$this->parameters = [];
+		$this->bindings = [];
 	}
 
 	/**
@@ -263,7 +272,7 @@ class ConnectionHandler
 	 * @param  string $query The type of query being executed e.g 'select'|'delete'|'update'
 	 * @return bool
 	 */
-	private function queryIsCachable(string $query): bool
+	protected function queryIsCachable(string $query): bool
 	{
 		$queryType = $this->getQueryType($query);
 
@@ -276,7 +285,7 @@ class ConnectionHandler
 	 * @param  string $query SQL query
 	 * @return string
 	 */
-	private function getQueryType(string $query): string
+	protected function getQueryType(string $query): string
 	{
 		return strtolower(explode(' ', trim($query))[0]);
 	}
@@ -287,7 +296,7 @@ class ConnectionHandler
 	 * @param  mixed $value A query value to sanitize
 	 * @return mixed
 	 */
-	private function sanitizeValue($value)
+	protected function sanitizeValue($value)
 	{
 		if (is_int($value))
 		{
@@ -303,7 +312,7 @@ class ConnectionHandler
 		}
 		elseif (is_string($value))
 		{
-			return utf8_encode($value);
+			return $value;
 		}
 
 		return $value;
@@ -313,15 +322,15 @@ class ConnectionHandler
 	 * Adds a query to the query log.
 	 *
 	 * @param string $query     SQL query
-	 * @param array  $params    Query parameters
+	 * @param array  $bindings  Query parameters
 	 * @param float  $start     Start time in microseconds
 	 * @param bool   $fromCache Was the query loaded from the cache?
 	 */
-	private function log(string $query, array $params, float $start, bool $fromCache = false): void
+	protected function log(string $query, array $bindings, float $start, bool $fromCache = false): void
 	{
 		$time = microtime(true) - $start;
 
-		$query = $this->prepareQueryForLog($query, $params);
+		$query = $this->prepareQueryForLog($query, $bindings);
 
 		$this->log[] = ['query' => $query, 'time' => $time, 'from_cache' => $fromCache];
 	}
@@ -329,13 +338,13 @@ class ConnectionHandler
 	/**
 	 * Prepares query for logging.
 	 *
-	 * @param  string $query  SQL query
-	 * @param  array  $params Query paramaters
+	 * @param  string $query    SQL query
+	 * @param  array  $bindings Query paramaters
 	 * @return string
 	 */
-	private function prepareQueryForLog(string $query, array $params): string
+	protected function prepareQueryForLog(string $query, array $bindings): string
 	{
-		foreach (array_reverse($params) as $k => $v)
+		foreach (array_reverse($bindings) as $k => $v)
 		{
 			$parentesis = '';
 
@@ -345,7 +354,7 @@ class ConnectionHandler
 			}
 			elseif (is_string($v))
 			{
-				$parentesis = '\'';
+				$parentesis = '"';
 			}
 			elseif (is_bool($v))
 			{
@@ -359,6 +368,6 @@ class ConnectionHandler
 			$query = str_replace(":$k", $parentesis . $v . $parentesis, $query);
 		}
 
-		return $query;
+		return str_replace('`', '"', $query);
 	}
 }

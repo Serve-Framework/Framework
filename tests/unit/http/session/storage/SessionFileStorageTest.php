@@ -5,7 +5,7 @@
  * @license   https://github.com/Serve-Framework/Framework/blob/master/LICENSE
  */
 
-namespace serve\tests\unit\framework\http\session\storage;
+namespace serve\tests\unit\http\session\storage;
 
 use serve\file\Filesystem;
 use serve\http\session\storage\FileSessionStorage;

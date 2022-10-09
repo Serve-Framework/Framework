@@ -5,7 +5,7 @@
  * @license   https://github.com/Serve-Framework/Framework/blob/master/LICENSE
  */
 
-namespace serve\tests\unit\framework\common;
+namespace serve\tests\unit\common;
 
 use serve\common\MagicObjectArray;
 use serve\tests\TestCase;

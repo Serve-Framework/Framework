@@ -5,7 +5,7 @@
  * @license   https://github.com/Serve-Framework/Framework/blob/master/LICENSE
  */
 
-namespace serve\tests\unit\framework\http\request;
+namespace serve\tests\unit\http\request;
 
 use serve\http\request\Environment;
 use serve\tests\TestCase;

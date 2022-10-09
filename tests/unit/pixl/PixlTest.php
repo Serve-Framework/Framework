@@ -5,7 +5,7 @@
  * @license   https://github.com/Serve-Framework/Framework/blob/master/LICENSE
  */
 
-namespace serve\tests\unit\framework\pixl;
+namespace serve\tests\unit\pixl;
 
 use RuntimeException;
 use serve\pixl\Image;
