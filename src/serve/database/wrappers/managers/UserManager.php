@@ -14,7 +14,6 @@ use serve\utility\UUID;
 
 use function filter_var;
 use function is_int;
-use function utf8_encode;
 
 /**
  * User manager.
@@ -94,11 +93,11 @@ class UserManager extends Manager
         // Hash/generate password
         if (empty($password))
         {
-            $password = utf8_encode($this->crypto->password()->hash(Str::random(10)));
+            $password = $this->crypto->password()->hash(Str::random(10));
         }
         else
         {
-            $password = utf8_encode($this->crypto->password()->hash($password));
+            $password = $this->crypto->password()->hash($password);
         }
 
         // Generate other required fields

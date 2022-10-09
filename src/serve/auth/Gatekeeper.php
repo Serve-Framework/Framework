@@ -16,8 +16,6 @@ use serve\utility\UUID;
 
 use function filter_var;
 use function is_null;
-use function utf8_decode;
-use function utf8_encode;
 
 /**
  * Gatekeeper.
@@ -324,7 +322,7 @@ class Gatekeeper
         }
 
         // Compare the hashed password to the provided password
-        if ($this->crypto->password()->verify($password, utf8_decode($user['hashed_pass'])))
+        if ($this->crypto->password()->verify($password, $user['hashed_pass']))
         {
             // Log the client in
             $this->logClientIn($user);
@@ -397,7 +395,7 @@ class Gatekeeper
         }
 
         $user->password_key = '';
-        $user->hashed_pass = utf8_encode($this->crypto->password()->hash($password));
+        $user->hashed_pass = $this->crypto->password()->hash($password);
         $user->save();
 
         return true;
