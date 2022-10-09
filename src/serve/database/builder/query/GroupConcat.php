@@ -7,14 +7,13 @@
 
 namespace serve\database\builder\query;
 
-use function preg_replace;
-use function trim;
-use function str_replace;
 use function implode;
+use function preg_replace;
+use function str_replace;
+use function trim;
 
 /**
  * SQL "GROUP_CONCAT" statement wrapper.
- *
  */
 class GroupConcat
 {
@@ -26,14 +25,14 @@ class GroupConcat
 	protected $column;
 
 	/**
-	 * "as"
+	 * "as".
 	 *
 	 * @var string|null
 	 */
 	protected $as;
 
 	/**
-	 * "DISTINCT"
+	 * "DISTINCT".
 	 *
 	 * @var bool|null
 	 */
@@ -42,9 +41,9 @@ class GroupConcat
 	/**
 	 * Constructor.
 	 *
-	 * @param string             $column     Concat column
-	 * @param string|null        $as         As value
-	 * @param bool|null          $distinct   "DISTINCT" (optional) (default null)
+	 * @param string      $column   Concat column
+	 * @param string|null $as       As value
+	 * @param bool|null   $distinct "DISTINCT" (optional) (default null)
 	 */
 	public function __construct(string $column, ?string $as = null, ?bool $distinct = null)
 	{
@@ -57,7 +56,7 @@ class GroupConcat
 
 	/**
 	 * Returns the SQL statement.
-	 * 
+	 *
 	 * @return string
 	 */
 	public function sql(): string
@@ -70,7 +69,7 @@ class GroupConcat
 		}
 		else
 		{
-			$sql[] = $this->column .')';
+			$sql[] = $this->column . ')';
 		}
 
 		if ($this->as)

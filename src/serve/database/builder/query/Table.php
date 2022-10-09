@@ -7,13 +7,19 @@
 
 namespace serve\database\builder\query;
 
+use function end;
+use function implode;
+use function key;
+use function rtrim;
+use function str_replace;
+use function strtolower;
+
 /**
- * SQL statement wrapper for "DROP TABLE", "TRUNCATE TABLE", "CREATE TABLE"
- *
+ * SQL statement wrapper for "DROP TABLE", "TRUNCATE TABLE", "CREATE TABLE".
  */
 class Table
 {
-    /**
+	/**
 	 * Table name.
 	 *
 	 * @var string
@@ -41,7 +47,7 @@ class Table
 	}
 
 	/**
-	 * Return SQL for "CREATE TABLE"
+	 * Return SQL for "CREATE TABLE".
 	 *
 	 * @param  string $connectionType Connection database type
 	 * @return string
@@ -58,14 +64,14 @@ class Table
 		}
 
 		// Build the SQL
-        $sql = [ 'CREATE TABLE ' . $this->name . ' ('];
-        
+        $sql = ['CREATE TABLE ' . $this->name . ' ('];
+
         // Loop the columns
         foreach ($this->schema as $name => $schema)
         {
             $name  = strtolower(str_replace(' ', '_', $name));
 
-            $sql[] = '`' . $name  . '` ' . str_replace('|', '', $schema) . ',';
+            $sql[] = '`' . $name . '` ' . str_replace('|', '', $schema) . ',';
         }
 
         $lastVal = end($sql);
@@ -83,12 +89,11 @@ class Table
         	$sql[] = "PRIMARY KEY (id)\n) ENGINE=InnoDB AUTO_INCREMENT=0 DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;";
         }
 
-
         return implode(' ', $sql);
 	}
 
 	/**
-	 * Return SQL for "TRUNCATE TABLE"
+	 * Return SQL for "TRUNCATE TABLE".
 	 *
 	 * @param  string $connectionType Connection database type
 	 * @return string
@@ -104,7 +109,7 @@ class Table
 	}
 
 	/**
-	 * Return SQL for "DROP TABLE"
+	 * Return SQL for "DROP TABLE".
 	 *
 	 * @return string
 	 */

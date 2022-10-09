@@ -14,6 +14,7 @@ use function escapeshellcmd;
 use function explode;
 use function file_exists;
 use function getenv;
+use function htmlspecialchars;
 use function in_array;
 use function ini_set;
 use function is_array;
@@ -21,7 +22,6 @@ use function is_numeric;
 use function putenv;
 use function rtrim;
 use function strlen;
-use function htmlspecialchars;
 
 /**
  * Shell interface utility class.
@@ -431,7 +431,7 @@ class Shell
      * @return string
      */
     private function resolveBins(string $cmd): string
-    {        
+    {
         // If this is a built in command we can skip
         if (in_array($cmd, $this->built_ins))
         {

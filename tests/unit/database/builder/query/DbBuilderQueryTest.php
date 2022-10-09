@@ -9,13 +9,15 @@ namespace serve\tests\unit\database\builder\query;
 
 use serve\database\builder\query\Where;
 use serve\tests\TestCase;
+use function array_flip;
+use function array_values;
 
 /**
  * @group unit
  */
 class DbBuilderQueryTest extends TestCase
 {
-	/**
+    /**
      *
      */
     public function testBasic(): void
@@ -28,7 +30,7 @@ class DbBuilderQueryTest extends TestCase
 
     	$flipped = array_values(array_flip($bindings));
 
-    	$this->assertEquals('foo = :' .$flipped[0], $where->sql());
+    	$this->assertEquals('foo = :' . $flipped[0], $where->sql());
     }
 
     /**
@@ -44,7 +46,7 @@ class DbBuilderQueryTest extends TestCase
 
     	$flipped = array_values(array_flip($bindings));
 
-    	$this->assertEquals('(foo = :' .$flipped[0] . ' OR ' . 'foo = :' .$flipped[1] . ')', $where->sql());
+    	$this->assertEquals('(foo = :' . $flipped[0] . ' OR ' . 'foo = :' . $flipped[1] . ')', $where->sql());
     }
 
     /**
@@ -60,6 +62,6 @@ class DbBuilderQueryTest extends TestCase
 
     	$flipped = array_values(array_flip($bindings));
 
-    	$this->assertEquals('table.foo = :' .$flipped[0], $where->sql('table'));
+    	$this->assertEquals('table.foo = :' . $flipped[0], $where->sql('table'));
     }
 }

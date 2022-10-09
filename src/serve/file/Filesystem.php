@@ -12,7 +12,10 @@ use serve\utility\Mime;
 use SplFileObject;
 
 use function array_diff;
+use function array_merge;
 use function array_values;
+use function basename;
+use function dirname;
 use function extract;
 use function file_exists;
 use function file_get_contents;

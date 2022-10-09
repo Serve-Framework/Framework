@@ -7,13 +7,15 @@
 
 namespace serve\database\builder\query;
 
+use function in_array;
+use function trim;
+
 /**
  * SQL "ORDER BY" statement wrapper.
- *
  */
 class OrderBy
 {
-    /**
+	/**
 	 * Offset if it exists.
 	 *
 	 * @var string
@@ -21,7 +23,7 @@ class OrderBy
 	protected $columns;
 
 	/**
-	 * Direction
+	 * Direction.
 	 *
 	 * @var string
 	 */
@@ -30,7 +32,7 @@ class OrderBy
 	/**
 	 * Constructor.
 	 *
-	 * @param string $columns    The column names to sort in order of
+	 * @param string $columns   The column names to sort in order of
 	 * @param string $direction 'DESC'|'ASC' (optional) (default 'DESC')
 	 */
 	public function __construct(string $columns, string $direction = 'DESC')
@@ -39,7 +41,7 @@ class OrderBy
 		{
 			throw new InvalidArgumentException('Invalid sort direction [' . $direction . ']. Direction must be one of [ASC, DESC]');
 		}
-		
+
 		$this->direction = $direction;
 
 		$this->columns = $columns;
@@ -47,7 +49,7 @@ class OrderBy
 
 	/**
 	 * Returns the SQL statement.
-	 * 
+	 *
 	 * @return string
 	 */
 	public function sql(): string

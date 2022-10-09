@@ -7,9 +7,9 @@
 
 namespace serve\tests\unit\database\builder\query;
 
-use serve\database\connection\ConnectionHandler;
 use serve\database\builder\Builder;
 use serve\database\builder\query\Query;
+use serve\database\connection\ConnectionHandler;
 use serve\tests\TestCase;
 
 use function preg_replace;

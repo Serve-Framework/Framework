@@ -8,8 +8,8 @@
 namespace serve\database;
 
 use RuntimeException;
-use serve\database\connection\Connection;
 use serve\database\builder\Builder;
+use serve\database\connection\Connection;
 
 use function vsprintf;
 

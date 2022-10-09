@@ -9,11 +9,10 @@ namespace serve\database\builder\query;
 
 /**
  * SQL "LIMIT" statement wrapper.
- *
  */
 class Limit
 {
-    /**
+	/**
 	 * Offset if it exists.
 	 *
 	 * @var int|null
@@ -49,7 +48,7 @@ class Limit
 
 	/**
 	 * Returns the SQL statement.
-	 * 
+	 *
 	 * @return string
 	 */
 	public function sql(): string
@@ -64,7 +63,7 @@ class Limit
 
 	/**
 	 * Returns the SQL statement.
-	 * 
+	 *
 	 * @return int
 	 */
 	public function getValue(): int

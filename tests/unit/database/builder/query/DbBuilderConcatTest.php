@@ -15,7 +15,7 @@ use serve\tests\TestCase;
  */
 class DbBuilderConcatTest extends TestCase
 {
-	 /**
+    /**
      *
      */
     public function testSql(): void

@@ -7,9 +7,18 @@
 
 namespace serve\database\builder\query;
 
+use function ceil;
+use function is_array;
+use function preg_replace;
+use function rtrim;
+use function serialize;
+use function str_repeat;
+use function str_shuffle;
+use function strlen;
+use function substr;
+
 /**
- * SQL "SET" statement wrapper 
- *
+ * SQL "SET" statement wrapper.
  */
 class Set
 {
@@ -41,7 +50,7 @@ class Set
 			}
 		}
 	}
-	
+
 	/**
 	 * Returns SQL.
 	 *
@@ -50,7 +59,7 @@ class Set
 	public function sql(): string
 	{
 		$values  = '';
-		
+
 		foreach($this->bindings as $binding)
 		{
 			$values .=  $binding[0] . ' = :' . $binding[1] . ', ';
@@ -60,26 +69,25 @@ class Set
 	}
 
 	/**
-	 * Returns array of bindings
-	 * 
+	 * Returns array of bindings.
+	 *
 	 * @return array
 	 */
 	public function bindings(): array
-	{		
+	{
 		$bindings = [];
 
 		foreach($this->bindings as $binding)
 		{
 			$bindings[$binding[1]] = $binding[2];
 		}
-		
+
 		return $bindings;
 	}
 
-
 	/**
 	 * Generates a random unique key for the binding.
-	 * 
+	 *
 	 * @param  string $str Key to provide for binding
 	 * @return string
 	 */
@@ -87,11 +95,11 @@ class Set
 	{
 		$chars = 'abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ1234567890';
 
-		$key = str_shuffle(preg_replace('/[^A-Za-z_-]/', '', $str)) . substr(str_shuffle(str_repeat($chars, ceil(10/strlen($chars)) )),1,10);
+		$key = str_shuffle(preg_replace('/[^A-Za-z_-]/', '', $str)) . substr(str_shuffle(str_repeat($chars, ceil(10/strlen($chars)))), 1, 10);
 
 		while(isset($this->bindings[$key]))
 		{
-			$key = $key . substr(str_shuffle(str_repeat($chars, ceil(10/strlen($chars)) )),1,10);
+			$key = $key . substr(str_shuffle(str_repeat($chars, ceil(10/strlen($chars)))), 1, 10);
 		}
 
 		return $key;

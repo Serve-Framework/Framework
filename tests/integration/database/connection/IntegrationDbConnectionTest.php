@@ -7,10 +7,10 @@
 
 namespace serve\tests\integration\connection;
 
-use serve\tests\integration\DatabaseTestCase;
+use PDO;
 use serve\database\builder\Builder;
 use serve\database\connection\ConnectionHandler;
-use PDO;
+use serve\tests\integration\DatabaseTestCase;
 
 /**
  * @group integration

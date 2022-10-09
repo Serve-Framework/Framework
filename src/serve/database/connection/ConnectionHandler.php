@@ -94,7 +94,7 @@ class ConnectionHandler
 	/**
 	 *  Returns the last inserted id.
 	 *
-	 * @return int|string|false
+	 * @return false|int|string
 	 */
 	public function lastInsertId(): int|string|false
 	{
@@ -177,9 +177,9 @@ class ConnectionHandler
 	 * If the SQL statement is a DELETE, INSERT, or UPDATE statement
 	 * it returns the number of affected rows.
 	 *
-	 * @param  string      $query     The query to execute
-	 * @param  array|null  $bindings  Assoc array of parameters to bind (optional) (default [])
-	 * @param  int         $fetchmode PHP PDO::ATTR_DEFAULT_FETCH_MODE constant or integer
+	 * @param  string     $query     The query to execute
+	 * @param  array|null $bindings  Assoc array of parameters to bind (optional) (default [])
+	 * @param  int        $fetchmode PHP PDO::ATTR_DEFAULT_FETCH_MODE constant or integer
 	 * @return mixed
 	 */
 	public function query(string $query, ?array $bindings = null, int $fetchmode = PDO::FETCH_ASSOC)
@@ -239,7 +239,7 @@ class ConnectionHandler
 	/**
 	 * All SQL queries pass through this method.
 	 *
-	 * @param string $query  SQL query statement
+	 * @param string $query    SQL query statement
 	 * @param array  $bindings Array of parameters to bind (optional) (default [])
 	 */
 	protected function parseQuery(string $query, array $bindings = []): void

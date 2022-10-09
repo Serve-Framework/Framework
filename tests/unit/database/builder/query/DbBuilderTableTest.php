@@ -15,7 +15,7 @@ use serve\tests\TestCase;
  */
 class DbBuilderTableTest extends TestCase
 {
-	/**
+    /**
      *
      */
     public function testSql(): void
@@ -30,7 +30,7 @@ class DbBuilderTableTest extends TestCase
 
     	//
 
-    	$this->assertEquals("CREATE TABLE table_name ( `id` INTEGER  NOT NULL  UNIQUE  PRIMARY KEY  AUTOINCREMENT )", $table->create('sqlite'));
+    	$this->assertEquals('CREATE TABLE table_name ( `id` INTEGER  NOT NULL  UNIQUE  PRIMARY KEY  AUTOINCREMENT )', $table->create('sqlite'));
 
     	$this->assertEquals('DROP TABLE table_name', $table->drop('sqlite'));
 

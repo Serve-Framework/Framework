@@ -12,6 +12,8 @@ use PDOException;
 use RuntimeException;
 use serve\database\builder\Builder;
 
+use function implode;
+use function in_array;
 use function is_null;
 use function vsprintf;
 
@@ -132,7 +134,7 @@ class Connection
 		{
 			$this->dsn = "sqlite:sqlite:$config[path]";
 		}
-		
+
 		$this->host = $config['host'] ?? null;
 
 		$this->name = $config['name'] ?? null;
@@ -171,7 +173,7 @@ class Connection
 
 	/**
 	 * Creates a new PDO instance.
-	 * 
+	 *
 	 * @return bool
 	 */
 	public function isConnected(): bool
@@ -181,8 +183,8 @@ class Connection
 
 	/**
 	 * Creates a new PDO instance.
-	 * 
-	 * @return \PDO
+	 *
+	 * @return PDO
 	 */
 	public function reconnect(): PDO
 	{
@@ -193,7 +195,7 @@ class Connection
 
 	/**
 	 * Creates a new PDO instance.
-	 * 
+	 *
 	 * @return PDO
 	 */
 	public function pdo(): PDO
@@ -208,7 +210,7 @@ class Connection
 
 	/**
 	 * Get the table prefix.
-	 * 
+	 *
 	 * @return string
 	 */
 	public function tablePrefix(): string
@@ -274,8 +276,8 @@ class Connection
 	}
 
 	/**
-	 * Returns the connection type
-	 * 
+	 * Returns the connection type.
+	 *
 	 * @return string
 	 */
 	public function type(): string

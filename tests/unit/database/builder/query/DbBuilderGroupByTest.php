@@ -15,7 +15,7 @@ use serve\tests\TestCase;
  */
 class DbBuilderGroupByTest extends TestCase
 {
-	 /**
+    /**
      *
      */
     public function testSql(): void

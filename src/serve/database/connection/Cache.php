@@ -149,7 +149,7 @@ class Cache
 
             return;
         }
-        
+
         $tableName = $this->getTableName($queryStr);
 
         if (isset($this->data[$tableName]))
@@ -197,7 +197,7 @@ class Cache
      * @return string
      */
     private function getTableName(string $query): string
-    {        
+    {
         if (in_array($this->getQueryType($query), ['drop', 'create', 'show', 'alter', 'start', 'stop']))
         {
             return 'NULL';

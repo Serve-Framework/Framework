@@ -7,14 +7,27 @@
 
 namespace serve\database\builder\query;
 
+use function array_keys;
+use function count;
+use function implode;
+use function in_array;
+use function is_array;
+use function ltrim;
+use function mb_strlen;
+use function mb_substr;
+use function preg_replace;
+use function random_int;
+use function reset;
+use function str_contains;
+use function str_shuffle;
+use function trim;
 
 /**
- * SQL Where statement wrapper 
- *
+ * SQL Where statement wrapper.
  */
 class Where
 {
-	/**
+    /**
      * Constant for "WHERE" statement.
      *
      * @var string
@@ -28,7 +41,7 @@ class Where
      */
     public const OR_WHERE = 'OR';
 
- 	/**
+    /**
      * Constant for "AND WHERE" statement.
      *
      * @var string
@@ -49,7 +62,7 @@ class Where
      */
     protected const ACCEPTABLE_OPERATORS = ['=', '!=', '>', '<', '>=', '<=', '<>', 'IN', 'NOT IN', 'LIKE', 'NOT LIKE', 'BETWEEN'];
 
-    /**
+	/**
 	 * Type of where statement.
 	 *
 	 * @var string
@@ -80,23 +93,23 @@ class Where
 	/**
 	 * SQL WHERE Clause.
 	 *
-	 * @param string      $column Column name to use
-	 * @param string      $op     Logical operator
-	 * @param mixed       $value  Comparison value
-	 * @param string      $type   Where type
+	 * @param string $column Column name to use
+	 * @param string $op     Logical operator
+	 * @param mixed  $value  Comparison value
+	 * @param string $type   Where type
 	 */
 	public function __construct(string $column, string $operator, mixed $value, string $type = 'WHERE')
 	{
 		// Validate the query type
 		if (!in_array($type, self::ACCEPTABLE_TYPES))
 		{
-			throw new InvalidArgumentException('Invalid type [' . $type . ']. Type must be one of [' . implode(',', self::ACCEPTABLE_TYPES) .']');
+			throw new InvalidArgumentException('Invalid type [' . $type . ']. Type must be one of [' . implode(',', self::ACCEPTABLE_TYPES) . ']');
 		}
 
 		// Validate the operator
 		if (!in_array($operator, self::ACCEPTABLE_OPERATORS))
 		{
-			throw new InvalidArgumentException('Invalid logic operator [' . $operator . ']. Logical operators must be one of [' . implode(',', self::ACCEPTABLE_OPERATORS ) .']');
+			throw new InvalidArgumentException('Invalid logic operator [' . $operator . ']. Logical operators must be one of [' . implode(',', self::ACCEPTABLE_OPERATORS) . ']');
 		}
 
 		// Set the type
@@ -128,11 +141,11 @@ class Where
 
 	/**
 	 * Returns the clause as SQL.
-	 * 
+	 *
 	 * @return string
 	 */
 	public function sql(?string $table = null): string
-	{		
+	{
 		$sql = '';
 
 		// Nested OR when constructor $value is an array
@@ -150,7 +163,7 @@ class Where
 					$sql .= $this->column . ' ' . $this->operator;
 				}
 
-				$sql .= ' (:' . implode(', :', array_keys($this->bindings)) .')';
+				$sql .= ' (:' . implode(', :', array_keys($this->bindings)) . ')';
 			}
 			// WHERE (column = 'value1' OR column = 'value1')
 			else
@@ -167,7 +180,7 @@ class Where
 					}
 				}
 
-				$sql = '(' . trim(ltrim($sql, ' OR ')) .')';
+				$sql = '(' . trim(ltrim($sql, ' OR ')) . ')';
 			}
 		}
 		// WHERE column = 'value1'
@@ -182,7 +195,7 @@ class Where
 			}
 			else
 			{
-				$sql =  $this->column . ' ' . $this->operator . ' :' .  $binding[0];
+				$sql =  $this->column . ' ' . $this->operator . ' :' . $binding[0];
 			}
 		}
 
@@ -190,35 +203,35 @@ class Where
 	}
 
 	/**
-	 * Returns array of bindings
-	 * 
+	 * Returns array of bindings.
+	 *
 	 * @return array
 	 */
 	public function bindings(): array
-	{		
+	{
 		$bindings = [];
 
 		foreach($this->bindings as $binding)
 		{
 			$bindings[$binding[0]] = $binding[1];
 		}
-		
+
 		return $bindings;
 	}
 
 	/**
-	 * Returns array of bindings
-	 * 
+	 * Returns array of bindings.
+	 *
 	 * @return array
 	 */
 	public function type(): string
-	{		
+	{
 		return $this->type;
 	}
 
 	/**
 	 * Generates a random unique key for the binding.
-	 * 
+	 *
 	 * @param  string $str Key to provide for binding
 	 * @return string
 	 */

@@ -9,7 +9,6 @@ namespace serve\database\builder\query;
 
 /**
  * SQL "GROUP BY" statement wrapper.
- *
  */
 class GroupBy
 {
@@ -32,7 +31,7 @@ class GroupBy
 
 	/**
 	 * Returns the SQL statement.
-	 * 
+	 *
 	 * @return string
 	 */
 	public function sql(): string

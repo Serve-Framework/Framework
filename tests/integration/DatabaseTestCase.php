@@ -8,9 +8,8 @@
 namespace serve\tests\integration;
 
 use serve\database\Database;
-use serve\database\connection\Connection;
 use serve\tests\TestCase;
-
+use function file_get_contents;
 
 /**
  * Builder test case.

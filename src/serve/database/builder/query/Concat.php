@@ -7,32 +7,32 @@
 
 namespace serve\database\builder\query;
 
+use function implode;
+
 /**
  * SQL "CONCAT" statement wrapper.
- *
  */
 class Concat
 {
 	/**
-	 * Columns to concat
+	 * Columns to concat.
 	 *
 	 * @var array
 	 */
 	protected $columns;
 
 	/**
-	 * "as"
+	 * "as".
 	 *
 	 * @var string
 	 */
 	protected $as;
 
 	/**
-	 * Constructor
+	 * Constructor.
 	 *
-	 * @param array   $columns  column names
-	 * @param string  $as       As value
-	 * 
+	 * @param array  $columns column names
+	 * @param string $as      As value
 	 */
 	public function __construct(array $columns, string $as)
 	{
@@ -43,7 +43,7 @@ class Concat
 
 	/**
 	 * Returns the SQL statement.
-	 * 
+	 *
 	 * @return string
 	 */
 	public function sql(): string

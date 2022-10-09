@@ -16,6 +16,7 @@ use function array_merge;
 use function array_shift;
 use function array_unique;
 use function array_values;
+use function trim;
 use function explode;
 use function in_array;
 use function is_null;
@@ -236,7 +237,7 @@ class Input
 				{
 					$option = explode('=', $arg);
 
-					$this->params[trim($option[0])] = \trim($option[1]);
+					$this->params[trim($option[0])] = trim($option[1]);
 				}
 
                 // Does not contain "=" e.g '-f bar'

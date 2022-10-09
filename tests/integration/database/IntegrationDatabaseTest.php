@@ -7,11 +7,12 @@
 
 namespace serve\tests\integration\database;
 
-use serve\tests\integration\DatabaseTestCase;
-use serve\database\connection\Connection;
-use serve\database\builder\Builder;
-
 use RuntimeException;
+use serve\database\builder\Builder;
+use serve\database\connection\Connection;
+
+use serve\tests\integration\DatabaseTestCase;
+use function count;
 
 /**
  * @group integration

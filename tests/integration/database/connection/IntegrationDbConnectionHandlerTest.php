@@ -8,6 +8,8 @@
 namespace serve\tests\integration\database\connection;
 
 use serve\tests\integration\DatabaseTestCase;
+use function count;
+use function is_array;
 
 /**
  * @group integration
@@ -18,7 +20,7 @@ class IntegrationDbConnectionHandlerTest extends DatabaseTestCase
 {
     /**
      * Example data for testing.
-     * 
+     *
      * @var array
      */
     protected $exampleData =
@@ -42,7 +44,7 @@ class IntegrationDbConnectionHandlerTest extends DatabaseTestCase
             'username'     => 'baz',
             'email'        => 'baz@example.org',
             'group_id'     => 2,
-            'created_at'   => '2014-04-30 14:12:43'
+            'created_at'   => '2014-04-30 14:12:43',
         ],
     ];
 
@@ -86,7 +88,7 @@ class IntegrationDbConnectionHandlerTest extends DatabaseTestCase
         $this->assertTrue(count($query) === 1);
     }
 
-        /**
+    /**
      *
      */
     public function testBindFromQueryArgs(): void
@@ -145,7 +147,6 @@ class IntegrationDbConnectionHandlerTest extends DatabaseTestCase
 
         $this->assertFalse($handler->getLog()[1]['from_cache']);
 
-       
     }
 
     /**
@@ -204,7 +205,7 @@ class IntegrationDbConnectionHandlerTest extends DatabaseTestCase
         //
 
         $values =
-        [ 
+        [
             'foo'   => 1,
             'bar'   => 'foobar',
             'baz'      => 'foobar@example.org',

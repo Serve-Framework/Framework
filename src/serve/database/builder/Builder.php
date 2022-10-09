@@ -7,15 +7,9 @@
 
 namespace serve\database\builder;
 
-use serve\database\connection\ConnectionHandler;
-use serve\database\builder\query\Query;
 use serve\database\builder\query\Alter;
-
-use function implode;
-use function preg_replace;
-use function str_replace;
-use function strpos;
-use function strtolower;
+use serve\database\builder\query\Query;
+use serve\database\connection\ConnectionHandler;
 
 /**
  * Database SQL builder.
@@ -64,9 +58,9 @@ class Builder
     }
 
     /**
-     * Set query to "SELECT" with columns 
+     * Set query to "SELECT" with columns.
      *
-     * @param  string|array $columns $columns to select
+     * @param  array|string $columns $columns to select
      * @return $this
      */
     public function SELECT(string|array $columns): Builder
@@ -90,7 +84,7 @@ class Builder
     }
 
     /**
-     * Set a "WHERE" clause
+     * Set a "WHERE" clause.
      *
      * @param  string $column   Column name
      * @param  string $operator Logical operator
@@ -105,7 +99,7 @@ class Builder
     }
 
     /**
-     * Set a "AND" where clause
+     * Set a "AND" where clause.
      *
      * @param  string $column   Column name
      * @param  string $operator Logical operator
@@ -120,7 +114,7 @@ class Builder
     }
 
     /**
-     * Set a "OR" where clause
+     * Set a "OR" where clause.
      *
      * @param  string $column   Column name
      * @param  string $operator Logical operator
@@ -135,10 +129,10 @@ class Builder
     }
 
     /**
-     * Set a "JOIN ON" clause
+     * Set a "JOIN ON" clause.
      *
-     * @param  string        $table       Table name
-     * @param  string|array  $comparisons Join columns by string or array of multiple
+     * @param  string       $table       Table name
+     * @param  array|string $comparisons Join columns by string or array of multiple
      * @return $this
      */
     public function JOIN_ON(string $table, string|array $comparisons): Builder
@@ -149,10 +143,10 @@ class Builder
     }
 
     /**
-     * Set a "INNNER JOIN ON" clause
+     * Set a "INNNER JOIN ON" clause.
      *
-     * @param  string        $table       Table name
-     * @param  string|array  $comparisons Join columns by string or array of multiple
+     * @param  string       $table       Table name
+     * @param  array|string $comparisons Join columns by string or array of multiple
      * @return $this
      */
     public function INNER_JOIN_ON(string $table, string|array $comparisons): Builder
@@ -163,10 +157,10 @@ class Builder
     }
 
     /**
-     * Set a "LEFT JOIN ON" clause
+     * Set a "LEFT JOIN ON" clause.
      *
-     * @param  string        $table       Table name
-     * @param  string|array  $comparisons Join columns by string or array of multiple
+     * @param  string       $table       Table name
+     * @param  array|string $comparisons Join columns by string or array of multiple
      * @return $this
      */
     public function LEFT_JOIN_ON(string $table, string|array $comparisons): Builder
@@ -177,10 +171,10 @@ class Builder
     }
 
     /**
-     * Set a "RIGHT JOIN ON" clause
+     * Set a "RIGHT JOIN ON" clause.
      *
-     * @param  string        $table       Table name
-     * @param  string|array  $comparisons Join columns by string or array of multiple
+     * @param  string       $table       Table name
+     * @param  array|string $comparisons Join columns by string or array of multiple
      * @return $this
      */
     public function RIGHT_JOIN_ON(string $table, string|array $comparisons): Builder
@@ -191,10 +185,10 @@ class Builder
     }
 
     /**
-     * Set a "LEFT OUTER JOIN ON" clause
+     * Set a "LEFT OUTER JOIN ON" clause.
      *
-     * @param  string        $table       Table name
-     * @param  string|array  $comparisons Join columns by string or array of multiple
+     * @param  string       $table       Table name
+     * @param  array|string $comparisons Join columns by string or array of multiple
      * @return $this
      */
     public function LEFT_OUTER_JOIN_ON(string $table, string|array $comparisons): Builder
@@ -205,10 +199,10 @@ class Builder
     }
 
     /**
-     * Set a "RIGHT OUTER JOIN ON" clause
+     * Set a "RIGHT OUTER JOIN ON" clause.
      *
-     * @param  string        $table       Table name
-     * @param  string|array  $comparisons Join columns by string or array of multiple
+     * @param  string       $table       Table name
+     * @param  array|string $comparisons Join columns by string or array of multiple
      * @return $this
      */
     public function RIGHT_OUTER_JOIN_ON(string $table, string|array $comparisons): Builder
@@ -219,10 +213,10 @@ class Builder
     }
 
     /**
-     * Set a "FULL OUTER ON" clause
+     * Set a "FULL OUTER ON" clause.
      *
-     * @param  string        $table       Table name
-     * @param  string|array  $comparisons Join columns by string or array of multiple
+     * @param  string       $table       Table name
+     * @param  array|string $comparisons Join columns by string or array of multiple
      * @return $this
      */
     public function FULL_OUTER_JOIN_ON(string $table, string|array $comparisons): Builder
@@ -233,10 +227,10 @@ class Builder
     }
 
     /**
-     * Set an "ORDER BY" clause
+     * Set an "ORDER BY" clause.
      *
-     * @param  string|array  $columns   Single column or array of multiple column names
-     * @param  string        $direction Optional direction (DESC|ASC) (optional) (default DESC)
+     * @param  array|string $columns   Single column or array of multiple column names
+     * @param  string       $direction Optional direction (DESC|ASC) (optional) (default DESC)
      * @return $this
      */
     public function ORDER_BY(string|array $columns, string $direction = 'DESC'): Builder
@@ -247,7 +241,7 @@ class Builder
     }
 
     /**
-     * Set a "GROUP BY" clause
+     * Set a "GROUP BY" clause.
      *
      * @param  string $column Column to group
      * @return $this
@@ -260,11 +254,11 @@ class Builder
     }
 
     /**
-     * Set a "GROUP_CONCAT" clause
+     * Set a "GROUP_CONCAT" clause.
      *
-     * @param  string            $column    Column to group
-     * @param  string|null       $as        as (optional) (default null)
-     * @param  bool|null         $distinct  Distinct
+     * @param  string      $column   Column to group
+     * @param  string|null $as       as (optional) (default null)
+     * @param  bool|null   $distinct Distinct
      * @return $this
      */
     public function GROUP_CONCAT(string $column, ?string $as = null, ?bool $distinct = null): Builder
@@ -275,7 +269,7 @@ class Builder
     }
 
     /**
-     * Set a "LIMIT" clause
+     * Set a "LIMIT" clause.
      *
      * @param  int      $offset Offset or limit if second parameter not provided
      * @param  int|null $value  Value when offset is provided (optional) (default null)
@@ -289,10 +283,10 @@ class Builder
     }
 
     /**
-     * Create a new table with given schema
+     * Create a new table with given schema.
      *
-     * @param  string $table Table name to create
-     * @param  array  $schema    Table parameters
+     * @param  string $table  Table name to create
+     * @param  array  $schema Table parameters
      * @return $this
      */
     public function CREATE_TABLE(string $table, array $schema): Builder
@@ -331,7 +325,7 @@ class Builder
     /**
      * Initialize an "ALTER TABLE" statement.
      *
-     * @param  string $table Table name to use
+     * @param  string                              $table Table name to use
      * @return \serve\database\builder\query\Alter
      */
     public function ALTER_TABLE(string $table): Alter
@@ -353,7 +347,7 @@ class Builder
     }
 
     /**
-     * Add the "VALUES" to when running an "INSERT INTO" query
+     * Add the "VALUES" to when running an "INSERT INTO" query.
      *
      * @param  array $values The values to apply
      * @return $this
@@ -379,7 +373,7 @@ class Builder
     }
 
     /**
-     * Add the "SET" values when running an "UPDATE" query
+     * Add the "SET" values when running an "UPDATE" query.
      *
      * @param  array $values The values to apply
      * @return $this
@@ -408,7 +402,7 @@ class Builder
      * Execute a query and limit to single row
      * and/or find a single row by id.
      *
-     * @param  int|null $id Row id to find (optional) (default null)
+     * @param  int|null   $id Row id to find (optional) (default null)
      * @return array|null
      */
     public function FIND(?int $id = null): array|null
@@ -441,11 +435,11 @@ class Builder
     }
 
     /**
-     * Execute current query and return results
+     * Execute current query and return results.
      *
      * @return mixed
      */
-    public function exec(): Mixed
+    public function exec(): mixed
     {
         $result = $this->query->exec();
 
@@ -456,9 +450,8 @@ class Builder
 
     /**
      * Creates a new Query instance once a query is executed.
-     *
      */
-    protected function queryFactory(): Void
+    protected function queryFactory(): void
     {
         $query = $this->query::class;
 

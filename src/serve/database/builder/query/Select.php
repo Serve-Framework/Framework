@@ -8,17 +8,26 @@
 namespace serve\database\builder\query;
 
 use serve\utility\Str;
+use function array_filter;
+use function array_map;
+use function array_values;
+use function explode;
+use function implode;
+use function is_array;
+use function is_string;
+use function ltrim;
+use function rtrim;
+use function str_contains;
 
 /**
  * SQL "SELECT" statement wrapper.
- *
  */
 class Select
 {
 	/**
 	 * Columns.
 	 *
-	 * @var string|array
+	 * @var array|string
 	 */
 	protected $columns;
 
@@ -32,7 +41,7 @@ class Select
 	/**
 	 * Constructor.
 	 *
-	 * @param string|array  $columns  Column or columns to select by
+	 * @param array|string $columns Column or columns to select by
 	 */
 	public function __construct(string|array $columns, string $prefix)
 	{
@@ -42,9 +51,9 @@ class Select
 	}
 
 	/**
-	 * Returns the SQL
+	 * Returns the SQL.
 	 *
-	 * @param  string|null  $baseTable  Whether the default table needs to use "dot.notation" (optional) (default null)
+	 * @param  string|null $baseTable Whether the default table needs to use "dot.notation" (optional) (default null)
 	 * @return string
 	 */
 	public function sql(?string $baseTable = null): string
@@ -66,7 +75,7 @@ class Select
 				}
 				else
 				{
-					$sql .= implode(', ', $columns); 
+					$sql .= implode(', ', $columns);
 				}
 			}
 			else
@@ -80,13 +89,13 @@ class Select
 		return 'SELECT ' . $sql;
 	}
 
-	/**
-	 * Normalizes statement into an array.
-	 * 
-	 * @param  string|array  $statement  "SELECT" statement
-	 * @param  string        $prefix     Database table prefix
-	 * @return array
-	 */
+    /**
+     * Normalizes statement into an array.
+     *
+     * @param  array|string $statement "SELECT" statement
+     * @param  string       $prefix    Database table prefix
+     * @return array
+     */
     protected function normalizeSatement(string|array $statement, string $prefix): array
     {
     	$results = [];
@@ -103,7 +112,7 @@ class Select
 					{
 						$table  = $prefix . trim(Str::getBeforeFirstChar($column, '.'));
 						$column = trim(Str::getAfterLastChar($column, '.'));
-						
+
 						if (!isset($results[$table]))
 						{
 							$results[$table] = [];
@@ -133,7 +142,7 @@ class Select
 					if (is_array($columns))
 					{
 						$results[$table] = array_map('trim', array_values($columns));
-						
+
 					}
 					// ['table2' => 'name'] -> table2.name
 					else
@@ -154,7 +163,7 @@ class Select
 				{
 					$table   = $prefix . trim(ltrim(Str::getBeforeFirstChar($_statement, '('), ','));
 					$columns = array_filter(array_map('trim', explode(',', Str::getAfterFirstChar($_statement, '('))));
-					
+
 					$results[$table] = $columns;
 				}
 			}

@@ -15,7 +15,7 @@ use serve\tests\TestCase;
  */
 class DbBuilderGroupConcatTest extends TestCase
 {
-	 /**
+    /**
      *
      */
     public function testSql(): void
@@ -30,8 +30,8 @@ class DbBuilderGroupConcatTest extends TestCase
 
     	$this->assertEquals('GROUP_CONCAT(foobar) AS "foobaz"', $concat->sql());
 
-    	// 
-    	
+    	//
+
     	$concat = new GroupConcat('foobar', 'foobaz', true);
 
     	$this->assertEquals('GROUP_CONCAT(DISTINCT foobar) AS "foobaz"', $concat->sql());

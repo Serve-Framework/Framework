@@ -9,24 +9,23 @@ namespace serve\database\builder\query;
 
 use InvalidArgumentException;
 use serve\database\connection\ConnectionHandler;
-use serve\database\builder\query\Concat;
-use serve\database\builder\query\GroupBy;
-use serve\database\builder\query\GroupConcat;
-use serve\database\builder\query\Join;
-use serve\database\builder\query\Limit;
-use serve\database\builder\query\OrderBy;
-use serve\database\builder\query\Result;
-use serve\database\builder\query\ResultSet;
-use serve\database\builder\query\Select;
-use serve\database\builder\query\Set;
-use serve\database\builder\query\Table;
-use serve\database\builder\query\Values;
-use serve\database\builder\query\Where;
-use serve\database\builder\query\Alter;
+use function array_filter;
+use function array_map;
+use function count;
+use function explode;
+use function implode;
+use function is_array;
+use function ltrim;
+use function preg_replace;
+use function rtrim;
+use function str_contains;
+use function str_replace;
+use function strpos;
+use function strtolower;
+use function trim;
 
 /**
  * SQL Query builder manager.
- *
  */
 class Query
 {
@@ -47,63 +46,63 @@ class Query
 	/**
 	 * Select.
 	 *
-	 * @var null|\serve\database\query\Select
+	 * @var \serve\database\query\Select|null
 	 */
 	protected $select;
 
 	/**
 	 * Limit.
 	 *
-	 * @var null|\serve\database\query\Limit
+	 * @var \serve\database\query\Limit|null
 	 */
 	protected $limit;
 
 	/**
 	 * Order by.
 	 *
-	 * @var null|\serve\database\query\OrderBy
+	 * @var \serve\database\query\OrderBy|null
 	 */
 	protected $orderBy;
 
 	/**
 	 * Group concat.
 	 *
-	 * @var null|\serve\database\query\GroupBy
+	 * @var \serve\database\query\GroupBy|null
 	 */
 	protected $groupBy;
 
 	/**
 	 * Concat.
 	 *
-	 * @var null|\serve\database\query\Concat
+	 * @var \serve\database\query\Concat|null
 	 */
 	protected $concat;
 
 	/**
 	 * Group concat.
 	 *
-	 * @var null|\serve\database\query\GroupConcat
+	 * @var \serve\database\query\GroupConcat|null
 	 */
 	protected $groupConcat;
 
 	/**
-	 * Values to insert
+	 * Values to insert.
 	 *
-	 * @var null|\serve\database\query\Values
+	 * @var \serve\database\query\Values|null
 	 */
 	protected $values;
 
 	/**
-	 * Values to update
+	 * Values to update.
 	 *
-	 * @var null|\serve\database\query\Set
+	 * @var \serve\database\query\Set|null
 	 */
 	protected $set;
 
 	/**
 	 * Values to update.
 	 *
-	 * @var null|\serve\database\query\Update
+	 * @var \serve\database\query\Update|null
 	 */
 	protected $update;
 
@@ -117,12 +116,12 @@ class Query
 	/**
 	 * Bindings.
 	 *
-	 * @var null|array
+	 * @var array|null
 	 */
 	protected $bindings;
 
 	/**
-	 * Current table to run query on
+	 * Current table to run query on.
 	 *
 	 * @var string
 	 */
@@ -145,8 +144,8 @@ class Query
 	/**
 	 * Constructor.
 	 *
-	 * @param \serve\database\connection\ConnectionHandler  $connectionHandler  Connection handler
-	 * @param string|null                                   $table              Table name (optional) (default null)
+	 * @param \serve\database\connection\ConnectionHandler $connectionHandler Connection handler
+	 * @param string|null                                  $table             Table name (optional) (default null)
 	 */
 	public function __construct(ConnectionHandler $connectionHandler, ?string $table = null)
 	{
@@ -159,10 +158,10 @@ class Query
 	}
 
 	/**
-     * Set query to "SELECT" with columns 
-     *
-     * @param  string|array $columns $columns to select
-     */
+	 * Set query to "SELECT" with columns.
+	 *
+	 * @param array|string $columns $columns to select
+	 */
 	public function select(string|array $columns): void
 	{
 		$this->operation = 'SELECT';
@@ -170,149 +169,149 @@ class Query
 		$this->select = new Select($columns, $this->connectionHandler->tablePrefix());
 	}
 
-	/**
+    /**
      * Set table to select from.
      *
-     * @param  string $table Table
+     * @param string $table Table
      */
     public function from(string $table): void
     {
     	$this->operationTable = $this->tableNamePrefix($table);
     }
 
-    /**
-     * Set a "WHERE" clause
-     *
-     * @param  string $column   Column name
-     * @param  string $operator Logical operator
-     * @param  mixed  $value    Value to compare to
-     */
+	/**
+	 * Set a "WHERE" clause.
+	 *
+	 * @param string $column   Column name
+	 * @param string $operator Logical operator
+	 * @param mixed  $value    Value to compare to
+	 */
 	public function where(string $column, string $operator, mixed $value): void
 	{
 		$this->whereFactory($column, $operator, $value, Where::WHERE);
 	}
 
 	/**
-     * Set a "AND" where clause
-     *
-     * @param  string $column   Column name
-     * @param  string $operator Logical operator
-     * @param  mixed  $value    Value to compare to
-     */
+	 * Set a "AND" where clause.
+	 *
+	 * @param string $column   Column name
+	 * @param string $operator Logical operator
+	 * @param mixed  $value    Value to compare to
+	 */
 	public function andWhere(string $column, string $operator, mixed $value): void
 	{
 		$this->whereFactory($column, $operator, $value, Where::AND_WHERE);
 	}
 
 	/**
-     * Set a "OR" where clause
-     *
-     * @param  string $column   Column name
-     * @param  string $operator Logical operator
-     * @param  mixed  $value    Value to compare to
-     */
+	 * Set a "OR" where clause.
+	 *
+	 * @param string $column   Column name
+	 * @param string $operator Logical operator
+	 * @param mixed  $value    Value to compare to
+	 */
 	public function orWhere(string $column, string $operator, mixed $value): void
 	{
 		$this->whereFactory($column, $operator, $value, Where::OR_WHERE);
 	}
 
 	/**
-     * Makes new "Where" 
-     *
-     * @param  string $column   Column name
-     * @param  string $operator Logical operator
-     * @param  mixed  $value    Value to compare to
-     * @param  string $type     Type of where statement
-     */
+	 * Makes new "Where".
+	 *
+	 * @param string $column   Column name
+	 * @param string $operator Logical operator
+	 * @param mixed  $value    Value to compare to
+	 * @param string $type     Type of where statement
+	 */
 	protected function whereFactory(string $column, string $operator, mixed $value, string $type): void
 	{
 		$this->wheres[] = new Where($this->columnTablePrefix($column), $operator, $value, $type);
 	}
 
 	/**
-     * Set a "JOIN ON" clause
-     *
-     * @param  string        $table       Table name
-     * @param  string|array  $comparisons Join columns by string or array of multiple
-     */
+	 * Set a "JOIN ON" clause.
+	 *
+	 * @param string       $table       Table name
+	 * @param array|string $comparisons Join columns by string or array of multiple
+	 */
 	public function join(string $table, string $comparisons): void
 	{
 		$this->joinFactory($table, $comparisons, Join::TYPE_INNER);
 	}
 
 	/**
-     * Set a "INNNER JOIN ON" clause
-     *
-     * @param  string        $table       Table name
-     * @param  string|array  $comparisons Join columns by string or array of multiple
-     */
+	 * Set a "INNNER JOIN ON" clause.
+	 *
+	 * @param string       $table       Table name
+	 * @param array|string $comparisons Join columns by string or array of multiple
+	 */
 	public function innerJoin(string $table, string $comparisons): void
 	{
 		$this->joinFactory($table, $comparisons, Join::TYPE_INNER);
 	}
 
 	/**
-     * Set a "LEFT JOIN ON" clause
-     *
-     * @param  string        $table       Table name
-     * @param  string|array  $comparisons Join columns by string or array of multiple
-     */
+	 * Set a "LEFT JOIN ON" clause.
+	 *
+	 * @param string       $table       Table name
+	 * @param array|string $comparisons Join columns by string or array of multiple
+	 */
 	public function leftJoin(string $table, string $comparisons): void
 	{
 		$this->joinFactory($table, $comparisons, Join::TYPE_LEFT);
 	}
 
 	/**
-     * Set a "RIGHT JOIN ON" clause
-     *
-     * @param  string        $table       Table name
-     * @param  string|array  $comparisons Join columns by string or array of multiple
-     */
+	 * Set a "RIGHT JOIN ON" clause.
+	 *
+	 * @param string       $table       Table name
+	 * @param array|string $comparisons Join columns by string or array of multiple
+	 */
 	public function rightJoin(string $table, string $comparisons): void
 	{
 		$this->joinFactory($table, $comparisons, Join::TYPE_RIGHT);
 	}
 
 	/**
-     * Set a "LEFT OUTER JOIN ON" clause
-     *
-     * @param  string        $table       Table name
-     * @param  string|array  $comparisons Join columns by string or array of multiple
-     */
+	 * Set a "LEFT OUTER JOIN ON" clause.
+	 *
+	 * @param string       $table       Table name
+	 * @param array|string $comparisons Join columns by string or array of multiple
+	 */
 	public function leftOuterJoin(string $table, string $comparisons): void
 	{
 		$this->joinFactory($table, $comparisons, Join::TYPE_LEFT_OUTER);
 	}
 
 	/**
-     * Set a "RIGHT OUTER JOIN ON" clause
-     *
-     * @param  string        $table       Table name
-     * @param  string|array  $comparisons Join columns by string or array of multiple
-     */
+	 * Set a "RIGHT OUTER JOIN ON" clause.
+	 *
+	 * @param string       $table       Table name
+	 * @param array|string $comparisons Join columns by string or array of multiple
+	 */
 	public function rightOuterJoin(string $table, string $comparisons): void
 	{
 		$this->joinFactory($table, $comparisons, Join::TYPE_RIGHT_OUTER);
 	}
 
 	/**
-     * Set a "FULL OUTER ON" clause
-     *
-     * @param  string        $table       Table name
-     * @param  string|array  $comparisons Join columns by string or array of multiple
-     */
+	 * Set a "FULL OUTER ON" clause.
+	 *
+	 * @param string       $table       Table name
+	 * @param array|string $comparisons Join columns by string or array of multiple
+	 */
 	public function fullOuterJoin(string $table, string $comparisons): void
 	{
 		$this->joinFactory($table, $comparisons, Join::TYPE_FULL_OUTER);
 	}
 
 	/**
-     * Creates "Join" class
-     *
-     * @param  string        $table       Table name
-     * @param  string|array  $comparisons Join columns by string or array of multiple
-     * @param  string        $type        Join type
-     */
+	 * Creates "Join" class.
+	 *
+	 * @param string       $table       Table name
+	 * @param array|string $comparisons Join columns by string or array of multiple
+	 * @param string       $type        Join type
+	 */
 	protected function joinFactory(string $tableName, string|array $comparisons, string $type): void
 	{
 		if (is_array($comparisons))
@@ -351,11 +350,11 @@ class Query
 	}
 
 	/**
-     * Set an "ORDER BY" clause
-     *
-     * @param  string|array  $columns   Single column or array of multiple column names
-     * @param  string        $direction Optional direction (DESC|ASC) (optional) (default DESC)
-     */
+	 * Set an "ORDER BY" clause.
+	 *
+	 * @param array|string $columns   Single column or array of multiple column names
+	 * @param string       $direction Optional direction (DESC|ASC) (optional) (default DESC)
+	 */
 	public function orderBy(string|array $columns, string $direction = 'DESC'): void
 	{
 		$cols = '';
@@ -391,45 +390,45 @@ class Query
 	}
 
 	/**
-     * Set a "GROUP BY" clause
-     *
-     * @param  string $column Column to group
-     */
+	 * Set a "GROUP BY" clause.
+	 *
+	 * @param string $column Column to group
+	 */
 	public function groupBy(string $column): void
 	{
 		$this->groupBy = new GroupBy($column);
 	}
 
 	/**
-     * Set a "GROUP_CONCAT" clause
-     *
-     * @param  string            $column    Column to group
-     * @param  string|null       $as        as (optional) (default null)
-     * @param  bool|null         $distinct  Distinct
-     * @param  string|null       $separator Separator (optional) (default null)
-     * @param  string|array|null $orderby   Order (optional) (default null)
-     */
+	 * Set a "GROUP_CONCAT" clause.
+	 *
+	 * @param string            $column    Column to group
+	 * @param string|null       $as        as (optional) (default null)
+	 * @param bool|null         $distinct  Distinct
+	 * @param string|null       $separator Separator (optional) (default null)
+	 * @param array|string|null $orderby   Order (optional) (default null)
+	 */
 	public function groupConcat(string $column, ?string $as = null, ?bool $distinct = null, ?string $separator = null, string|array|null $orderby = null): void
 	{
 		$this->groupConcat = new GroupConcat($column, $as, $distinct, $separator, $orderby);
 	}
 
 	/**
-     * Set a "LIMIT" clause
-     *
-     * @param  int      $offset Offset or limit if second parameter not provided
-     * @param  int|null $value  Value when offset is provided (optional) (default null)
-     */
+	 * Set a "LIMIT" clause.
+	 *
+	 * @param int      $offset Offset or limit if second parameter not provided
+	 * @param int|null $value  Value when offset is provided (optional) (default null)
+	 */
 	public function limit(int $offset, ?int $value = null): void
 	{
 		$this->limit = new Limit($offset, $value);
 	}
 
-	/**
-     * Create a new table with given schema
+    /**
+     * Create a new table with given schema.
      *
-     * @param  string $table Table name to create
-     * @param  array  $schema    Table parameters
+     * @param string $table  Table name to create
+     * @param array  $schema Table parameters
      */
     public function createTable(string $table, array $schema): void
     {
@@ -445,11 +444,11 @@ class Query
 
         $this->operation = null;
     }
-   	
-   	/**
+
+    /**
      * Drop an existing table.
      *
-     * @param  string $table Table name to use
+     * @param string $table Table name to use
      */
     public function dropTable(string $table): void
     {
@@ -464,10 +463,10 @@ class Query
         $this->operation = null;
     }
 
-   	/**
+    /**
      * Truncate an existing table.
      *
-     * @param  string $table Table name to use
+     * @param string $table Table name to use
      */
     public function truncateTable(string $table): void
     {
@@ -485,10 +484,10 @@ class Query
     }
 
 	/**
-     * Set the query to "INSERT INTO" a given table.
-     *
-     * @param  string $table The table name to use
-     */
+	 * Set the query to "INSERT INTO" a given table.
+	 *
+	 * @param string $table The table name to use
+	 */
 	public function insertInto(string $table): void
 	{
 		$this->operationTable = $this->tableNamePrefix($table);
@@ -496,10 +495,10 @@ class Query
 		$this->operation = 'INSERT';
 	}
 
-	/**
-     * Add the "VALUES" to when running an "INSERT INTO" query
+    /**
+     * Add the "VALUES" to when running an "INSERT INTO" query.
      *
-     * @param  array $values The values to apply
+     * @param array $values The values to apply
      */
     public function values(array $values): void
     {
@@ -507,10 +506,10 @@ class Query
     }
 
 	/**
-     * Set the query to "UPDATE" a given table.
-     *
-     * @param  string $table The table name to use
-     */
+	 * Set the query to "UPDATE" a given table.
+	 *
+	 * @param string $table The table name to use
+	 */
 	public function update(string $table): void
 	{
 		$this->operationTable = $this->tableNamePrefix($table);
@@ -518,20 +517,20 @@ class Query
 		$this->operation = 'UPDATE';
 	}
 
-	/**
-     * Add the "SET" values when running an "UPDATE" query
+    /**
+     * Add the "SET" values when running an "UPDATE" query.
      *
-     * @param  array $values The values to apply
+     * @param array $values The values to apply
      */
     public function set(array $values): void
     {
         $this->set = new Set($values);
     }
 
-   	/**
+    /**
      * Set the query to "DELETE FROM" a given table.
      *
-     * @param  string $table The table name to use
+     * @param string $table The table name to use
      */
     public function deleteFrom(string $table): void
     {
@@ -543,7 +542,7 @@ class Query
     /**
      * Set the query to "DELETE FROM" a given table.
      *
-     * @param  string $table The table name to use
+     * @param string $table The table name to use
      * @return \serve\database\builder\query\Alter;
      */
     public function alterTable(string $table): Alter
@@ -556,16 +555,16 @@ class Query
 
 		return new Alter($this->connectionHandler, $table);
     }
-		
-	/**
+
+    /**
      * Execute a query and limit to single row
      * and/or find a single row by id.
      *
-     * @param  int|null $id Row id to find (optional) (default null)
+     * @param  int|null   $id Row id to find (optional) (default null)
      * @return array|null
      */
     public function find(?int $id = null): array|null
-    { 
+    {
 		// If id filter by id
 		if ($id)
 		{
@@ -585,13 +584,13 @@ class Query
 		return $this->exec();
     }
 
-   	/**
-     * Execute current query and return results
+    /**
+     * Execute current query and return results.
      *
-     * @return array|null|bool
+     * @return array|bool|null
      */
     public function exec(): array|null|bool
-    {    	
+    {
        	// Validate a table was loaded
 		if (!$this->operationTable)
 		{
@@ -609,15 +608,15 @@ class Query
 		{
 			return $this->execSQL($this->buildSelectSql());
 		}
-		else if ($this->operation === 'UPDATE')
+		elseif ($this->operation === 'UPDATE')
 		{
 			return $this->execSQL($this->buildUpdateSql());
 		}
-		else if ($this->operation === 'DELETE')
+		elseif ($this->operation === 'DELETE')
 		{
 			return $this->execSQL($this->buildDeleteSql());
 		}
-		else if ($this->operation === 'INSERT')
+		elseif ($this->operation === 'INSERT')
 		{
 			return $this->execSQL($this->buildInsertSql());
 		}
@@ -625,13 +624,13 @@ class Query
 		throw new InvalidArgumentException('No SQL query operation to run.');
     }
 
-   	/**
-     * Execute current query and return results
-     *
-     * @return array|null|bool|int
-     */
+	/**
+	 * Execute current query and return results.
+	 *
+	 * @return array|bool|int|null
+	 */
 	private function execSQL(string $sql): array|null|bool|int
-	{		
+	{
 		// Save the SQL query
 		$this->queryStr = $sql;
 
@@ -665,11 +664,11 @@ class Query
 		return $results;
 	}
 
-   	/**
-     * Builds SQL for "SELECT" queries.
-     *
-     * @return string
-     */
+	/**
+	 * Builds SQL for "SELECT" queries.
+	 *
+	 * @return string
+	 */
 	protected function buildSelectSql(): string
 	{
 		// Start with "SELECT"
@@ -726,7 +725,7 @@ class Query
 
 	/**
 	 * Builds and returns SQL query string for an "UPDATE" query.
-	 * 
+	 *
 	 * @return string
 	 */
 	protected function buildUpdateSql(): string
@@ -768,7 +767,7 @@ class Query
 
 	/**
 	 * Builds and returns SQL query string for an "DELETE" query.
-	 * 
+	 *
 	 * @return string
 	 */
 	protected function buildDeleteSql(): string
@@ -799,7 +798,7 @@ class Query
 
 	/**
 	 * Builds and returns SQL query string for an "INSERT" query.
-	 * 
+	 *
 	 * @return string
 	 */
 	protected function buildInsertSql(): string
@@ -824,8 +823,8 @@ class Query
 
 	/**
 	 * Applies bindings.
-	 * 
-	 * @param  array $bindings Bindings
+	 *
+	 * @param array $bindings Bindings
 	 */
 	protected function applyBindings(array $bindings): void
 	{
@@ -837,11 +836,11 @@ class Query
 
 	/**
 	 * Processes "WHERE" clause logics and returns SQL.
-	 * 
+	 *
 	 * @return string
 	 */
 	protected function procesWhereClauses(): string
-	{	
+	{
 		$wheresSql = [];
 
 		foreach($this->wheres as $i => $where)
@@ -867,7 +866,7 @@ class Query
 						{
 							$wheresSql[$x] = '(' . $wheresSql[$x];
 						}
-						
+
 						break;
 					}
 				}
@@ -877,7 +876,7 @@ class Query
 			}
 
 			$wheresSql[] = $currType . ' ' . $where->sql(!empty($this->joins) ? $this->operationTable : null);
-			
+
 			$this->applyBindings($where->bindings());
 
 			$prevType = $currType;
@@ -886,12 +885,12 @@ class Query
 		return implode(' ', $wheresSql);
 	}
 
-	/**
-	 * Table prefixes tables when either "table(column)" or "table.column" syntax is used
-	 * 
-	 * @param  string $query Query string
-	 * @return string
-	 */
+    /**
+     * Table prefixes tables when either "table(column)" or "table.column" syntax is used.
+     *
+     * @param  string $query Query string
+     * @return string
+     */
     protected function columnTablePrefix(string $query): string
     {
         // Check that the the query is using a dot notatation
@@ -911,12 +910,12 @@ class Query
         return $query;
     }
 
-   	/**
-	 * Table prefixes tables when table name is provided
-	 * 
-	 * @param  string $table Table name
-	 * @return string
-	 */
+    /**
+     * Table prefixes tables when table name is provided.
+     *
+     * @param  string $table Table name
+     * @return string
+     */
     protected function tableNamePrefix(string $table): string
     {
         // append the table prefix

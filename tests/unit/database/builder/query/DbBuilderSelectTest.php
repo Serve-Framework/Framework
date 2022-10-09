@@ -15,7 +15,7 @@ use serve\tests\TestCase;
  */
 class DbBuilderSelectTest extends TestCase
 {
-	/**
+    /**
      *
      */
     public function testSql(): void
@@ -38,18 +38,18 @@ class DbBuilderSelectTest extends TestCase
 
     	//
 
-    	$select = new Select([ 'users' => ['id', 'email'] ], 'prefix_');
+    	$select = new Select(['users' => ['id', 'email']], 'prefix_');
 
     	$this->assertEquals('SELECT prefix_users.id, prefix_users.email', $select->sql());
 
     	//
 
-    	$select = new Select([ 'users' => ['id', 'email'], 'groups' => ['name'] ], 'prefix_');
+    	$select = new Select(['users' => ['id', 'email'], 'groups' => ['name']], 'prefix_');
 
     	$this->assertEquals('SELECT prefix_users.id, prefix_users.email, prefix_groups.name', $select->sql());
 
     	//
-   		
+
    		$select = new Select('id', 'prefix_');
 
     	$this->assertEquals('SELECT prefix_table.id', $select->sql('table'));
@@ -68,13 +68,13 @@ class DbBuilderSelectTest extends TestCase
 
     	//
 
-    	$select = new Select([ 'users' => ['id', 'email'] ], 'prefix_');
+    	$select = new Select(['users' => ['id', 'email']], 'prefix_');
 
     	$this->assertEquals('SELECT prefix_users.id, prefix_users.email', $select->sql('table'));
 
     	//
 
-    	$select = new Select([ 'users' => ['id', 'email'], 'groups' => ['name'] ], 'prefix_');
+    	$select = new Select(['users' => ['id', 'email'], 'groups' => ['name']], 'prefix_');
 
     	$this->assertEquals('SELECT prefix_users.id, prefix_users.email, prefix_groups.name', $select->sql('table'));
     }
