@@ -24,14 +24,16 @@ use function ob_start;
 
 class OnionCallbackTest
 {
+	protected $value;
+
 	public function __construct(Request $request, Response $response, Closure $next, $arg1, $arg2)
     {
-    	$this->var = $arg1 . $arg2;
+    	$this->value = $arg1 . $arg2;
     }
 
     public function normalMethod(): void
     {
-    	echo $this->var;
+    	echo $this->value;
     }
 
 	public static function staticFunc(Request $request, Response $response, Closure $next, $arg1, $arg2): void
@@ -98,7 +100,7 @@ class OnionTest extends TestCase
 	{
 		ob_start();
 
-		$callback = '\serve\tests\unit\onion\OnionCallbackTest@normalMethod';
+		$callback = OnionCallbackTest::class . '@normalMethod';
 
 		$request = $this->mock(Request::class);
 
@@ -120,7 +122,7 @@ class OnionTest extends TestCase
 	{
 		ob_start();
 
-		$callback = '\serve\tests\unit\onion\OnionCallbackTest::staticFunc';
+		$callback = OnionCallbackTest::class . '::staticFunc';
 
 		$request = $this->mock(Request::class);
 
