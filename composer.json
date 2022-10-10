@@ -43,7 +43,7 @@
     "minimum-stability": "dev",
     "extra": {
         "branch-alias": {
-            "dev-master": "9.0-dev"
+            "dev-master": "8.0-dev"
         }
     },
     "suggest": {

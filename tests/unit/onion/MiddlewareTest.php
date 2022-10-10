@@ -16,16 +16,22 @@ use serve\tests\TestCase;
 use function ob_get_clean;
 use function ob_start;
 
+// --------------------------------------------------------------------------
+// START CLASSES
+// --------------------------------------------------------------------------
+
 class MiddleWareCallbackTest
 {
+	protected $value;
+
 	public function __construct(Request $request, Response $response, Closure $next, $arg1, $arg2)
     {
-    	$this->var = $arg1 . $arg2;
+    	$this->value = $arg1 . $arg2;
     }
 
     public function normalMethod(): void
     {
-    	echo $this->var;
+    	echo $this->value;
     }
 
 	public static function staticFunc(Request $request, Response $response, Closure $next, $arg1, $arg2): void
@@ -34,8 +40,12 @@ class MiddleWareCallbackTest
 	}
 }
 
+// --------------------------------------------------------------------------
+// END CLASSES
+// --------------------------------------------------------------------------
+
 /**
- * Callback tester.
+ * @group unit
  */
 class MiddlewareTest extends TestCase
 {
@@ -50,7 +60,7 @@ class MiddlewareTest extends TestCase
 
 		$response = $this->mock(Response::class);
 
-		$layer = new Middleware('\serve\tests\unit\onion\MiddleWareCallbackTest@normalMethod', ['foo', 'bar']);
+		$layer = new Middleware(MiddleWareCallbackTest::class . '@normalMethod', ['foo', 'bar']);
 
 		$next = function (): void
 		{
@@ -73,7 +83,7 @@ class MiddlewareTest extends TestCase
 
 		$response = $this->mock(Response::class);
 
-		$layer = new Middleware('\serve\tests\unit\onion\MiddleWareCallbackTest::staticFunc', ['foo', 'bar']);
+		$layer = new Middleware(MiddleWareCallbackTest::class . '::staticFunc', ['foo', 'bar']);
 
 		$next = function (): void
 		{
@@ -113,9 +123,9 @@ class MiddlewareTest extends TestCase
 	 */
 	public function testGetCallback(): void
 	{
-		$layer = new Middleware('\serve\tests\unit\onion\MiddleWareCallbackTest::staticFunc', ['foo', 'bar']);
+		$layer = new Middleware(MiddleWareCallbackTest::class . '::staticFunc', ['foo', 'bar']);
 
-		$this->assertEquals('\serve\tests\unit\onion\MiddleWareCallbackTest::staticFunc', $layer->getCallback());
+		$this->assertEquals(MiddleWareCallbackTest::class . '::staticFunc', $layer->getCallback());
 	}
 
 	/**
@@ -123,11 +133,11 @@ class MiddlewareTest extends TestCase
 	 */
 	public function testGetArgs(): void
 	{
-		$layer = new Middleware('\serve\tests\unit\onion\MiddleWareCallbackTest::staticFunc', ['foo', 'bar']);
+		$layer = new Middleware(MiddleWareCallbackTest::class . '::staticFunc', ['foo', 'bar']);
 
 		$this->assertEquals(['foo', 'bar'], $layer->getArgs());
 
-		$layer = new Middleware('\serve\tests\unit\onion\MiddleWareCallbackTest::staticFunc', 'foo');
+		$layer = new Middleware(MiddleWareCallbackTest::class . '::staticFunc', 'foo');
 
 		$this->assertEquals(['foo'], $layer->getArgs());
 	}
