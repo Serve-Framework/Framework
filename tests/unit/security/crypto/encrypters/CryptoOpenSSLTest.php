@@ -41,7 +41,7 @@ class CryptoOpenSslTest extends TestCase
 
 		foreach (openssl_get_cipher_methods() as $cypher)
 		{
-			if (str_contains($cypher, 'gcm') || str_contains($cypher, 'ccm'))
+			if (str_contains(strtolower($cypher), 'gcm') || str_contains(strtolower($cypher), 'ccm') || str_contains(strtolower($cypher), 'poly1305'))
 			{
 				continue;
 			}
