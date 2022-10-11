@@ -40,7 +40,7 @@ class DatabaseBuilderTest extends TestCase
             'notifications' => 'BOOLEAN | DEFAULT TRUE',
         ];
 
-        $expectedSQL = 'CREATE TABLE prefixed_my_table_name ( `id` INT UNSIGNED UNIQUE AUTO_INCREMENT, `description` VARCHAR(255), `thumbnail_id` INTEGER UNSIGNED, `notifications` BOOLEAN DEFAULT TRUE PRIMARY KEY (id) ) ENGINE=InnoDB AUTO_INCREMENT=0 DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;';
+        $expectedSQL = 'CREATE TABLE prefixed_my_table_name ( `id` INT UNSIGNED UNIQUE AUTO_INCREMENT, `description` VARCHAR(255), `thumbnail_id` INTEGER UNSIGNED, `notifications` BOOLEAN DEFAULT TRUE, PRIMARY KEY (id) ) ENGINE=InnoDB AUTO_INCREMENT=0 DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;';
 
         $connection = $this->mock(Connection::class);
 

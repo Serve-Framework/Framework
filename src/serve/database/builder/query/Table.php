@@ -74,13 +74,12 @@ class Table
             $sql[] = '`' . $name . '` ' . str_replace('|', '', $schema) . ',';
         }
 
-        $lastVal = end($sql);
-		$lastkey = key($sql);
-
-		$sql[$lastkey] = rtrim($lastVal, ', ');
-
         if ($connectionType === 'sqlite')
         {
+        	$last = (count($sql) - 1);
+
+			$sql[$last] = rtrim($sql[$last], ', ');
+
         	$sql[] = ')';
         }
         else

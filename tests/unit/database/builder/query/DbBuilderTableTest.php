@@ -22,7 +22,7 @@ class DbBuilderTableTest extends TestCase
     {
     	$table = new Table('table_name');
 
-    	$this->assertEquals("CREATE TABLE table_name ( `id` INT  UNSIGNED  UNIQUE  AUTO_INCREMENT PRIMARY KEY (id)\n) ENGINE=InnoDB AUTO_INCREMENT=0 DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;", $table->create('mysql'));
+    	$this->assertEquals("CREATE TABLE table_name ( `id` INT  UNSIGNED  UNIQUE  AUTO_INCREMENT, PRIMARY KEY (id)\n) ENGINE=InnoDB AUTO_INCREMENT=0 DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;", $table->create('mysql'));
 
     	$this->assertEquals('DROP TABLE IF EXISTS table_name', $table->drop('mysql'));
 
