@@ -71,6 +71,7 @@ class OpenSSL extends Encrypter implements EncrypterInterface
 		'des-',
 		'gcm-',
 		'id-',
+		'poly1305'
 	];
 
 	/**
