@@ -64,7 +64,7 @@ class SessionFileStorageTest extends TestCase
 
 		$filesystem = $this->mockFilesystem();
 
-		$storageDir = sys_get_temp_dir();
+		$storageDir = dirname(__FILE__) . '/tmp';
 
 		$storage = new FileSessionStorage($crypto, $filesystem, $this->getSessionConfig(), $storageDir);
 
@@ -90,7 +90,7 @@ class SessionFileStorageTest extends TestCase
 
 		$filesystem = $this->mockFilesystem();
 
-		$storageDir = sys_get_temp_dir();
+		$storageDir = dirname(__FILE__) . '/tmp';
 
 		$storage = new FileSessionStorage($crypto, $filesystem, $this->getSessionConfig(), $storageDir);
 
@@ -120,7 +120,7 @@ class SessionFileStorageTest extends TestCase
 
 		$filesystem = $this->mockFilesystem();
 
-		$storageDir = sys_get_temp_dir();
+		$storageDir = dirname(__FILE__) . '/tmp';
 
 		$storage = new FileSessionStorage($crypto, $filesystem, $this->getSessionConfig(), $storageDir);
 
@@ -168,7 +168,7 @@ class SessionFileStorageTest extends TestCase
 
 		$filesystem = $this->mockFilesystem();
 
-		$storageDir = sys_get_temp_dir();
+		$storageDir = dirname(__FILE__) . '/tmp';
 
 		$storage = new FileSessionStorage($crypto, $filesystem, $this->getSessionConfig(), $storageDir);
 
@@ -198,7 +198,7 @@ class SessionFileStorageTest extends TestCase
 
 		$filesystem = $this->mockFilesystem();
 
-		$storageDir = sys_get_temp_dir();
+		$storageDir = dirname(__FILE__) . '/tmp';
 
 		$storage = new FileSessionStorage($crypto, $filesystem, $this->getSessionConfig(), $storageDir);
 
@@ -228,7 +228,7 @@ class SessionFileStorageTest extends TestCase
 
 		$filesystem = $this->mockFilesystem();
 
-		$storageDir = sys_get_temp_dir();
+		$storageDir = dirname(__FILE__) . '/tmp';
 
 		$newid = UUID::v4();
 
@@ -258,7 +258,7 @@ class SessionFileStorageTest extends TestCase
 
 		$filesystem = $this->mockFilesystem();
 
-		$storageDir = sys_get_temp_dir();
+		$storageDir = dirname(__FILE__) . '/tmp';
 
 		$storage = new FileSessionStorage($crypto, $filesystem, $this->getSessionConfig(), $storageDir);
 
@@ -286,7 +286,7 @@ class SessionFileStorageTest extends TestCase
 
 		$filesystem = $this->mockFilesystem();
 
-		$storageDir = sys_get_temp_dir();
+		$storageDir = dirname(__FILE__) . '/tmp';
 
 		$storage = new FileSessionStorage($crypto, $filesystem, $this->getSessionConfig(), $storageDir);
 
