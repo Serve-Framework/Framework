@@ -364,7 +364,7 @@ class Query
 				// column_name -> prefixed_table.column_name
 				if (!empty($this->joins))
 				{
-					$cols .= $this->operationTable . ' . ' . $column . ', ';
+					$cols .= $this->operationTable . '.' . $column . ', ';
 				}
 				else
 				{
@@ -390,7 +390,7 @@ class Query
 	 */
 	public function groupBy(string $column): void
 	{
-		$this->groupBy = new GroupBy($column);
+		$this->groupBy = new GroupBy($column, $this->connectionHandler->tablePrefix());
 	}
 
 	/**
@@ -694,6 +694,12 @@ class Query
 			$sql[] = $this->procesWhereClauses();
 		}
 
+		// Add group
+		if (!empty($this->groupBy))
+		{
+			$sql[] = $this->groupBy->sql(!empty($this->joins) ? $this->operationTable : null);
+		}
+
 		// Add Orderby
 		if (!empty($this->orderBy))
 		{
@@ -705,13 +711,7 @@ class Query
 		{
 			$sql[] = $this->limit->sql();
 		}
-
-		// Add group
-		if (!empty($this->groupBy))
-		{
-			$sql[] = $this->groupBy->sql();
-		}
-
+		
 		return implode(' ', $sql);
 	}
 

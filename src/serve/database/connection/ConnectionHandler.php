@@ -9,6 +9,7 @@ namespace serve\database\connection;
 
 use PDO;
 use PDOStatement;
+use PDOException;
 
 use function array_keys;
 use function array_merge;
@@ -245,7 +246,16 @@ class ConnectionHandler
 	protected function parseQuery(string $query, array $bindings = []): void
 	{
 		// Prepare query
-		$this->pdoStatement = $this->connection->pdo()->prepare($query);
+		try
+		{
+    		$this->pdoStatement = $this->connection->pdo()->prepare($query);
+		}
+		catch (PDOException $e)
+		{
+			$msg = [$e->getMessage(), 'SQL Query: [' . $query . ']', 'Bindings: [' . var_export($bindings, true) . ']' ];
+
+    		throw new PDOException(implode("\n\n", $msg));
+		}
 
 		// Add parameters to the parameter array
 		$this->bindMultiple($bindings);

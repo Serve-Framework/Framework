@@ -7,26 +7,37 @@
 
 namespace serve\database\builder\query;
 
+use serve\utility\Str;
+
 /**
  * SQL "GROUP BY" statement wrapper.
  */
 class GroupBy
 {
 	/**
-	 * Column.
+	 * Columns.
+	 *
+	 * @var array
+	 */
+	protected $columns;
+
+	/**
+	 * Table prefix.
 	 *
 	 * @var string
 	 */
-	protected $column;
+	protected $prefix;
 
 	/**
 	 * Constructor.
 	 *
 	 * @param string $column Column name
 	 */
-	public function __construct(string $column)
+	public function __construct(string $column, string $tablePrefix)
 	{
-		$this->column = $column;
+		$this->columns = array_map('trim', explode(',', $column));
+
+		$this->prefix = $tablePrefix;
 	}
 
 	/**
@@ -34,8 +45,52 @@ class GroupBy
 	 *
 	 * @return string
 	 */
-	public function sql(): string
+	public function sql(?string $baseTable = null): string
 	{
-		return 'GROUP BY ' . $this->column;
+		$columns = '';
+
+		foreach($this->columns as $column)
+		{
+			if (str_contains($column, '.'))
+			{
+				$table  = trim(Str::getBeforeFirstChar($column, '.'));
+				$column = trim(Str::getAfterFirstChar($column, '.'));
+
+				if ($baseTable)
+				{
+					// Prefix an existing table
+					if (!str_contains($baseTable, $table))
+					{
+						$columns .= $this->prefix . $table . '.' . $column . ', ';
+					}
+					// Use the base table
+					else
+					{
+						$columns .= $baseTable . '.' . $column . ', ';
+					}
+				}
+				// No base table but prefix this anyway
+				else
+				{
+					$columns .= $this->prefix . $table . '.' . $column . ', ';
+				}
+			}
+			// No table specified
+			else
+			{
+				// Add the base table
+				if ($baseTable)
+				{
+					$columns .= $baseTable . '.' . $column . ', ';
+				}
+				// No base table but prefix this anyway
+				else
+				{
+					$columns .= $column . ', ';
+				}
+			}
+		}
+	
+		return 'GROUP BY ' . rtrim($columns, ', ');
 	}
 }
