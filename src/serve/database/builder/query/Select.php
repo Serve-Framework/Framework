@@ -67,7 +67,22 @@ class Select
 
 		foreach($this->columns as $table => $columns)
 		{
-			if ($table === 'default')
+			if ($table === 'COUNT' || $table === 'SUM')
+			{
+				if ($baseTable)
+				{
+					foreach($columns as $i => $column)
+					{
+						if (!str_contains($column, '.') && strtolower($column) !== 'distinct')
+						{
+							$columns[$i] =  $baseTable . '.' . $column;
+						}
+					}
+				}
+
+				$sql .= $table . '(' . trim(implode(' ', $columns)) . ')';
+			}
+			else if ($table === 'default')
 			{
 				if ($baseTable)
 				{
@@ -99,6 +114,46 @@ class Select
     protected function normalizeSatement(string|array $statement, string $prefix): array
     {
     	$results = [];
+
+    	// Special case for COUNT and SUM 
+    	if ( (is_array($statement) && (isset($statement['COUNT']) || isset($statement['SUM']))) || (is_string($statement) && ( str_contains($statement, 'COUNT') || str_contains($statement, 'SUM') )))
+    	{
+    		// [ 'COUNT' => ['name', 'email', 'slug'] ] OR  ['COUNT' => 'name']
+    		if (is_array($statement))
+			{
+				$function = isset($statement['COUNT']) ? 'COUNT' : 'SUM';
+
+				if (is_array($statement[$function]))
+				{
+					$results[$function] = array_map('trim', array_values($statement[$function]));
+				}
+				else
+				{
+					$results[$function] = array_filter(array_map('trim', explode(' ', $statement[$function])));
+				}
+			}
+			// count(distinct col1) etc...
+			else
+			{
+				$function = trim(Str::getBeforeFirstChar($statement, '('));
+
+				$cols = array_filter(array_map('trim', explode(' ', Str::getAfterFirstChar(Str::getBeforeFirstChar($statement, ')'), '('))));
+
+				$results[$function] = $cols;
+			}
+
+			$function = isset($results['COUNT']) ? 'COUNT' : 'SUM';
+
+			foreach($results[$function] as $i => $column)
+			{
+				if (str_contains($column, '.'))
+				{
+					$results[$function][$i] =  $prefix . $column;
+				}
+			}
+
+    		return $results;
+    	}
 
     	if (is_array($statement))
     	{
@@ -197,7 +252,6 @@ class Select
 						$results['default'][] = $_statement;
 					}
 				}
-
 			}
 		}
 

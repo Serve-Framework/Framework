@@ -77,5 +77,29 @@ class DbBuilderSelectTest extends TestCase
     	$select = new Select(['users' => ['id', 'email'], 'groups' => ['name']], 'prefix_');
 
     	$this->assertEquals('SELECT prefix_users.id, prefix_users.email, prefix_groups.name', $select->sql('table'));
+
+        //
+
+        $select = new Select(['COUNT' => 'id'], 'prefix_');
+
+        $this->assertEquals('SELECT COUNT(prefix_table.id)', $select->sql('table'));
+
+        //
+
+        $select = new Select(['COUNT' => ['DISTINCT', 'id']], 'prefix_');
+
+        $this->assertEquals('SELECT COUNT(DISTINCT prefix_table.id)', $select->sql('table'));
+
+        //
+
+        $select = new Select('COUNT(id)', 'prefix_');
+
+        $this->assertEquals('SELECT COUNT(prefix_table.id)', $select->sql('table'));
+
+        //
+
+        $select = new Select('COUNT(id)', 'prefix_');
+
+        $this->assertEquals('SELECT COUNT(id)', $select->sql());
     }
 }
