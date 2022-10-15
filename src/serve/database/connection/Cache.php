@@ -33,7 +33,7 @@ class Cache
      *
      * @var array
      */
-    private $data = [];
+    public $data = [];
 
     /**
      * Is the cache enabled?
@@ -82,13 +82,13 @@ class Cache
      * Is the query cached ?
      *
      * @param  string $queryStr SQL query string
-     * @param  array  $params   SQL query parameters
+     * @param  array  $bindings   SQL query parameters
      * @return bool
      */
-    public function has(string $queryStr, array $params): bool
+    public function has(string $queryStr, array $bindings): bool
     {
         $tableName = $this->getTableName($queryStr);
-        $cacheKey  = $this->queryToKey($queryStr, $params);
+        $cacheKey  = $this->queryToKey($queryStr, $bindings);
 
         if (!$this->enabled)
         {
@@ -110,14 +110,14 @@ class Cache
      * Get cached result.
      *
      * @param  string $queryStr SQL query string
-     * @param  array  $params   SQL query parameters
+     * @param  array  $bindings   SQL query parameters
      * @return mixed
      */
-    public function get(string $queryStr, array $params)
+    public function get(string $queryStr, array $bindings)
     {
-        if ($this->has($queryStr, $params))
+        if ($this->has($queryStr, $bindings))
         {
-            return $this->data[$this->getTableName($queryStr)][$this->queryToKey($queryStr, $params)];
+            return $this->data[$this->getTableName($queryStr)][$this->queryToKey($queryStr, $bindings)];
         }
 
         return false;
@@ -127,14 +127,14 @@ class Cache
      * Save a cached result.
      *
      * @param string $queryStr SQL query string
-     * @param array  $params   SQL query parameters
+     * @param array  $bindings   SQL query parameters
      * @param mixed  $result   Data to cache
      */
-    public function put(string $queryStr, array $params, $result): void
+    public function put(string $queryStr, array $bindings, $result): void
     {
         if ($this->enabled)
         {
-            $this->data[$this->getTableName($queryStr)][$this->queryToKey($queryStr, $params)] = $result;
+            $this->data[$this->getTableName($queryStr)][$this->queryToKey($queryStr, $bindings)] = $result;
         }
     }
 
@@ -162,32 +162,36 @@ class Cache
      * Returns the cache key based on query and params.
      *
      * @param  string $query  SQL query string
-     * @param  array  $params SQL query parameters
+     * @param  array  $bindings SQL query parameters
      * @return string
      */
-    private function queryToKey(string $query, array $params): string
+    private function queryToKey(string $query, array $bindings): string
     {
-        $key = $query;
-
-        foreach ($params as $i => $value)
+        foreach (array_reverse($bindings) as $k => $v)
         {
-            if (is_null($value))
+            $parentesis = '';
+
+            if (is_null($v))
             {
-                $value = 'NULL';
+                $v = 'NULL';
             }
-            elseif (is_bool($value))
+            elseif (is_string($v))
             {
-                $value = $value === true ? 'TRUE' : 'FALSE';
+                $parentesis = '"';
             }
-            elseif (is_array($value))
+            elseif (is_bool($v))
             {
-                $value = implode('', $value);
+                $v = $v === true ? 'TRUE' : 'FALSE';
+            }
+            elseif (is_array($v))
+            {
+                $v = implode('', $v);
             }
 
-            $key .= $value;
+            $query = str_replace(":$k", $parentesis . $v . $parentesis, $query);
         }
 
-        return md5($key);
+        return md5(str_replace('`', '"', $query));
     }
 
     /**
@@ -207,7 +211,7 @@ class Cache
 
         if (!$matches || !isset($matches[3]))
         {
-            throw new Exception('Error retrieving database query table name. Query: "' . $query . '"');
+            throw new Exception('Error retrieving database query table name. Query: [' . $query . ']');
         }
 
         return trim($matches[3]);
