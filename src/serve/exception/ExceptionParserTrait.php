@@ -159,8 +159,6 @@ trait ExceptionParserTrait
 
 	    array_shift($trace);
 
-	    array_pop($trace);
-
 	    $length = count($trace);
 
 	    $result = [];
