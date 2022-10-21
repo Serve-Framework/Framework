@@ -1661,7 +1661,7 @@ class Parsedown
             return self::$instances[$name];
         }
 
-        $instance = new static();
+        $instance = new self();
 
         self::$instances[$name] = $instance;
 
