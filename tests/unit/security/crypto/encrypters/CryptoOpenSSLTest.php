@@ -38,16 +38,13 @@ class CryptoOpenSslTest extends TestCase
 	public function testCyphers(): void
 	{
 		$data = 'foobar!!$#$@#"$#@!$P:{';
+		
+		$encrypter = new OpenSSL('secret-code');
 
-		foreach (openssl_get_cipher_methods() as $cypher)
+		foreach ($encrypter->cyphers() as $cypher)
 		{
-			if (str_contains(strtolower($cypher), 'gcm') || str_contains(strtolower($cypher), 'ccm') || str_contains(strtolower($cypher), 'poly1305'))
-			{
-				continue;
-			}
-
 			$encrypter = new OpenSSL('secret-code', $cypher);
-
+			
 			$hashed = $encrypter->encrypt($data);
 
 			$this->assertEquals($data, $encrypter->decrypt($hashed));
