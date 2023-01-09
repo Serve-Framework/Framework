@@ -40,6 +40,8 @@ class CryptoOpenSslTest extends TestCase
 
 		foreach ($encrypter->cyphers() as $cypher)
 		{
+			var_dump($cypher);
+			
 			$encrypter = new OpenSSL('secret-code', $cypher);
 
 			$hashed = $encrypter->encrypt($data);
