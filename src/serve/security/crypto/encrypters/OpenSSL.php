@@ -50,28 +50,25 @@ class OpenSSL extends Encrypter implements EncrypterInterface
 	protected $ivSize;
 
 	/**
-	 * Initialization vector size.
-	 *
-	 * @var array
-	 */
-	protected $ciphers;
-
-	/**
 	 * Cyphers we don't use.
 	 *
 	 * @var array
 	 */
 	protected $nonCyphers =
 	[
-		'aes-',
-		'bf-',
-		'camellia-',
-		'cast5-',
-		'ccm-',
-		'des-',
-		'gcm-',
-		'id-',
-		'poly1305'
+		// weak
+		'ecb',
+		'des',
+		'rc2',
+		'rc4',
+		'md5',
+
+		// AEAD
+		'gcm',
+		'ccm',
+		'ocb',
+		'poly',
+		'wrap',
 	];
 
 	/**
@@ -82,21 +79,19 @@ class OpenSSL extends Encrypter implements EncrypterInterface
 	 */
 	public function __construct(string $key, string $cipher = 'AES-256-CTR')
 	{
-		$this->loadCyphers();
-
 		$this->key = $key;
 
-		$this->cipher = !in_array($cipher, $this->ciphers) ? 'AES-256-CTR' : $cipher;
+		$this->cipher = !in_array($cipher, $this->cyphers()) ? 'AES-256-CTR' : $cipher;
 
 		$this->ivSize = openssl_cipher_iv_length($this->cipher);
 	}
 	
 	/**
-	 * Load compatible ciphers.
+	 * {@inheritDoc}
 	 */
-	private function loadCyphers(): void
+	public function cyphers(): array
 	{
-		$this->ciphers = array_filter(openssl_get_cipher_methods(), function ($cypher)
+		return array_filter(openssl_get_cipher_methods(), function ($cypher)
 		{
 			foreach ($this->nonCyphers as $nonCypher)
 			{
@@ -108,14 +103,6 @@ class OpenSSL extends Encrypter implements EncrypterInterface
 
 			return true;
 		});
-	}
-	
-	/**
-	 * {@inheritDoc}
-	 */
-	public function cyphers(): array
-	{
-		return $this->ciphers;
 	}
 
 	/**
