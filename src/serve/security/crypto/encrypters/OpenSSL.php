@@ -90,7 +90,7 @@ class OpenSSL extends Encrypter implements EncrypterInterface
 
 		$this->ivSize = openssl_cipher_iv_length($this->cipher);
 	}
-
+	
 	/**
 	 * Load compatible ciphers.
 	 */
@@ -108,6 +108,14 @@ class OpenSSL extends Encrypter implements EncrypterInterface
 
 			return true;
 		});
+	}
+	
+	/**
+	 * {@inheritDoc}
+	 */
+	public function cyphers(): array
+	{
+		return $this->ciphers;
 	}
 
 	/**
