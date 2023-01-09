@@ -82,7 +82,7 @@ class Select
 
 				$sql .= $table . '(' . trim(implode(' ', $columns)) . ')';
 			}
-			else if ($table === 'default')
+			elseif ($table === 'default')
 			{
 				if ($baseTable)
 				{
@@ -115,8 +115,8 @@ class Select
     {
     	$results = [];
 
-    	// Special case for COUNT and SUM 
-    	if ( (is_array($statement) && (isset($statement['COUNT']) || isset($statement['SUM']))) || (is_string($statement) && ( str_contains($statement, 'COUNT') || str_contains($statement, 'SUM') )))
+    	// Special case for COUNT and SUM
+    	if ((is_array($statement) && (isset($statement['COUNT']) || isset($statement['SUM']))) || (is_string($statement) && (str_contains($statement, 'COUNT') || str_contains($statement, 'SUM'))))
     	{
     		// [ 'COUNT' => ['name', 'email', 'slug'] ] OR  ['COUNT' => 'name']
     		if (is_array($statement))

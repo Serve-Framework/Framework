@@ -7,9 +7,7 @@
 
 namespace serve\database\builder\query;
 
-use function end;
 use function implode;
-use function key;
 use function rtrim;
 use function str_replace;
 use function strtolower;

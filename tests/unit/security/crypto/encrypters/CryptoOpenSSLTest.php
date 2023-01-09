@@ -10,9 +10,6 @@ namespace serve\tests\unit\security\crypto\encrypters;
 use serve\security\crypto\encrypters\OpenSSL;
 use serve\tests\TestCase;
 
-use function openssl_get_cipher_methods;
-use function str_contains;
-
 /**
  * @group unit
  */
@@ -38,13 +35,13 @@ class CryptoOpenSslTest extends TestCase
 	public function testCyphers(): void
 	{
 		$data = 'foobar!!$#$@#"$#@!$P:{';
-		
+
 		$encrypter = new OpenSSL('secret-code');
 
 		foreach ($encrypter->cyphers() as $cypher)
 		{
 			$encrypter = new OpenSSL('secret-code', $cypher);
-			
+
 			$hashed = $encrypter->encrypt($data);
 
 			$this->assertEquals($data, $encrypter->decrypt($hashed));

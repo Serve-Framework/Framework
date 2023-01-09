@@ -8,8 +8,8 @@
 namespace serve\database\connection;
 
 use PDO;
-use PDOStatement;
 use PDOException;
+use PDOStatement;
 
 use function array_keys;
 use function array_merge;
@@ -252,7 +252,7 @@ class ConnectionHandler
 		}
 		catch (PDOException $e)
 		{
-			$msg = [$e->getMessage(), 'SQL Query: [' . $query . ']', 'Bindings: [' . var_export($bindings, true) . ']' ];
+			$msg = [$e->getMessage(), 'SQL Query: [' . $query . ']', 'Bindings: [' . var_export($bindings, true) . ']'];
 
     		throw new PDOException(implode("\n\n", $msg));
 		}

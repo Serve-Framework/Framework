@@ -85,7 +85,7 @@ class OpenSSL extends Encrypter implements EncrypterInterface
 
 		$this->ivSize = openssl_cipher_iv_length($this->cipher);
 	}
-	
+
 	/**
 	 * {@inheritDoc}
 	 */

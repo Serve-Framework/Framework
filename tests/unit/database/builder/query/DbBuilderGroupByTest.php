@@ -38,7 +38,6 @@ class DbBuilderGroupByTest extends TestCase
 
         //
 
-
         $group = new GroupBy('foo, base_table.bar', 'prefix_');
 
         $this->assertEquals('GROUP BY prefix_base_table.foo, prefix_base_table.bar', $group->sql('prefix_base_table'));

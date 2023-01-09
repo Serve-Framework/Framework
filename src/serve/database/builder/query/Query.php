@@ -711,7 +711,7 @@ class Query
 		{
 			$sql[] = $this->limit->sql();
 		}
-		
+
 		return implode(' ', $sql);
 	}
 

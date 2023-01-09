@@ -90,7 +90,7 @@ class GroupBy
 				}
 			}
 		}
-	
+
 		return 'GROUP BY ' . rtrim($columns, ', ');
 	}
 }

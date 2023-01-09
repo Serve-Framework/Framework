@@ -82,7 +82,7 @@ class Cache
      * Is the query cached ?
      *
      * @param  string $queryStr SQL query string
-     * @param  array  $bindings   SQL query parameters
+     * @param  array  $bindings SQL query parameters
      * @return bool
      */
     public function has(string $queryStr, array $bindings): bool
@@ -110,7 +110,7 @@ class Cache
      * Get cached result.
      *
      * @param  string $queryStr SQL query string
-     * @param  array  $bindings   SQL query parameters
+     * @param  array  $bindings SQL query parameters
      * @return mixed
      */
     public function get(string $queryStr, array $bindings)
@@ -127,7 +127,7 @@ class Cache
      * Save a cached result.
      *
      * @param string $queryStr SQL query string
-     * @param array  $bindings   SQL query parameters
+     * @param array  $bindings SQL query parameters
      * @param mixed  $result   Data to cache
      */
     public function put(string $queryStr, array $bindings, $result): void
@@ -161,7 +161,7 @@ class Cache
     /**
      * Returns the cache key based on query and params.
      *
-     * @param  string $query  SQL query string
+     * @param  string $query    SQL query string
      * @param  array  $bindings SQL query parameters
      * @return string
      */
