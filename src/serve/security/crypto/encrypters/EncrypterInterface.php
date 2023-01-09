@@ -29,4 +29,11 @@ interface EncrypterInterface
 	 * @return mixed
 	 */
 	public function decrypt(string $string);
+	
+	/**
+	 * Returns available cyphers.
+	 *
+	 * @return array
+	 */
+	public function cyphers(): array;
 }
