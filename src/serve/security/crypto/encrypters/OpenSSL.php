@@ -67,6 +67,7 @@ class OpenSSL extends Encrypter implements EncrypterInterface
 		'gcm',
 		'ccm',
 		'ocb',
+		'cbc',
 		'poly',
 		'wrap',
 	];
