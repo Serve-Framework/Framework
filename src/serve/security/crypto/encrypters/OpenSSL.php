@@ -109,20 +109,10 @@ class OpenSSL extends Encrypter implements EncrypterInterface
 	 */
 	public function cyphers(): array
 	{
-		return $this->acceptedCyphers;
-
-		/*return array_filter(openssl_get_cipher_methods(), function ($cypher)
+		return array_filter(openssl_get_cipher_methods(), function ($cypher)
 		{
-			foreach ($this->nonCyphers as $nonCypher)
-			{
-				if (strpos(strtolower($cypher), $nonCypher) !== false)
-				{
-			    	return false;
-				}
-			}
-
-			return true;
-		});*/
+			return in_array(strtolower($cypher), $this->acceptedCyphers);
+		});
 	}
 
 	/**
