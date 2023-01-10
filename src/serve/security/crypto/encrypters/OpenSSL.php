@@ -70,6 +70,7 @@ class OpenSSL extends Encrypter implements EncrypterInterface
 		'cbc',
 		'poly',
 		'wrap',
+		'bf-'
 	];
 
 	/**
