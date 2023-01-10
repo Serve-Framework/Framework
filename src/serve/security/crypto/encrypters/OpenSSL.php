@@ -62,6 +62,7 @@ class OpenSSL extends Encrypter implements EncrypterInterface
 		'rc2',
 		'rc4',
 		'md5',
+		'sm4'
 
 		// AEAD
 		'gcm',
@@ -72,7 +73,8 @@ class OpenSSL extends Encrypter implements EncrypterInterface
 		'wrap',
 		'bf-',
 		'cast5',
-		'idea'
+		'idea',
+		'seed',
 	];
 
 	/**
