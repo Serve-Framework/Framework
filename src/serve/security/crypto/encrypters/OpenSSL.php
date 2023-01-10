@@ -54,27 +54,39 @@ class OpenSSL extends Encrypter implements EncrypterInterface
 	 *
 	 * @var array
 	 */
-	protected $nonCyphers =
+	protected $acceptedCyphers =
 	[
-		// weak
-		'ecb',
-		'des',
-		'rc2',
-		'rc4',
-		'md5',
-		'sm4'
-
-		// AEAD
-		'gcm',
-		'ccm',
-		'ocb',
-		'cbc',
-		'poly',
-		'wrap',
-		'bf-',
-		'cast5',
-		'idea',
-		'seed',
+		'aes-128-cfb1',
+		'aes-128-cfb8',
+		'aes-128-ctr',
+		'aes-128-ofb',
+		'aes-128-xts',
+		'aes-192-cfb',
+		'aes-192-cfb1',
+		'aes-192-cfb8',
+		'aes-192-ctr',
+		'aes-192-ofb',
+		'aes-256-cfb',
+		'aes-256-cfb1',
+		'aes-256-cfb8',
+		'aes-256-ctr',
+		'aes-256-ofb',
+		'aes-256-xts',
+		'aria-128-cfb',
+		'aria-128-cfb1',
+		'aria-128-cfb8',
+		'aria-128-ctr',
+		'aria-128-ofb',
+		'aria-192-cfb',
+		'aria-192-cfb1',
+		'aria-192-cfb8',
+		'aria-192-ctr',
+		'aria-192-ofb',
+		'aria-256-cfb',
+		'aria-256-cfb1',
+		'aria-256-cfb8',
+		'aria-256-ctr',
+		'aria-256-ofb',
 	];
 
 	/**
@@ -97,7 +109,9 @@ class OpenSSL extends Encrypter implements EncrypterInterface
 	 */
 	public function cyphers(): array
 	{
-		return array_filter(openssl_get_cipher_methods(), function ($cypher)
+		return $this->acceptedCyphers;
+
+		/*return array_filter(openssl_get_cipher_methods(), function ($cypher)
 		{
 			foreach ($this->nonCyphers as $nonCypher)
 			{
@@ -108,7 +122,7 @@ class OpenSSL extends Encrypter implements EncrypterInterface
 			}
 
 			return true;
-		});
+		});*/
 	}
 
 	/**
