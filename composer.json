@@ -40,12 +40,6 @@
         "mockery/mockery": "^1.5"
     },
     "prefer-stable": true,
-    "minimum-stability": "dev",
-    "extra": {
-        "branch-alias": {
-            "dev-master": "8.0-dev"
-        }
-    },
     "suggest": {
         "ext-openssl": "Required to use the crypto library",
         "ext-pdo": "Required to use the database library"
