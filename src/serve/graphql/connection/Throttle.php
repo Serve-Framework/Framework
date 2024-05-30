@@ -29,7 +29,7 @@ use function usleep;
 class Throttle
 {
     /**
-     * @var StorageInterface
+     * @var \serve\graphql\connection\ThrottleStorage
      */
     protected $storage;
 
@@ -46,10 +46,9 @@ class Throttle
     /**
      * Throttle.
      *
-     * @param  string                   $key          - A unique key for what we're throttling
-     * @param  int                      $limit        - How many are allowed
-     * @param  int                      $milliseconds - In this many milliseconds
-     * @throws LockWaitTimeoutException
+     * @param  string $key          - A unique key for what we're throttling
+     * @param  int    $limit        - How many are allowed
+     * @param  int    $milliseconds - In this many milliseconds
      * @return int
      */
     public function throttle($key, $limit, $milliseconds)
@@ -57,13 +56,15 @@ class Throttle
         /**
          * Try and do our waiting without a lock.
          */
-        $key = $this->getStorageKey($key, $limit, $milliseconds);
+        $key      = $this->getStorageKey($key, $limit, $milliseconds);
         $wait     = 0;
         $newRatio = $this->getNewRatio($key, $limit, $milliseconds);
 
-        if ($newRatio > $milliseconds) {
+        if ($newRatio > $milliseconds)
+        {
             $wait = ceil($newRatio - $milliseconds);
         }
+
         usleep($wait * 1000);
 
         /*
@@ -86,14 +87,15 @@ class Throttle
      * @param  int    $limit        - How many are allowed
      * @param  int    $milliseconds - In this many milliseconds
      * @return int    - the number of milliseconds before this request should be allowed
-     *                             to pass
+     *                to pass
      */
     public function getEstimate($key, $limit, $milliseconds)
     {
         $key = $this->getStorageKey($key, $limit, $milliseconds);
         $newRatio = $this->getNewRatio($key, $limit, $milliseconds);
         $wait     = 0;
-        if ($newRatio > $milliseconds) {
+        if ($newRatio > $milliseconds)
+        {
             $wait = ceil($newRatio - $milliseconds);
         }
         return $wait;

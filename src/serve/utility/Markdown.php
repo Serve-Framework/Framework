@@ -10,6 +10,10 @@ namespace serve\utility;
 use serve\utility\markdown\Parsedown;
 use serve\utility\markdown\ParsedownExtra;
 
+use function preg_replace;
+use function strip_tags;
+use function trim;
+
 /**
  * Convert markdown to HTML.
  *

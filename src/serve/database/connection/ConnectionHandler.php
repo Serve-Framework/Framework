@@ -26,6 +26,7 @@ use function preg_replace;
 use function str_replace;
 use function strtolower;
 use function trim;
+use function var_export;
 
 /**
  * Database connection handler.

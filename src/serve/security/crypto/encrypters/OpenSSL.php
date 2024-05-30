@@ -18,7 +18,6 @@ use function openssl_decrypt;
 use function openssl_encrypt;
 use function openssl_get_cipher_methods;
 use function openssl_random_pseudo_bytes;
-use function strpos;
 use function strtolower;
 
 /**
@@ -109,7 +108,7 @@ class OpenSSL extends Encrypter implements EncrypterInterface
 	 */
 	public function cyphers(): array
 	{
-		return array_filter(openssl_get_cipher_methods(), function ($cypher)
+		return array_filter(openssl_get_cipher_methods(), function($cypher)
 		{
 			return in_array(strtolower($cypher), $this->acceptedCyphers);
 		});

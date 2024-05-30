@@ -136,6 +136,10 @@ class Client
 
             $headers['Content-length'] = mb_strlen($bodyString);
         }
+        else
+        {
+            $bodyString = '';
+        }
 
         $headers['Content-Type'] = $dataType;
 
@@ -152,6 +156,8 @@ class Client
 		];
 
         $currentTries = 0;
+
+        $http_response_header = [];
 
         do
         {

@@ -39,7 +39,7 @@ class CryptoOpenSslTest extends TestCase
 		$encrypter = new OpenSSL('secret-code');
 
 		foreach ($encrypter->cyphers() as $cypher)
-		{			
+		{
 			$encrypter = new OpenSSL('secret-code', $cypher);
 
 			$hashed = $encrypter->encrypt($data);

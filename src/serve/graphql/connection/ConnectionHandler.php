@@ -86,7 +86,7 @@ class ConnectionHandler
 	/**
 	 * Constructor.
 	 *
-	 * @param \serve\graphql\client\Client.      $client         Client isntance
+	 * @param \serve\graphql\client\Client       $client         Client isntance
 	 * @param \serve\graphql\connection\Cache    $cache          Cache isntance
 	 * @param \serve\graphql\connection\Throttle $throttle       Throttle isntance
 	 * @param \serve\exception\ErrorHandler      $errorHandler   Error handler isntance
@@ -177,9 +177,9 @@ class ConnectionHandler
 	 *
 	 * All graphql queries run through this method.
 	 *
-	 * @param  string                        $query    The query to execute
-	 * @param  array|null                    $bindings Assoc array of parameters to bind (optional) (default [])
-	 * @return serve\graphql\client\Response
+	 * @param  string                         $query    The query to execute
+	 * @param  array|null                     $bindings Assoc array of parameters to bind (optional) (default [])
+	 * @return \serve\graphql\client\Response
 	 */
 	public function query(string $query, ?array $bindings = null): Response
 	{
@@ -234,8 +234,8 @@ class ConnectionHandler
 	/**
 	 * Execute graphql query.
 	 *
-	 * @param  string                        $query SQL query statement
-	 * @return serve\graphql\client\Response
+	 * @param  string                         $query SQL query statement
+	 * @return \serve\graphql\client\Response
 	 */
 	protected function executeQuery(string $query): Response
 	{
@@ -252,7 +252,7 @@ class ConnectionHandler
 
 			$exception = new ResponseException($msg);
 
-			$this->errorHandler->logException($exception);
+			$this->errorHandler->logger()->writeException($exception);
 		}
 
         return $response;
@@ -349,5 +349,33 @@ class ConnectionHandler
 		}
 
 		return trim($query);
+	}
+
+	/**
+	 * Sanitize a value.
+	 *
+	 * @param  mixed $value A query value to sanitize
+	 * @return mixed
+	 */
+	protected function sanitizeValue($value)
+	{
+		/*if (is_int($value))
+		{
+			return $value;
+		}
+		elseif (is_bool($value))
+		{
+			return !$value ? 0 : 1;
+		}
+		elseif (is_string($value) && trim($value) === '' || is_null($value))
+		{
+			return null;
+		}
+		elseif (is_string($value))
+		{
+			return $value;
+		}*/
+
+		return $value;
 	}
 }

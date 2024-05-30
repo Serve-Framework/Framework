@@ -11,6 +11,7 @@ use serve\cache\stores\FileStore;
 use serve\file\Filesystem;
 use serve\tests\TestCase;
 
+use function serialize;
 use function strtotime;
 
 /**

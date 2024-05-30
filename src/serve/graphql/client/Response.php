@@ -308,10 +308,11 @@ class Response
                         }
                     }
                 }
+
                 // Flat array
                 if (is_string($key) && str_contains(strtolower($key), 'error'))
                 {
-                    $errors[] = $array[$key];
+                    $errors[] = $response[$key];
                 }
             }
         }

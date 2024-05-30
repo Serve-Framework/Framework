@@ -8,9 +8,11 @@
 namespace serve\database\builder\query;
 
 use serve\utility\Str;
+
 use function array_filter;
 use function array_map;
 use function array_values;
+use function count;
 use function explode;
 use function implode;
 use function is_array;
@@ -18,6 +20,8 @@ use function is_string;
 use function ltrim;
 use function rtrim;
 use function str_contains;
+use function strtolower;
+use function trim;
 
 /**
  * SQL "SELECT" statement wrapper.

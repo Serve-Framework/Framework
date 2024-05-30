@@ -13,6 +13,7 @@ use serve\security\Crypto;
 use serve\tests\TestCase;
 use serve\utility\UUID;
 
+use function dirname;
 use function serialize;
 use function strtotime;
 use function sys_get_temp_dir;

@@ -14,5 +14,51 @@ namespace serve\cache\stores;
  */
 class DatabaseStore implements StoreInterface
 {
+	/**
+     * {@inheritDoc}
+     */
+    public function get(string $key)
+    {
+        
+    }
 
+    /**
+     * {@inheritDoc}
+     */
+    public function put(string $key, $data): void
+    {
+ 
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    public function has(string $key): bool
+    {
+    	return false;
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    public function delete(string $key): void
+    {
+        
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    public function expired(string $key, int $maxAge): bool
+    {
+        return false;
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    public function clear(): void
+    {
+        
+    }
 }

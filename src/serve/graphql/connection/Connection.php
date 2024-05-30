@@ -54,7 +54,7 @@ class Connection
 	/**
 	 * Pre connect callback.
 	 *
-	 * @var Colsure|null
+	 * @var \Closure|null
 	 */
 	protected $preConnect;
 
@@ -64,7 +64,7 @@ class Connection
 	 * @param string                                      $name              Connection name
 	 * @param \serve\graphql\client\Client                $client            Client
 	 * @param \serve\graphql\connection\ConnectionHandler $connectionHandler Connection handler
-	 * @param Closure|null                                $preConnect        Pre connection callback
+	 * @param \Closure|null                               $preConnect        Pre connection callback
 	 */
 	public function __construct(string $name, Client $client, ConnectionHandler $connectionHandler, ?Closure $preConnect = null)
 	{

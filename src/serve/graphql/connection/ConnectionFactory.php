@@ -48,9 +48,9 @@ class ConnectionFactory
 	/**
 	 * Creates connection.
 	 *
-	 * @param  string                              $connectionName Connection name
-	 * @param  array                               $config         Connection configurations
-	 * @return serve\graphql\connection\Connection
+	 * @param  string                               $connectionName Connection name
+	 * @param  array                                $config         Connection configurations
+	 * @return \serve\graphql\connection\Connection
 	 */
 	public function connection(string $connectionName, array $config): Connection
 	{

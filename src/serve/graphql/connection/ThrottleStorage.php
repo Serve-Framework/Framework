@@ -2,6 +2,7 @@
 
 namespace serve\graphql\connection;
 
+use Exception;
 use serve\cache\Cache;
 
 use function microtime;
@@ -21,7 +22,7 @@ class ThrottleStorage
     /**
      * Cache storage.
      *
-     * @var serve\cache\Cache
+     * @var \serve\cache\Cache
      */
     protected $cache;
 
@@ -42,9 +43,9 @@ class ThrottleStorage
     /**
      * Constructor.
      *
-     * @param serve\cache\Cache $cache            Cache instance
-     * @param int               $lockWaitTimeout  Timeout for lock
-     * @param int               $lockWaitInterval Interval to check lock
+     * @param \serve\cache\Cache $cache            Cache instance
+     * @param int                $lockWaitTimeout  Timeout for lock
+     * @param int                $lockWaitInterval Interval to check lock
      */
     public function __construct(Cache $cache, $lockWaitTimeout = 1000, $lockWaitInterval = 100)
     {
@@ -70,7 +71,8 @@ class ThrottleStorage
      *
      * We might have multiple requests coming in at once, so we lock the storage
      *
-     * @param string $key Key to lock
+     * @param  string    $key Key to lock
+     * @throws Exception
      */
     public function lock(string $key): void
     {

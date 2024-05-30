@@ -52,8 +52,8 @@ class GraphQl
     /**
      * Constructor.
      *
-     * @param serve\graphql\connection\ConnectionFactory $factory        Connection factory
-     * @param array                                      $configurations Array of configuration options
+     * @param \serve\graphql\connection\ConnectionFactory $factory        Connection factory
+     * @param array                                       $configurations Array of configuration options
      */
     public function __construct(ConnectionFactory $factory, array $configurations)
     {

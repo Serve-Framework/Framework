@@ -43,14 +43,14 @@ class Builder
     /**
      * Connection handler instance.
      *
-     * @var \serve\graphql\client\ConnectionHandler
+     * @var \serve\graphql\connection\ConnectionHandler
      */
     protected $connectionHandler;
 
     /**
      * Constructor.
      *
-     * @param \serve\graphql\client\ConnectionHandler $connectionHandler connection handler instance
+     * @param \serve\graphql\connection\ConnectionHandler $connectionHandler connection handler instance
      */
     public function __construct(ConnectionHandler $connectionHandler)
     {
@@ -62,13 +62,26 @@ class Builder
      *
      * @example $query->images(['first' => 200])
      *
-     * @param  string     $function Field name
-     * @param  array|null $args     Function args (optional)
-     * @return this
+     * @param  string                       $function Field name
+     * @param  array|null                   $args     Function args (optional)
+     * @return \serve\graphql\query\Builder
      */
     public function __call(string $function, ?array $args = null): Builder
     {
         $this->applyFunctionField($function, $args);
+
+        return $this;
+    }
+
+    /**
+     * Adds next function as an alias.
+     *
+     * @param  string $name Alias name
+     * @return \serve\graphql\query\Builder
+     */
+    public function alias(string $name): Builder
+    {
+        $this->applyFunctionField($name . ':');
 
         return $this;
     }
@@ -81,6 +94,8 @@ class Builder
     public function exec(): array
     {
         $queryStr = trim($this->stringifyFields($this->fields));
+
+        var_dump($queryStr);
 
         $response = $this->connectionHandler->query($queryStr);
 
@@ -97,7 +112,7 @@ class Builder
     /**
      * Resets internal pointer to root.
      *
-     * @return this
+     * @return \serve\graphql\query\Builder
      */
     public function root(): Builder
     {
@@ -111,7 +126,7 @@ class Builder
      *
      * @param  array                                    $fields Fields to add
      * @throws \serve\graphql\exception\SyntaxException
-     * @return this
+     * @return \serve\graphql\query\Builder
      */
     public function fields(array $fields): Builder
     {
@@ -170,7 +185,7 @@ class Builder
      */
     protected function applyFunctionField(string $function, ?array $args = null): void
     {
-        $function = $args && is_array($args) && !empty($args) ? $function . $this->normaliseFuncArgs($args[0]) : $function;
+        $function = is_array($args) && !empty($args) ? $function . $this->normaliseFuncArgs($args[0]) : $function;
 
         if (empty($this->fields))
         {
@@ -202,8 +217,10 @@ class Builder
             {
                 $v = is_string($v) ? '"' . $v . '"' : $v;
 
-                $func .= $k . ': ' . $v;
+                $func .= $k . ': ' . $v . ', ';
             }
+
+            $func = rtrim($func, ', ');
 
             $func .= ')';
 
@@ -211,7 +228,7 @@ class Builder
         }
         else
         {
-            return $args + '';
+            return '("' . $args . '")';
         }
     }
 
@@ -231,11 +248,13 @@ class Builder
 
         foreach($fields as $key => $value)
         {
+            $isAlias = is_string($key) && substr($key, -1) === ':';
+
             if (is_array($value))
             {
                 if (is_string($key))
                 {
-                    $ret .= str_repeat($tab, $depth) . $key . ' {' . $brk;
+                    $isAlias ? $ret .= str_repeat($tab, $depth) . $key . $brk : $ret .= str_repeat($tab, $depth) . $key . ' {' . $brk;
                 }
                 else
                 {
@@ -244,7 +263,8 @@ class Builder
 
                 $ret .= $this->stringifyFields($value, ++$depth);
 
-                $ret .= str_repeat($tab, --$depth) . '} ' . $brk;
+                $isAlias ? $ret .= str_repeat($tab, --$depth) . $brk : $ret .= str_repeat($tab, --$depth) . '} ' . $brk;
+
             }
             else
             {
