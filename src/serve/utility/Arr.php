@@ -8,7 +8,6 @@
 namespace serve\utility;
 
 use function array_filter;
-
 use function array_key_exists;
 use function array_keys;
 use function array_map;
@@ -190,7 +189,7 @@ class Arr
 	 */
 	public static function pluck(array $array, string $key): array
 	{
-		return array_map(function ($value) use ($key)
+		return array_map(function($value) use ($key)
 		{
 			return is_object($value) ? $value->$key : $value[$key];
 
@@ -301,7 +300,7 @@ class Arr
 
 		$usort = self::isAssoc($array) ? 'uasort' : 'usort';
 
-		$usort($array, function ($a, $b) use ($key)
+		$usort($array, function($a, $b) use ($key)
 	    {
 	    	$aV = null;
 	        $bV = null;
@@ -404,6 +403,26 @@ class Arr
         $split = array_filter(explode($glue, $str));
 
         return implode($glue, $split);
+    }
+
+    /**
+     * Implode an associative array.
+     *
+     * @param  string $seperator Seperator
+     * @param  string $glue      Glue
+     * @param  array  $array     Array
+     * @return string
+     */
+    public static function implodeMulti(string $seperator, string $glue, array $array): string
+    {
+        $ret = '';
+
+        foreach ($array as $key => $val)
+        {
+            $ret .= $key . $glue . $val . $seperator;
+        }
+
+        return(rtrim($ret, $seperator));
     }
 
 	/**

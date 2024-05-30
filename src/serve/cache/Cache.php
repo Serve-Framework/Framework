@@ -48,7 +48,7 @@ class Cache
      *
      * @param string $key Key to load
      */
-    public function get(string $key): string
+    public function get(string $key)
     {
         return $this->store->get($key);
     }
@@ -59,7 +59,7 @@ class Cache
      * @param string $key  Key to save the output
      * @param string $data Data to store
      */
-    public function put(string $key, string $data): void
+    public function put(string $key, $data): void
     {
         $this->store->put($key, $data);
     }

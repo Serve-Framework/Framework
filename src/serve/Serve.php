@@ -19,7 +19,7 @@ abstract class Serve
 	 *
 	 * @var string
 	 */
-	public const VERSION = '8.0.0';
+	public const VERSION = '8.1.0';
 
 	/**
 	 * Serve major version.
@@ -33,7 +33,7 @@ abstract class Serve
 	 *
 	 * @var int
 	 */
-	public const VERSION_MINOR = 0;
+	public const VERSION_MINOR = 1;
 
 	/**
 	 * Serve patch version.

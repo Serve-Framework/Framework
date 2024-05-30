@@ -37,9 +37,23 @@ class CacheFileStoreTest extends TestCase
 
 		$filesystem->shouldReceive('exists')->once()->with('/app/storage/cache/foo.cache')->andReturn(true);
 
-		$filesystem->shouldReceive('getContents')->once()->with('/app/storage/cache/foo.cache')->andReturn('loaded from cache');
+		$filesystem->shouldReceive('getContents')->once()->with('/app/storage/cache/foo.cache')->andReturn(serialize('loaded from cache'));
 
 		$this->assertEquals('loaded from cache', $store->get('foo'));
+	}
+
+	/**
+	 *
+	 */
+	public function testGetNot(): void
+	{
+		$filesystem = $this->getFilesystem();
+
+		$store = new FileStore($filesystem, '/app/storage/cache');
+
+		$filesystem->shouldReceive('exists')->once()->with('/app/storage/cache/foo.cache')->andReturn(false);
+
+		$this->assertEquals(null, $store->get('foo'));
 	}
 
 	/**
@@ -51,7 +65,7 @@ class CacheFileStoreTest extends TestCase
 
 		$store = new FileStore($filesystem, '/app/storage/cache');
 
-		$filesystem->shouldReceive('putContents')->once()->with('/app/storage/cache/foobar.cache', 'loaded from cache');
+		$filesystem->shouldReceive('putContents')->once()->with('/app/storage/cache/foobar.cache', serialize('loaded from cache'));
 
 		$store->put('foobar', 'loaded from cache');
 	}

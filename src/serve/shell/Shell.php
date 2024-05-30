@@ -8,7 +8,7 @@
 namespace serve\shell;
 
 use function array_map;
-
+use function array_unshift;
 use function escapeshellarg;
 use function escapeshellcmd;
 use function explode;
@@ -439,8 +439,9 @@ class Shell
         }
 
         // Get the env paths
-        $paths   = array_map('trim', explode(':', getenv('PATH')));
-        $paths[] = '/usr/local/bin/';
+        $paths = array_map('trim', explode(':', getenv('PATH')));
+        array_unshift($paths, '/opt/local/bin/');
+        array_unshift($paths, '/usr/local/bin/');
 
         // Loop the current env paths for the binary
         foreach ($paths as $path)

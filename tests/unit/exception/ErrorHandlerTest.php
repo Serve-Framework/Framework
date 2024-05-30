@@ -29,7 +29,7 @@ class ErrorHandlerTest extends TestCase
         $error         = new ErrorException('Unit testing error message');
         $madeCallback  = false;
 
-        $handler->handle(Throwable::class, function ($exception) use (&$madeCallback)
+        $handler->handle(Throwable::class, function($exception) use (&$madeCallback)
         {
             $madeCallback = true;
 
@@ -54,7 +54,7 @@ class ErrorHandlerTest extends TestCase
         $error         = new ErrorException('Unit testing error message');
         $madeCallback  = false;
 
-        $handler->handle(Throwable::class, function ($exception) use (&$madeCallback)
+        $handler->handle(Throwable::class, function($exception) use (&$madeCallback)
         {
             $madeCallback = true;
 
@@ -78,7 +78,7 @@ class ErrorHandlerTest extends TestCase
         $error         = new ErrorException('Unit testing error message');
         $madeCallback  = false;
 
-        $handler->handle(Throwable::class, function ($exception) use (&$madeCallback)
+        $handler->handle(Throwable::class, function($exception) use (&$madeCallback)
         {
             $madeCallback = true;
 
@@ -93,7 +93,7 @@ class ErrorHandlerTest extends TestCase
     }
 
     /**
-     * @runInSeparateProcess
+     *
      */
     public function testFallbackHandler(): void
     {
@@ -135,7 +135,7 @@ class ErrorHandlerTest extends TestCase
         $error         = new ErrorException('Unit testing error message');
         $madeCallback  = false;
 
-        $handler->handle(ErrorException::class, function ($exception) use (&$madeCallback)
+        $handler->handle(ErrorException::class, function($exception) use (&$madeCallback)
         {
             $madeCallback = true;
 
@@ -160,7 +160,7 @@ class ErrorHandlerTest extends TestCase
         $error         = new ErrorException('Unit testing error message');
         $madeCallback  = false;
 
-        $handler->handle(InvalidArgumentException::class, function ($exception) use (&$madeCallback)
+        $handler->handle(InvalidArgumentException::class, function($exception) use (&$madeCallback)
         {
             $madeCallback = true;
 
@@ -183,7 +183,7 @@ class ErrorHandlerTest extends TestCase
         $error         = new InvalidArgumentException('Unit testing error message');
         $madeCallback  = false;
 
-        $handler->handle(InvalidArgumentException::class, function ($exception) use (&$madeCallback)
+        $handler->handle(InvalidArgumentException::class, function($exception) use (&$madeCallback)
         {
             $madeCallback = true;
 
@@ -224,7 +224,7 @@ class ErrorHandlerTest extends TestCase
         $error         = new ErrorException('Unit testing error message');
         $madeCallback  = false;
 
-        $handler->replaceHandlers(Throwable::class, function ($exception) use (&$madeCallback)
+        $handler->replaceHandlers(Throwable::class, function($exception) use (&$madeCallback)
         {
             $madeCallback = true;
 

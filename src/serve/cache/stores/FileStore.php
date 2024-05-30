@@ -9,7 +9,9 @@ namespace serve\cache\stores;
 
 use serve\file\Filesystem;
 
+use function serialize;
 use function time;
+use function unserialize;
 
 /**
  * Cache file storage.
@@ -50,16 +52,16 @@ class FileStore implements StoreInterface
     {
         if ($this->has($key))
         {
-            return $this->filesystem->getContents($this->keyToFile($key));
+            return unserialize($this->filesystem->getContents($this->keyToFile($key)));
         }
     }
 
     /**
      * {@inheritDoc}
      */
-    public function put(string $key, string $data): void
+    public function put(string $key, $data): void
     {
-        $this->filesystem->putContents($this->keyToFile($key), $data);
+        $this->filesystem->putContents($this->keyToFile($key), serialize($data));
     }
 
     /**
