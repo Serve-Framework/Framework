@@ -114,10 +114,59 @@ class Response
      *
      * @return array
      */
-    public function body(): array
+    public function body(bool $normalise = false): array
     {
+        if ($normalise)
+        {
+            return $this->normalisedResponse($this->body);
+        }
+
         return $this->body;
     }
+
+    /**
+     * Normalise graphql response array.
+     * 
+     * Removes "edges" key to flat array
+     * Removes "node" key to flat array.
+     * 
+     * @param  array $fields Response from graphql
+     * @return array
+     */
+    protected function normalisedResponse(array $fields): array
+    {
+        foreach ($fields as $key => $value)
+        {
+            if ($key === 'edges')
+            {
+                foreach($value as $i => $node)
+                {
+                    if (is_array($node) && isset($node['node']))
+                    {
+                        if (empty($node['node']))
+                        {
+                            $fields['edges'][$i] = [];
+                        }
+                        else
+                        {
+                            $fields['edges'][$i] = $this->normalisedResponse($node['node']);
+                        }
+                    }
+                }
+            }
+            else if (is_array($value))
+            {
+                $fields[$key] = $this->normalisedResponse($value);
+            }
+        }
+
+        if (isset($fields['edges']))
+        {
+            return $fields['edges'];
+        }
+
+        return $fields;
+    } 
 
     /**
      * Returns errors.

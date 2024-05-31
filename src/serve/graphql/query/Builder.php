@@ -95,8 +95,6 @@ class Builder
     {
         $queryStr = trim($this->stringifyFields($this->fields));
 
-        var_dump($queryStr);
-
         $response = $this->connectionHandler->query($queryStr);
 
         if (!$response->isSuccessful())
