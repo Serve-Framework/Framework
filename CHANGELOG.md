@@ -8,7 +8,7 @@ Added new `Graphql` service.
 
 #### Changes
 
-* None
+* PHP `8.2` support
 
 #### Improvements
 
