@@ -7,6 +7,7 @@
 
 namespace serve\database\builder\query;
 
+use function count;
 use function implode;
 use function rtrim;
 use function str_replace;

@@ -116,7 +116,7 @@ class ErrorHandler
 	 */
 	protected function getFallbackHandler(): Closure
 	{
-		return function (Throwable $e): void
+		return function(Throwable $e): void
 		{
 			if($this->displayErrors)
 			{
@@ -133,7 +133,7 @@ class ErrorHandler
 	protected function register(): void
 	{
 		// Allows us to handle "fatal" errors
-		register_shutdown_function(function (): void
+		register_shutdown_function(function(): void
 		{
 			$e = error_get_last();
 
@@ -215,6 +215,16 @@ class ErrorHandler
     	restore_error_handler();
 
     	restore_exception_handler();
+    }
+
+    /**
+     * Returns logger.
+     *
+     * @return \serve\exception\logger\Logger
+     */
+    public function logger(): Logger
+    {
+    	return $this->logger;
     }
 
 	/**

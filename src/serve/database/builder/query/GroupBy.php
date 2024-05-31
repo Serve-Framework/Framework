@@ -9,6 +9,12 @@ namespace serve\database\builder\query;
 
 use serve\utility\Str;
 
+use function array_map;
+use function explode;
+use function rtrim;
+use function str_contains;
+use function trim;
+
 /**
  * SQL "GROUP BY" statement wrapper.
  */

@@ -360,10 +360,10 @@ class Filesystem
 	/**
 	 *  Creates a directory.
 	 *
-	 *  @param   string   $path       Path to directory
-	 *  @param   int      $mode       Mode (optional) (default 0777)
-	 *  @param   bool  $recursive  Recursive (optional) (default FALSE)
-	 *  @return  bool
+	 * @param  string $path      Path to directory
+	 * @param  int    $mode      Mode (optional) (default 0777)
+	 * @param  bool   $recursive Recursive (optional) (default FALSE)
+	 * @return bool
 	 */
 	public static function createDirectory(string $path, int $mode = 0777, bool $recursive = false)
 	{
