@@ -19,7 +19,7 @@ abstract class Serve
 	 *
 	 * @var string
 	 */
-	public const VERSION = '8.1.0';
+	public const VERSION = '8.2.0';
 
 	/**
 	 * Serve major version.

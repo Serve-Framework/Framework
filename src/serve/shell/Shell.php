@@ -114,6 +114,22 @@ class Shell
      */
     private $defaultMemory = '1024M';
 
+     /**
+     * Default available system memory.
+     *
+     * @var string
+     */
+    private $binaries =
+    [
+        '/sbin',
+        '/bin',
+        '/usr/sbin',
+        '/usr/bin',
+        '/usr/local/bin',
+        '/opt/homebrew/bin',
+        'C:\bin'
+    ];
+
     /**
      * Constructor.
      *
@@ -439,9 +455,11 @@ class Shell
         }
 
         // Get the env paths
-        $paths = array_map('trim', explode(':', getenv('PATH')));
-        array_unshift($paths, '/opt/local/bin/');
-        array_unshift($paths, '/usr/local/bin/');
+        $paths = array_unique(
+            array_merge(
+                array_map('trim', explode(':', getenv('PATH'))),  $this->binaries
+            )
+        );
 
         // Loop the current env paths for the binary
         foreach ($paths as $path)
